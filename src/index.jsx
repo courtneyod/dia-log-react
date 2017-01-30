@@ -2,18 +2,19 @@
 
 // Load up the application styles
 require("../styles/application.scss");
-require('../styles/styles')
+require('../styles/style.css')
 
 
 // Render the top-level React component
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App.jsx';
+import App from './App.jsx';
+import Routes from './routes.js';
 
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+import {Route, Router, IndexRoute, hashHistory} from 'react-router';
 
 
 ReactDOM.render(
-	<Router history={browserHistory} routes={routes}/>,
+	<Router history={hashHistory} routes={Routes}/>,
 	document.getElementById('react-root')
 );

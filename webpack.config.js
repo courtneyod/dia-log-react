@@ -4,6 +4,23 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   resolve: {
+    root: __dirname,
+    alias: {
+      Main: 'app/components/Main.jsx',
+      Weather: 'app/components/Weather.jsx',
+      Nav: 'src/components/Nav.jsx',
+      About: 'src/components/About.jsx',
+      AddPhotoBtn: 'src/components/AddPhotoBtn.jsx',
+      AddHealthStats: 'src/api/AddHealthStats.js',
+      Photo: 'src/components/Photo.jsx',
+      PhotoList: 'src/components/Photo.jsx',
+      Auth: 'src/components/login/Auth.jsx',
+      LoginContainer: 'src/components/login/LoginContainer.jsx',
+      GoogleAuth: 'src/components/login/GoogleAuth.jsx',
+      LoginForm: 'src/components/login/LoginForm.jsx',
+      LoginLogo: 'src/components/login/LoginLogo.jsx',
+      SignUp: 'src/components/login/SignUp.jsx'
+    },
     extensions: ['', '.js', '.jsx']
   },
   entry: [
@@ -28,5 +45,5 @@ module.exports = {
       }
     ]
   },
-  devtool: "source-map"
+  devtool: "cheap-module-eval-source-map"
 }
