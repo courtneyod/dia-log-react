@@ -10,8 +10,9 @@ import Auth from './components/login/Auth';
 export default (
 	<Router history={hashHistory}>
 		<Route path="/" component={App}>
+			<IndexRoute component={PhotoList} />
+			<Route path="/login" component={LoginContainer} />
 			<Route path="/feed" component={PhotoList} />
 		</Route>
-		<Route path="/login" component={LoginContainer} />
 	</Router>
 )

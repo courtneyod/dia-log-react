@@ -1,22 +1,40 @@
 import React, {Component} from 'react'
 var {Link} = require('react-router')
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import TextField from 'material-ui/TextField';
+
+const style = {
+  margin: 12,
+};
 
 export default class LoginForm extends Component {
 	constructor(props){
 		super(props)
 
+        this.state = {
+            email: '',
+            password: ''
+        }
+
 		this.handleClick = this.handleClick.bind(this)
 		this.onFormSubmit = this.onFormSubmit.bind(this)
+        this._handleEmailFieldChange = this._handleEmailFieldChange.bind(this)
+        this._handlePasswordFieldChange = this._handlePasswordFieldChange.bind(this)
 	}
+
+
 	onFormSubmit(e) {
 	    e.preventDefault();
-		
-	    var email = this.refs.email.value;
-	    var password = this.refs.password.value;
-		var loginObj = {
+        console.log(this.state, 'this is the state in on form')
+	    var email = this.state.email;
+	    var password = this.state.password;
+
+        var loginObj = {
 			'email': email,
 			'password': password
-		}
+        }
+        
 	    if (password.length > 5) {
 	      this.props.onLogIn(loginObj);
 	    } else {
@@ -24,19 +42,33 @@ export default class LoginForm extends Component {
 	    }
     }
 
+    _handleEmailFieldChange(e) {
+        this.setState({
+            email: e.target.value
+        });
+    }
+
+    _handlePasswordFieldChange(e) {
+        this.setState({
+            password: e.target.value
+        });
+    }
+
 	handleClick(){
 		this.props.updateMember()
 	}
 
 	render(){
-		console.log(this.props, 'this is the loginform propr')
 		return (
-				<div>
-					<div onClick={this.handleClick}>Not a member yet? Sign up!</div>
-					<form onSubmit={this.onFormSubmit}>
-			          <input type="text" ref="email" placeholder="Email"/>
-			          <input type="text" ref="password" placeholder="Password"/>
-			          <button className="button expanded">Submit</button>
+				<div className="login-form-container">
+					<div className="center-elements">
+                        <p className="inline-element"> Not a member yet? </p>
+                        <p className="sign-up-link" onClick={this.handleClick}>Sign up!</p>
+                    </div>
+					<form className="form">
+			          <TextField onChange={this._handleEmailFieldChange} id="email" className="login-input" type="text" ref="email" placeholder="Email"/>
+			          <TextField onChange={this._handlePasswordFieldChange} id="names" className="login-input" type="text" ref="password" placeholder="Password"/>
+					  <RaisedButton onClick={this.onFormSubmit} backgroundColor={'#9575CD'} className="btn" label="Submit" primary={true} style={style} ></RaisedButton>
 			        </form>
 				</div>
 		)

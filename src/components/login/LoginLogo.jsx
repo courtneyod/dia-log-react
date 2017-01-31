@@ -10,7 +10,7 @@ export default class LoginLogo extends Component {
 
 	render(){
 		return (
-				<div>
+				<div className="logo-container">
 					<img className="icon-logo" src="../../styles/logo.png" alt=""/>
 					<div className="logo" >Dia-log</div>
 				</div>

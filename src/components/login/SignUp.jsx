@@ -1,39 +1,89 @@
 import React, {Component} from 'react'
 var {Link} = require('react-router')
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import TextField from 'material-ui/TextField';
+
+const style = {
+  margin: 12,
+};
 
 export default class LoginForm extends Component {
 	constructor(props){
 		super(props)
 
-		this.handleSubmit = this.handleSubmit.bind(this)
+		this.state = {
+            email: '',
+            password: '',
+            confirmPassword: '',
+			firstName: ''
+        }
+
+
+        this._handleEmailFieldChange = this._handleEmailFieldChange.bind(this)
+        this._handlePasswordFieldChange = this._handlePasswordFieldChange.bind(this)
+        this._handleConfirmPasswordFieldChange = this._handleConfirmPasswordFieldChange.bind(this)
+        this._handleFirstNameFieldChange = this._handleFirstNameFieldChange.bind(this)
+
+		this.onFormSubmit = this.onFormSubmit.bind(this)
 	}
 
-	handleSubmit (e) {
+	onFormSubmit(e) {
 	    e.preventDefault();
-	    var email = this.refs.email.value;
-	    var password = this.refs.password.value;
-	    var confirmPassword = this.refs.confirmPassword.value;
+
+	    var email = this.state.email;
+	    var password = this.state.password;
+	    var confirmPassword = this.state.confirmPassword;
+	    var firstName = this.state.firstName;
+
 		var loginObj = {
 			'email': email,
 			'password': password,
-			'confirmPassword': confirmPassword
+			'confirmPassword': confirmPassword,
+			'firstName': firstName
 		}
-		
-	    if (password.length > 5) {
+		console.log(loginObj, 'this is the login obj')
+
+	    if (password.length > 5 && confirmPassword === password) {
 	      this.props.onSignUp(loginObj);
 	    } else {
 	      this.refs.password.focus();
 	    }
   }
 
+	_handleEmailFieldChange(e) {
+		  this.setState({
+			  email: e.target.value
+		  });
+	}
+
+	_handlePasswordFieldChange(e) {
+		  this.setState({
+			  password: e.target.value
+		  });
+	}
+
+	_handleFirstNameFieldChange(e) {
+        this.setState({
+            firstName: e.target.value
+        });
+    }
+
+	_handleConfirmPasswordFieldChange(e) {
+		  this.setState({
+			  confirmPassword: e.target.value
+		  });
+	}
+
 	render(){
 		return (
-				<div>
-					<form onSubmit={this.handleSubmit}>
-			          <input type="text" ref="email" placeholder="Email"/>
-			          <input type="text" ref="password" placeholder="Password"/>
-			          <input type="text" ref="confirmPassword" placeholder="Confirm Password"/>
-			          <button className="button expanded">Submit</button>
+				<div className="login-form-container">
+					<form className="form">
+			          <TextField id="name-sign-up" onChange={this._handleFirstNameFieldChange} className="login-input" type="text" ref="email" placeholder="First Name"/>
+			          <TextField id="email-sign-up" onChange={this._handleEmailFieldChange} className="login-input" type="text" ref="email" placeholder="Email"/>
+			          <TextField id="password-sign-up" onChange={this._handlePasswordFieldChange} className="login-input" type="text" ref="password" placeholder="Password"/>
+			          <TextField id="cp-sign-up" onChange={this._handleConfirmPasswordFieldChange} className="login-input" type="text" ref="confirmPassword" placeholder="Confirm Password"/>
+					  <RaisedButton onClick={this.onFormSubmit} label="Submit" primary={true} style={style} ></RaisedButton>
 			        </form>
 				</div>
 		)

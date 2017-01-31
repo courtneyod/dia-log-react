@@ -1,16 +1,31 @@
 import React, {Component} from 'react';
 import PhotoList from './components/PhotoList';
 import { browserHistory, Router, Route, Link, withRouter } from 'react-router';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 
 export default class App extends Component {
+    static childContextTypes =
+    {
+        muiTheme: React.PropTypes.object
+    }
+
+    getChildContext()
+    {
+        return {
+            muiTheme: getMuiTheme()
+        }
+    }
 
     render() {
         return (
-
-            <div>
-                <h1>Hello React </h1>
-                <PhotoList />
-            </div>
-    );
+            <MuiThemeProvider muiTheme={getMuiTheme()}>
+                <div>
+                    {this.props.children}
+                </div>
+            </MuiThemeProvider>
+         );
   }
 }
