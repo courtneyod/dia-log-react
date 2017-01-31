@@ -48,6 +48,8 @@ export default class PhotoList extends Component {
 				console.log(photo)
 				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id} = photo
 
+				// this.getPhotoCategory(id)
+
 				return <Photo
 					photoUrl={photo_url}
 					id={id}

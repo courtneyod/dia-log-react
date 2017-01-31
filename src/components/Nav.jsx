@@ -1,32 +1,82 @@
 import React, {Component} from 'react'
 var {Link, IndexLink} = require('react-router')
+import ActionHome from 'material-ui/svg-icons/content/sort';
+import ActionLogOut from 'material-ui/svg-icons/content/sort';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
+import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import AutoComplete from 'material-ui/AutoComplete';
+import FlatButton from 'material-ui/FlatButton';
 
+const styles = {
+  imageInput: {
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    width: '100%',
+    opacity: 0,
+  },
+};
+
+const colors = [
+  'Red',
+  'Orange',
+  'Yellow',
+  'Green',
+  'Blue',
+  'Purple',
+  'Black',
+  'White',
+];
+
+const iconStyles = {
+  marginRight: 24,
+};
 
 export default class Nav extends Component {
 	constructor(props){
 		super(props)
+
 	}
 
 	render(){
 		return (
 			<div className="top-bar">
-			  <div className="top-bar-left">
-				  <ul className="menu">
-					  <li>
-						  <IndexLink activeClassName="active" activeStyle={{fontWeight: 'bold'}} to="/categories"> Categories</IndexLink>
-					  </li>
-				  </ul>
-			  </div>
-		  <div className="top-bar-right">
-			  <div className="top-bar-left">
-				  <ul className="menu">
-					  <li>
-						  <Link activeClassName="active" activeStyle={{fontWeight: 'bold'}} to="/settings">Settings</Link>
-					  </li>
-				  </ul>
-			  </div>
-		  </div>
-
+				<Toolbar>
+			        <ToolbarGroup firstChild={true}>
+						<FlatButton
+						      target="_blank"
+						      label="Settings"
+						      secondary={true}
+						      icon={<ActionLogOut />}
+						    />
+			        </ToolbarGroup>
+			        <ToolbarGroup>
+						<AutoComplete
+							className="auto-complete"
+					        floatingLabelText="Filter By Categories"
+					        filter={AutoComplete.caseInsensitiveFilter}
+					        dataSource={colors}
+					      />
+			        </ToolbarGroup>
+			        <ToolbarGroup>
+						<FlatButton
+						      href="https://github.com/callemall/material-ui"
+						      target="_blank"
+						      label="Settings"
+						      secondary={true}
+						      icon={<ActionLogOut />}
+						    />
+			        </ToolbarGroup>
+			      </Toolbar>
 	  </div>
 		)
 	}

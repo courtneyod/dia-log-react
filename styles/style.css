@@ -133,7 +133,38 @@ input {
 	padding-right: 0 !important;
 }
 
+/*nav bar in feed styles*/
 
+.top-bar {
+    margin-bottom: 40px;
+}
+
+.auto-complete {
+    border-radius: 3px;
+    color: #999;
+    cursor: text;
+    left: 0;
+    padding: 7px;
+    text-align: center !important;
+    background: #fafafa !important;
+    border: solid 1px #dbdbdb !important;
+    height: 26px !important;
+}
+
+.auto-complete label {
+    top: 9px !important;
+    font-weight: 300;
+    font-weight: 300 !important;
+    font-size: 14px !important;
+}
+
+.auto-complete input {
+    margin-top: 0px !important;
+}
+
+.auto-complete input div hr {
+    width: 0% !important;
+}
 /*add photo button styles*/
 
 .add-btn-container {

@@ -14,17 +14,40 @@ function getPhotoList(){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			console.log(forJSON, 'this is the json back')
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log("hello?????")
 			console.log(data, 'this is in teh ap call')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
  		});
 }
+
+function getCategoriesList(id){
+	const REQUEST_URL = `${URL}/categories/${id}`
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'GET');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+
+	var myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			console.log(forJSON, 'this is the json back')
+			return forJSON.json()
+		})
+		.then((data)=>{
+			console.log(data, 'this is in teh ap call')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
 function googleAuth(){
 	const REQUEST_URL = `${URL}/auth/google`
 
