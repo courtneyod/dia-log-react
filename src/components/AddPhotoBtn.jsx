@@ -7,7 +7,7 @@ import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigati
 import Paper from 'material-ui/Paper';
 import IconLocationOn from 'material-ui/svg-icons/content/add-circle';
 
-const nearbyIcon = <IconLocationOn />;
+const nearbyIcon = <IconLocationOn className="icon"/>;
 
 const style = {
   marginRight: 20,
@@ -23,7 +23,7 @@ export default class AddPhotoBtn extends Component {
 
         this.handleUploadRequest = this.handleUploadRequest.bind(this)
 	}
-    
+
 	select = (index) => this.setState({selectedIndex: index});
 
 	handleUploadRequest(){
@@ -35,7 +35,7 @@ export default class AddPhotoBtn extends Component {
 		return (
 			<Paper className="add-btn-container" zDepth={1}>
 		        <BottomNavigation onClick={this.handleUploadRequest} selectedIndex={this.state.selectedIndex}>
-		          <BottomNavigationItem
+		          <BottomNavigationItem className="btn"
 		            icon={nearbyIcon}
 		            onTouchTap={() => this.select(2)}
 		          />

@@ -46,6 +46,7 @@ input {
 	width: 122px;
     /* border-radius: 50%; */
     height: 100%;
+    z-index: 1;
 }
 
 
@@ -146,6 +147,9 @@ input {
 .add-btn-container svg {
 	    height: 48px !important;
 }
+svg.icon {
+    fill: #7986CB !important;
+}
 
 /*expanded photo view styles*/
 
@@ -161,20 +165,41 @@ input {
 	padding-left: 30px;
 }
 
+/*upload photo styles */
 
-/*.photo-overlay {
-	content:'';
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: absolute;
-    background: blue;
-    opacity: 0.1;
-}*/
+.form-container {
+    width: 31%;
+    margin: auto;
+}
 
-.photo {
+.photo-upload-container {
+    width: 33%;
+    margin: auto;
+    background-color: white;
+    height: 360px;
+    margin-top: 40px;
+}
 
+.upload-btn-container {
+    text-align: center;
+    padding-top: 135px;
+}
+
+.btn button {
+    background-color: #7986CB !important;
+}
+
+/*new entry nav container */
+
+.new-entry-nav {
+
+}
+
+.tab-container div{
+    background-color: #7986CB !important;
+}
+
+.tab-element div div {
+    align-items: flex-start !important;
+    padding-left: 5%;
 }

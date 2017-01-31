@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import NewEntryForm from './NewEntryForm'
+import UploadPhoto from './UploadPhoto'
+import NewEntryNav from './NewEntryNav'
 
 export default class NewEntryContainer extends Component {
 	constructor(props){
@@ -10,10 +12,20 @@ export default class NewEntryContainer extends Component {
 
 	}
 
+	handleFormEntry(obj){
+
+	}
+
+	handleGoBack(){
+		
+	}
+
 	render(){
 		return (
-				<div>
-					<NewEntryForm onAddPhoto={this.handlePhotoEntry} />
+				<div >
+					<NewEntryNav onGoBack={this.handleGoBack}/>
+					<UploadPhoto onAddPhoto={this.handlePhotoEntry}/>
+					<NewEntryForm onFormSubmit={this.handleFormEntry} />
 				</div>
 		)
 	}

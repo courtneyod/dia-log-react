@@ -13,6 +13,7 @@ module.exports = {
       AddPhotoBtn: 'src/components/AddPhotoBtn.jsx',
       NewEntryContainer: 'src/components/newPhoto/NewEntryContainer.jsx',
       NewEntryForm: 'src/components/newPhoto/NewEntryForm.jsx',
+      NewEntryNav: 'src/components/newPhoto/NewEntryNav.jsx',
       AddHealthStats: 'src/api/AddHealthStats.js',
       Photo: 'src/components/Photo.jsx',
       PhotoList: 'src/components/Photo.jsx',
