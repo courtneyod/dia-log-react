@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import Photo from './Photo'
 import AddPhotoBtn from './AddPhotoBtn'
 import Nav from './Nav'
@@ -6,8 +6,8 @@ import ApiCalls from '../api/database_api'
 import CircularProgress from 'material-ui/CircularProgress';
 
 export default class PhotoList extends Component {
-	constructor(props){
-		super(props)
+	constructor(props, context){
+		super(props, context)
 
 		this.state= {
 			photos: []
@@ -15,6 +15,11 @@ export default class PhotoList extends Component {
 
 		this.setPhotoFeed()
 		this.renderPhotos = this.renderPhotos.bind(this)
+		this.handleNewUpload = this.handleNewUpload.bind(this)
+	}
+
+	static contextTypes = {
+		router: PropTypes.object
 	}
 
 	setPhotoFeed(){
@@ -57,7 +62,10 @@ export default class PhotoList extends Component {
 			return photoArray
 
 		}
+	}
 
+	handleNewUpload(){
+		this.context.router.push('/upload')
 	}
 
 	render(){
@@ -67,7 +75,7 @@ export default class PhotoList extends Component {
 				<div className="photo-container">
 					{this.renderPhotos()}
 				</div>
-				<AddPhotoBtn/>
+				<AddPhotoBtn clickNewPhoto={this.handleNewUpload}/>
 			</div>
 		)
 	}

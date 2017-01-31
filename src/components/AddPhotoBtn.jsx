@@ -20,13 +20,21 @@ export default class AddPhotoBtn extends Component {
 		this.state = {
     		selectedIndex: 0,
   		}
+
+        this.handleUploadRequest = this.handleUploadRequest.bind(this)
 	}
+    
 	select = (index) => this.setState({selectedIndex: index});
 
+	handleUploadRequest(){
+		this.props.clickNewPhoto()
+	}
+
 	render(){
+
 		return (
 			<Paper className="add-btn-container" zDepth={1}>
-		        <BottomNavigation selectedIndex={this.state.selectedIndex}>
+		        <BottomNavigation onClick={this.handleUploadRequest} selectedIndex={this.state.selectedIndex}>
 		          <BottomNavigationItem
 		            icon={nearbyIcon}
 		            onTouchTap={() => this.select(2)}

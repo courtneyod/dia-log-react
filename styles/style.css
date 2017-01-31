@@ -37,14 +37,15 @@ input {
 .logo {
 	font-size: 50px;
 	margin-left: 30px;
-	line-height: 148px;
+	line-height: 119px;
 	color: #757575;
 	font-weight: 500;
 }
 
 .icon-logo {
-	width: 150px;
-    /*border-radius: 50%;*/
+	width: 122px;
+    /* border-radius: 50%; */
+    height: 100%;
 }
 
 
@@ -68,13 +69,8 @@ input {
 	color: #2196F3;
 }
 
-.btn button {
-	border-radius: 35px !important;
-	color: #9575CD !important;
-}
-.btn button div {
-	border-radius: 35px !important;
-	color: #9575CD !important;
+.sign-up-link:hover {
+	color: #1565C0;
 }
 
 .login-input {
@@ -140,7 +136,11 @@ input {
 /*add photo button styles*/
 
 .add-btn-container {
-
+	position: fixed;
+    left: 0px;
+    bottom: 26px;
+    height: 30px;
+    width: 100%;
 }
 
 .add-btn-container svg {

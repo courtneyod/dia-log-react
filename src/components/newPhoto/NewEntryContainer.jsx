@@ -7,13 +7,13 @@ export default class NewEntryContainer extends Component {
 	}
 
   	handlePhotoEntry (obj){
-		
+
 	}
 
 	render(){
 		return (
 				<div>
-					<NewEntryForm onAddPhoto={this.handlePhotoEntry}
+					<NewEntryForm onAddPhoto={this.handlePhotoEntry} />
 				</div>
 		)
 	}

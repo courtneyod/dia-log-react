@@ -5,6 +5,7 @@ import App from './App';
 // import PostsIndex from './components/posts_index'
 import PhotoList from "./components/PhotoList";
 import LoginContainer from "./components/login/LoginContainer";
+import NewEntryContainer from "./components/newPhoto/NewEntryContainer";
 import Auth from './components/login/Auth';
 
 export default (
@@ -13,6 +14,7 @@ export default (
 			<IndexRoute component={PhotoList} />
 			<Route path="/login" component={LoginContainer} />
 			<Route path="/feed" component={PhotoList} />
+			<Route path="/upload" component={NewEntryContainer} />
 		</Route>
 	</Router>
 )
