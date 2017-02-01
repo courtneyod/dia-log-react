@@ -222,7 +222,7 @@ svg.icon {
 
 .upload-btn-container {
     text-align: center;
-    padding-top: 135px;
+    /*padding-top: 135px;*/
 }
 
 .btn button {
@@ -243,3 +243,22 @@ svg.icon {
     align-items: flex-start !important;
     padding-left: 5%;
 }
+
+
+
+/*drop zone styles*/
+
+.dropzone-image-container {
+    margin-top: -250px;
+}
+
+
+/*.dropzone-container div {
+    width: 424px;
+    height: 314px;
+    border-width: 2px;
+    border-color: rgb(102, 102, 102);
+    border-style: dashed;
+    border-radius: 5px;
+    margin: 0 auto;
+}*/
