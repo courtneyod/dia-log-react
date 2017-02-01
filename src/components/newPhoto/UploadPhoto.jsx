@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import ActionBackUp from 'material-ui/svg-icons/file/file-upload';
+import Dropzone from 'react-dropzone';
 
 const styles = {
   imageInput: {
@@ -22,11 +23,26 @@ export default class UploadPhoto extends Component {
 		super(props)
 
         this.state = {
-            imageSrc: ''
+            imageSrc: '',
+            files: []
         }
 
         this.renderImage = this.renderImage.bind(this)
 	}
+
+    onDrop(acceptedFiles, rejectedFiles) {
+      console.log('Accepted files: ', acceptedFiles);
+      console.log('Rejected files: ', rejectedFiles);
+      this.setState({
+        files: acceptedFiles
+      });
+
+      console.log(this.state.files, 'fileds')
+    }
+
+    onOpenClick () {
+      Dropzone.open();
+    }
 
     renderImage(e){
         console.log(e.target.files[0], 'filesss')
@@ -46,9 +62,20 @@ export default class UploadPhoto extends Component {
 		return (
 				<div className="photo-upload-container">
 					<div className="upload-btn-container">
+                        <div>
+               <Dropzone ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop}>
+                   <div>Try dropping some files here, or click to select files to upload.</div>
+               </Dropzone>
+               <button type="button" onClick={this.onOpenClick}>
+                   Open Dropzone
+               </button>
+               {this.state.files.length > 0 ? <div>
+               <h2>Uploading {this.state.files.length} files...</h2>
+               <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
+               </div> : null}
+           </div>
 
-						    <input onChange={this.renderImage} type="file" />
-                            <img className="image" src={this.state.imageSrc} alt="" height="100"/>
+
 					</div>
 				</div>
 		)
