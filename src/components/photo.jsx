@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import ApiCalls from '../api/database_api'
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import TimeAgo from 'react-timeago'
+import TimeAgo from 'react-timeago';
 
 export default class Photo extends Component {
 	constructor(props){
@@ -10,7 +11,12 @@ export default class Photo extends Component {
 
 		this.state = {
       		expanded: false,
+			category: []
     	}
+
+		this.getCatergiesNames = this.getCatergiesNames.bind(this)
+		this.getCatergiesNames(this.props.id)
+		// this.getCatergiesNames(this.props.id)
 	}
 
 	handleExpandChange = (expanded) => {
@@ -28,6 +34,38 @@ export default class Photo extends Component {
     handleReduce = () => {
     	this.setState({expanded: false});
     };
+
+	getCatergiesNames(photoId){
+		// console.log(photoId)
+	// console.log('here')
+	var promiseCat = ApiCalls.getCatergiesNames(photoId)
+				.then((data)=>{
+					console.log(data.data, 'photos')
+					return data.data;
+				}).catch((err)=>{
+					console.log(err)
+				})
+	// console.log(promiseCat, 'promises')
+	promiseCat
+		.then(values=>{
+			if(values.length>0){
+				var seting = new Set()
+				values.forEach((data)=>{
+					if(data.category !== undefined){
+						seting.add(data.category)
+						return seting
+						// return string += data.category + " "
+					}
+				})
+				this.setState({
+					category: Array.from(seting)
+				})
+			}
+
+		})
+
+	}
+
 
 	render(){
 		let {photoUrl, id, preMealBdgs, postMealBdgs, insulinUnits, preMealBdgsTimeStamp, customerId} = this.props
@@ -55,7 +93,7 @@ export default class Photo extends Component {
 		        </CardText>
 		        <CardText className="photo-details-container" expandable={true}>
 					<ul className="photo-details">
-						<li>Categories: {preMealBdgs}</li>
+						<li>Categories: {this.state.category.join(' ')}</li>
 						<li>Pre Meal Bdgs: {preMealBdgs}</li>
 						<li>Post Meal Bdgs: {postMealBdgs}</li>
 						<li>Units: {insulinUnits}</li>

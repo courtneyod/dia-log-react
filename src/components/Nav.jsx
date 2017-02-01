@@ -26,17 +26,6 @@ const styles = {
   },
 };
 
-const colors = [
-  'Red',
-  'Orange',
-  'Yellow',
-  'Green',
-  'Blue',
-  'Purple',
-  'Black',
-  'White',
-];
-
 const iconStyles = {
   marginRight: 24,
 };
@@ -45,7 +34,35 @@ export default class Nav extends Component {
 	constructor(props){
 		super(props)
 
+        this.state={
+            categoriesArray: [],
+            searchText: ''
+        }
+    this.renderAutoComplete = this.renderAutoComplete.bind(this)
+    this.renderAutoComplete()
+    this.handleUpdateInput = this.handleUpdateInput.bind(this)
+    this.handleNewRequest = this.handleNewRequest .bind(this)
 	}
+
+    handleUpdateInput(text){
+        // console.log(text, 'what is the fiter?')
+        this.setState({
+          searchText: text,
+        });
+    }
+
+    handleNewRequest = (text) => {
+        // console.log(te, 'skdjfksdjfkdj')
+        this.setState({
+          searchText: '',
+        });
+        this.props.handleNewFilter(text)
+
+      };
+
+    renderAutoComplete(){
+        console.log(this.props.categories, 'props')
+    }
 
 	render(){
 		return (
@@ -53,10 +70,10 @@ export default class Nav extends Component {
 				<Toolbar>
 			        <ToolbarGroup firstChild={true}>
 						<FlatButton
+							  className="nav-text nav-logo"
 						      target="_blank"
-						      label="Settings"
+						      label="Dialog"
 						      secondary={true}
-						      icon={<ActionLogOut />}
 						    />
 			        </ToolbarGroup>
 			        <ToolbarGroup>
@@ -64,11 +81,16 @@ export default class Nav extends Component {
 							className="auto-complete"
 					        floatingLabelText="Filter By Categories"
 					        filter={AutoComplete.caseInsensitiveFilter}
-					        dataSource={colors}
+					        dataSource={this.props.categories}
+                            maxSearchResults={5}
+                            searchText={this.state.searchText}
+                            onUpdateInput={this.handleUpdateInput}
+                            onNewRequest={this.handleNewRequest}
 					      />
 			        </ToolbarGroup>
 			        <ToolbarGroup>
 						<FlatButton
+							  className="nav-text"
 						      href="https://github.com/callemall/material-ui"
 						      target="_blank"
 						      label="Settings"

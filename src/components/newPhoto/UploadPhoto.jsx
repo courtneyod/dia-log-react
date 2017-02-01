@@ -20,27 +20,35 @@ const styles = {
 export default class UploadPhoto extends Component {
 	constructor(props){
 		super(props)
+
+        this.state = {
+            imageSrc: ''
+        }
+
+        this.renderImage = this.renderImage.bind(this)
 	}
 
-	handleUpload(e){
-		console.log(e, 'hjsdjsdjs')
-	}
+    renderImage(e){
+        console.log(e.target.files[0], 'filesss')
+        var myImage = new Image(100, 200);
+        var source = e.target.files[0].name
+
+        var textType = /text.*/
+        myImage.src = e.target.files[0].name
+        console.log(myImage);
+        this.setState({
+            imageSrc: source
+        })
+        return myImage
+    }
 
 	render(){
 		return (
 				<div className="photo-upload-container">
 					<div className="upload-btn-container">
-						<FlatButton
-					      label="Upload Photo"
-					      labelPosition="before"
-					      primary={true}
-					      style={styles.button}
-						  rippleColor={'#0D47A1'}
-						  containerElement='label'
-					      icon={<ActionBackUp />}
-					    >
-						    <input onChange={this.handleUpload} ref="photo" type="file" />
-					    </FlatButton>
+
+						    <input onChange={this.renderImage} type="file" />
+                            <img className="image" src={this.state.imageSrc} alt="" height="100"/>
 					</div>
 				</div>
 		)

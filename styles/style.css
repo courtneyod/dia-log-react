@@ -156,14 +156,23 @@ input {
     font-weight: 300;
     font-weight: 300 !important;
     font-size: 14px !important;
+    color: rgba(0, 0, 0, 0.298039) !important;
 }
 
 .auto-complete input {
     margin-top: 0px !important;
 }
 
-.auto-complete input div hr {
+.auto-complete div hr {
     width: 0% !important;
+}
+
+.nav-text {
+    color: #7986CB !important;
+}
+
+.nav-text div svg {
+    fill: #7986CB !important;
 }
 /*add photo button styles*/
 

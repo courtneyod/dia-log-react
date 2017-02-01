@@ -17,15 +17,14 @@ function getPhotoList(){
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is in teh ap call')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
  		});
 }
 
-function getCategoriesList(id){
-	const REQUEST_URL = `${URL}/categories/${id}`
+function getCatergiesId(photoId){
+	const REQUEST_URL = `${URL}/health-stat-categories/${photoId}`
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'GET');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
@@ -37,11 +36,54 @@ function getCategoriesList(id){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			console.log(forJSON, 'this is the json back')
+			// console.log(forJSON, 'this is the json back')
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is in teh ap call')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+function getCatergiesNames(photoId){
+	const REQUEST_URL = `${URL}/health-stat-categories/name/${photoId}`
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'GET');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+
+	var myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			// console.log(forJSON, 'this is the json back')
+			return forJSON.json()
+		})
+		.then((data)=>{
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
+function getAllCatergies(){
+	const REQUEST_URL = `${URL}/categories/`
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'GET');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+
+	var myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			return forJSON.json()
+		})
+		.then((data)=>{
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -63,12 +105,9 @@ function googleAuth(){
 
    	return fetch(REQUEST_URL, myInit)
 	   .then((forJSON)=>{
-		   // console.log(forJSON, 'this is the json back from sign up')
 		   return forJSON.json()
 	   })
 	   .then((data)=>{
-		   console.log("hello?????")
-		   console.log(data, 'this is in data from google auth')
 		   return data
 	   }).catch(function(err) {
 		   console.log('Fetch Error :-S', err);
@@ -95,12 +134,9 @@ function signUp(obj){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			// console.log(forJSON, 'this is the json back from sign up')
 			return forJSON.json()
 		})
 		.then((data)=>{
-			// console.log("hello?????")
-			// console.log(data, 'this is in data from sign up call')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -125,7 +161,6 @@ function login(obj){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			// console.log(forJSON, 'this is the json back from sign up')
 			return forJSON.json()
 		})
 		.then((data)=>{
@@ -137,4 +172,4 @@ function login(obj){
  		});
 }
 
-export default {googleAuth, getPhotoList, login, signUp}
+export default {googleAuth, getPhotoList, login, signUp, getCatergiesId, getCatergiesNames, getAllCatergies}

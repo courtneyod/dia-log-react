@@ -3,17 +3,47 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import IconLocationOn from 'material-ui/svg-icons/action/done';
+import AutoComplete from 'material-ui/AutoComplete';
+
 
 const style = {
   margin: 12,
 };
+
+const categoriesNames = [
+  'Red',
+  'Orange',
+  'Yellow',
+  'Green',
+  'Blue',
+  'Purple',
+  'Black',
+  'White',
+];
+
 
 const nearbyIcon = <IconLocationOn />;
 
 export default class NewEntryForm extends Component {
 	constructor(props){
 		super(props)
+
+        this.state = {
+            categories: []
+        }
+
 	}
+
+    renderNames(){
+        console.log(this.props.categories, 'woroks')
+            var cats = this.props.categories
+            console.log(cats)
+            // var nameArray = cats.map((name)=>{
+            //     return name.category
+            // })
+            // console.log(nameArray
+    }
+
 	handleSubmit (e) {
 	    e.preventDefault();
 	    // var photoUrl = this.refs.photo.value;
@@ -40,7 +70,14 @@ export default class NewEntryForm extends Component {
 				<div className="form-container">
 					<form className="form" onSubmit={this.handleSubmit}>
 				          <TextField onChange={this._handlePhotoChange} id="photo" className="login-input" type="text" placeholder="Photo Url"/>
-				          <TextField onChange={this._handlecategoriesFieldChange} id="categories" className="login-input" type="text" placeholder="Categories"/>
+                              <AutoComplete
+                                  className="login-input"
+                                  floatingLabelText="Categories"
+                                  filter={AutoComplete.caseInsensitiveFilter}
+                                  onChange={this._handlecategoriesFieldChange}
+                                  dataSource={categoriesNames}
+                                  maxSearchResults={5}
+                                />
 				          <TextField onChange={this._handlePreMealBdgsFieldChange} id="pre_meal_bdgs" className="login-input" type="text" placeholder="Pre Meal Bdgs"/>
 				          <TextField onChange={this._handleUnitsFieldChange} id="units" className="login-input" type="text" placeholder="Units"/>
 						  <RaisedButton
