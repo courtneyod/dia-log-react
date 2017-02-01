@@ -10,12 +10,11 @@ export default class Photo extends Component {
 		super(props)
 
 		this.state = {
-      		expanded: false,
-			category: []
+      		expanded: false
     	}
 
-		this.getCatergiesNames = this.getCatergiesNames.bind(this)
-		this.getCatergiesNames(this.props.id)
+		// this.getCatergiesNames = this.getCatergiesNames.bind(this)
+		// this.getCatergiesNames(this.props.id)
 		// this.getCatergiesNames(this.props.id)
 	}
 
@@ -35,40 +34,40 @@ export default class Photo extends Component {
     	this.setState({expanded: false});
     };
 
-	getCatergiesNames(photoId){
-		// console.log(photoId)
-	// console.log('here')
-	var promiseCat = ApiCalls.getCatergiesNames(photoId)
-				.then((data)=>{
-					console.log(data.data, 'photos')
-					return data.data;
-				}).catch((err)=>{
-					console.log(err)
-				})
-	// console.log(promiseCat, 'promises')
-	promiseCat
-		.then(values=>{
-			if(values.length>0){
-				var seting = new Set()
-				values.forEach((data)=>{
-					if(data.category !== undefined){
-						seting.add(data.category)
-						return seting
-						// return string += data.category + " "
-					}
-				})
-				this.setState({
-					category: Array.from(seting)
-				})
-			}
-
-		})
-
-	}
+	// getCatergiesNames(photoId){
+	// 	// console.log(photoId)
+	// // console.log('here')
+	// var promiseCat = ApiCalls.getCatergiesNames(photoId)
+	// 			.then((data)=>{
+	// 				console.log(data.data, 'photos')
+	// 				return data.data;
+	// 			}).catch((err)=>{
+	// 				console.log(err)
+	// 			})
+	// // console.log(promiseCat, 'promises')
+	// promiseCat
+	// 	.then(values=>{
+	// 		if(values.length>0){
+	// 			var seting = new Set()
+	// 			values.forEach((data)=>{
+	// 				if(data.category !== undefined){
+	// 					seting.add(data.category)
+	// 					return seting
+	// 					// return string += data.category + " "
+	// 				}
+	// 			})
+	// 			this.setState({
+	// 				category: Array.from(seting)
+	// 			})
+	// 		}
+	//
+	// 	})
+	//
+	// }
 
 
 	render(){
-		let {photoUrl, id, preMealBdgs, postMealBdgs, insulinUnits, preMealBdgsTimeStamp, customerId} = this.props
+		let {photoUrl, id, preMealBdgs, postMealBdgs, insulinUnits, preMealBdgsTimeStamp, customerId, category} = this.props
 		var time=<TimeAgo className="time-ago" date={preMealBdgsTimeStamp} />
 		return (
 			<Card className="photo-card" expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
@@ -93,7 +92,7 @@ export default class Photo extends Component {
 		        </CardText>
 		        <CardText className="photo-details-container" expandable={true}>
 					<ul className="photo-details">
-						<li>Categories: {this.state.category.join(' ')}</li>
+						<li>Categories: {category.join(' ')}</li>
 						<li>Pre Meal Bdgs: {preMealBdgs}</li>
 						<li>Post Meal Bdgs: {postMealBdgs}</li>
 						<li>Units: {insulinUnits}</li>

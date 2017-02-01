@@ -28,6 +28,8 @@ export default class UploadPhoto extends Component {
         }
 
         this.renderImage = this.renderImage.bind(this)
+        this.onDrop = this.onDrop.bind(this)
+        this.onOpenClick = this.onOpenClick.bind(this)
 	}
 
     onDrop(acceptedFiles, rejectedFiles) {
@@ -37,11 +39,17 @@ export default class UploadPhoto extends Component {
         files: acceptedFiles
       });
 
+    //   var req = request.post('/upload');
+    //     acceptedFiles.forEach((file)=> {
+    //         req.attach(file.name, file);
+    //     });
+    //     req.end(callback);
+
       console.log(this.state.files, 'fileds')
     }
 
     onOpenClick () {
-      Dropzone.open();
+      this.dropzone.open();
     }
 
     renderImage(e){
@@ -63,19 +71,18 @@ export default class UploadPhoto extends Component {
 				<div className="photo-upload-container">
 					<div className="upload-btn-container">
                         <div>
-               <Dropzone ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop}>
-                   <div>Try dropping some files here, or click to select files to upload.</div>
-               </Dropzone>
-               <button type="button" onClick={this.onOpenClick}>
-                   Open Dropzone
-               </button>
-               {this.state.files.length > 0 ? <div>
-               <h2>Uploading {this.state.files.length} files...</h2>
-               <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
-               </div> : null}
-           </div>
-
-
+                            <Dropzone ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop}>
+                               <div>Try dropping some files here, or click to select files to upload.</div>
+                            </Dropzone>
+                            <button type="button" onClick={this.onOpenClick}>
+                               Open Dropzone
+                            </button>
+                            {this.state.files.length > 0 ?
+                            <div>
+                               <h2>Uploading {this.state.files.length} files...</h2>
+                               <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
+                            </div> : null}
+                       </div>
 					</div>
 				</div>
 		)

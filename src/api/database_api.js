@@ -17,6 +17,7 @@ function getPhotoList(){
 			return forJSON.json()
 		})
 		.then((data)=>{
+			// console.log(data, 'this is the list of photos')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);

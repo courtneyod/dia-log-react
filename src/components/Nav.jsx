@@ -46,22 +46,25 @@ export default class Nav extends Component {
 
     handleUpdateInput(text){
         // console.log(text, 'what is the fiter?')
+        if(text.length === 0){
+            text = false
+        }
         this.setState({
           searchText: text,
         });
     }
 
     handleNewRequest = (text) => {
-        // console.log(te, 'skdjfksdjfkdj')
-        this.setState({
-          searchText: '',
-        });
-        this.props.handleNewFilter(text)
+        console.log(text, 'skdjfksdjfkdj')
+        // this.setState({
+        //   searchText: false,
+        // });
+        this.props.handleNewFilter(this.state.searchText)
 
       };
 
     renderAutoComplete(){
-        console.log(this.props.categories, 'props')
+        // console.log(this.props.categories, 'props')
     }
 
 	render(){

@@ -17,11 +17,12 @@ export default class PhotoList extends Component {
 			fitered: false
 		}
 
-		this.setPhotoFeed()
+		// this.setPhotoFeed()
 		this.renderPhotos = this.renderPhotos.bind(this)
 		this.handleNewUpload = this.handleNewUpload.bind(this)
-		this.getCatergiesNames = this.getCatergiesNames.bind(this)
+		this.getAllCatergies = this.getAllCatergies.bind(this)
 		this.updateFilteredState = this.updateFilteredState.bind(this)
+		// this.getCatergory = this.getCatergory.bind(this)
 
 	}
 
@@ -29,16 +30,18 @@ export default class PhotoList extends Component {
 		router: PropTypes.object
 	}
 
-	setPhotoFeed(){
+	componentWillMount(){
 		var photoList = ApiCalls.getPhotoList()
 			.then((data)=>{
-				var photoArray = data.photo
+				var photoArray = data.data
 				this.setState({
 					photos: photoArray
 				})
+				// console.log(this.state.photos, 'this is sthe stae')
 				if(this.state.photos.length > 0){
-					this.getCatergiesNames()
+					this.getAllCatergies()
 				}
+				return data.photo
 			}).catch((err)=> {
 				console.log(err)
 			})
@@ -51,26 +54,50 @@ export default class PhotoList extends Component {
 				<CircularProgress className="modal-waiting" size={100} thickness={5} />
 			)
 		} else {
+			// console.log(this.state.photos, 'sdjfksdjfkjksdjf')
 
 			var photoArray = photos.map((photo)=>{
-				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id} = photo
+				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id, category} = photo
 
-				return <Photo
-					photoUrl={photo_url}
-					id={id}
-					preMealBdgs={pre_meal_bdgs}
-					postMealBdgs={post_meal_bdgs}
-					insulinUnits = {insulin_units}
-					preMealBdgsTimeStamp = {pre_meal_bdgs_time_stamp}
-					customerId = {customer_id}
-					/>
+				var filteredState = this.state.filtered
+
+				if(!filteredState){
+					return (
+						<Photo
+							category={category}
+							photoUrl={photo_url}
+							id={id}
+							preMealBdgs={pre_meal_bdgs}
+							postMealBdgs={post_meal_bdgs}
+							insulinUnits = {insulin_units}
+							preMealBdgsTimeStamp = {pre_meal_bdgs_time_stamp}
+							customerId = {customer_id}
+					/>)
+				} else {
+					if(category.indexOf(filteredState) !== -1 ){
+						return (
+						<Photo
+							category={category}
+							photoUrl={photo_url}
+							id={id}
+							preMealBdgs={pre_meal_bdgs}
+							postMealBdgs={post_meal_bdgs}
+							insulinUnits = {insulin_units}
+							preMealBdgsTimeStamp = {pre_meal_bdgs_time_stamp}
+							customerId = {customer_id}
+							/>)
+					}
+				}
+
+
+
 			})
 			return photoArray
-
 		}
 	}
 
-	getCatergiesNames(){
+
+	getAllCatergies(){
 		var photosArray = this.state.photos
 
 		var photoPromises = photosArray.map((photo)=>{
@@ -87,22 +114,18 @@ export default class PhotoList extends Component {
 
 		Promise.all(photoPromises)
 			.then(values => {
-				console.log(values, 'confused')
-				var items = values[0].data.map((data)=>{
-					newSet.add(data.category)
-
-					// var obj = {}
-					// obj[data.category] = true
-					return newSet
+				var items = values.map((results)=>{
+					results.data.forEach(objs=>{
+					newSet.add(objs.category)
 				})
 				this.setState({
 					categoryNames: Array.from(newSet)
 				})
-				console.log(this.state.categoryNames, 'blaaaahhh')
+			})
 			}).catch((err)=>{
 				console.log(err)
 			})
-	}
+}
 
 	handleNewUpload(){
 		this.context.router.push('/upload')
@@ -112,7 +135,6 @@ export default class PhotoList extends Component {
 		this.setState({
 			filtered: text
 		})
-		console.log(this.state.filtered)
 	}
 
 	render(){
