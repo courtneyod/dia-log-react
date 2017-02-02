@@ -4,12 +4,8 @@ import FontIcon from 'material-ui/FontIcon';
 import ActionBackUp from 'material-ui/svg-icons/file/file-upload';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import uploadcare from 'uploadcare-widget';
-
 
 import request from 'superagent';
-
-window.UPLOADCARE_PUBLIC_KEY = "ca793afb2fedc93a3c57"
 
 const style = {
   margin: 12
@@ -34,79 +30,54 @@ export default class UploadPhoto extends Component {
 		super(props)
 
         this.state = {
-            avatarImagePreview: null,
-            avatarImage: null,
-            imageValue: ''
+            file: '',
+            imagePreviewUrl: ''
         }
 
-        this.handleChange = this.handleChange.bind(this)
-        this.renderImage = this.renderImage.bind(this)
+        this._handleSubmit = this._handleSubmit.bind(this)
+        this._handleImageChange = this._handleImageChange.bind(this)
 	}
 
-    componentDidMount() {
-          uploadcare.start({
-            publicKey: "ca793afb2fedc93a3c57",
-            tabs: "all"
-          });
-}
-
-    handleChange(e){
-        console.log('here?')
-        console.log('here?', e)
-        uploadcare.openDialog().done((file) => {
-            console.log(file, 'now?')
-          file.promise().done((fileInfo)=>{
-              console.log(fileInfo.originalUrl, 'url')
-              var fileUrl = fileInfo.originalUrl
-              this.setState({
-                  avatarImagePreview: fileUrl,
-                  imageValue: fileUrl
-              })
-            this.setState({
-              avatarImagePreview: this.refs.avatarImagePreview,
-              avatarImage: this.refs.avatarImage
-            });
-            console.log(this.state, 'state')
-          }).fail(function(error, fileInfo) {
-              console.log(error)
-            });
-        });
-
+    _handleSubmit(e) {
+        e.preventDefault();
+        console.log('handle uploading-', this.state.file);
     }
 
-    renderImage(e){
-        console.log('render image')
-        console.log(e.target.value, 'filesss')
-        var myImage = new Image(100, 200);
-        var source = e.target.files[0].name
+    _handleImageChange(e) {
+        e.preventDefault();
 
-        var textType = /text.*/
-        myImage.src = e.target.files[0].name
-        console.log(myImage);
-        this.setState({
-            imageSrc: source
-        })
-        console.log(this.state.imageSrc, 'here')
-        return myImage
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result
+          });
+        }
+        console.log(this.state, 'this is the state)')
+
+        reader.readAsDataURL(file)
     }
 
 	render(){
-        console.log(this.state.imageValue, 'statessss')
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+          $imagePreview = (<img src={imagePreviewUrl} />);
+        } else {
+          $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+        }
 		return (
-				<div className="photo-upload-container">
-					<div className="upload-btn-container">
-                        <form action="" onSubmit={this.handleChange}>
-                        <input name="courtney" type="text" className="image-src" value={this.state.imageValue} onInput={this.renderImage} onChange={this.handleChange} role="uploadcare-uploader" />
-                        </form>
-                            <div className="container">
-
-                              <img className="image-preview" src={this.state.avatarImagePreview} />
-                              <img src={this.state.avatarImage} />
-                            </div>
-
-					</div>
-
-				</div>
+                <div className=" photo-upload-container previewComponent">
+                <form onSubmit={(e)=>this._handleSubmit(e)}>
+                  <input className="fileInput" type="file" onChange={(e)=>this._handleImageChange(e)} />
+                  <button className="submitButton" type="submit" onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
+                </form>
+                <div className="imgPreview">
+                  {$imagePreview}
+                </div>
+              </div>
 		)
 	}
 }
