@@ -17,10 +17,12 @@ const styles = {
 export default class NewEntryNav extends Component {
 	constructor(props){
 		super(props)
+
+        this.handleActive = this.handleActive.bind(this)
 	}
 
     handleActive(tab) {
-          alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
+          this.props.goBackToFeed()
     }
 
 	render(){

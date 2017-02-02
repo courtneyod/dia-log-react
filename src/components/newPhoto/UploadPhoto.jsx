@@ -2,9 +2,14 @@ import React, {Component} from 'react'
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import ActionBackUp from 'material-ui/svg-icons/file/file-upload';
-import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import uploadcare from 'uploadcare-widget';
+
+
+import request from 'superagent';
+
+window.UPLOADCARE_PUBLIC_KEY = "ca793afb2fedc93a3c57"
 
 const style = {
   margin: 12
@@ -29,33 +34,30 @@ export default class UploadPhoto extends Component {
 		super(props)
 
         this.state = {
-            imageSrc: '',
-            files: []
+            avatarImagePreview: null,
+            avatarImage: null
         }
 
-        this.renderImage = this.renderImage.bind(this)
-        this.onDrop = this.onDrop.bind(this)
-        this.onOpenClick = this.onOpenClick.bind(this)
+        this.handleChange = this.handleChange.bind(this)
 	}
 
-    onDrop(acceptedFiles, rejectedFiles) {
-      console.log('Accepted files: ', acceptedFiles);
-      console.log('Rejected files: ', rejectedFiles);
-      this.setState({
-        files: acceptedFiles
-      });
+    handleChange(e){
+        console.log('here?', e)
+        uploadcare.openDialog().done((file) => {
+            console.log(file, 'now?')
+          file.promise().done((fileInfo)=>{
+              console.log('working?')
+              console.log('ehrjerhejh', fileInfo)
+            this.setState({
+              avatarImagePreview: this.refs.avatarImagePreview,
+              avatarImage: this.refs.avatarImage
+            });
+            console.log(this.state, 'state')
+          }).fail(function(error, fileInfo) {
+              console.log(error)
+            });
+        });
 
-    //   var req = request.post('/upload');
-    //     acceptedFiles.forEach((file)=> {
-    //         req.attach(file.name, file);
-    //     });
-    //     req.end(callback);
-
-      console.log(this.state.files, 'fileds')
-    }
-
-    onOpenClick () {
-      this.dropzone.open();
     }
 
     renderImage(e){
@@ -69,6 +71,7 @@ export default class UploadPhoto extends Component {
         this.setState({
             imageSrc: source
         })
+        console.log(this.state.imageSrc, 'here')
         return myImage
     }
 
@@ -76,19 +79,14 @@ export default class UploadPhoto extends Component {
 		return (
 				<div className="photo-upload-container">
 					<div className="upload-btn-container">
-                        <div className='dropzone-container'>
-                            <Dropzone  ref={(node) => { this.dropzone = node; }} onDrop={this.onDrop} accept="image/*">
-                               <div>Try dropping some files here, or click to select files to upload.</div>
-                            </Dropzone>
-                            <RaisedButton onClick={this.onOpenClick} backgroundColor={'#9575CD'} className="btn" label="Upload File" primary={true} style={style} ></RaisedButton>
+                        <input onChange={this.handleChange} type="hidden" role="uploadcare-uploader" />
+                            <div className="container">
+                              <img src={this.state.avatarImagePreview} />
+                              <img src={this.state.avatarImage} />
+                            </div>
 
-                            {this.state.files.length > 0 ?
-                            <div className="dropzone-image-container">
-                               <h2>Uploading {this.state.files.length} files...</h2>
-                               <div>{this.state.files.map((file) => <img src={file.preview} /> )}</div>
-                            </div> : null}
-                       </div>
 					</div>
+
 				</div>
 		)
 	}

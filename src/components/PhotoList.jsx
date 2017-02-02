@@ -141,7 +141,7 @@ export default class PhotoList extends Component {
 		return (
 			<div>
 				<Nav handleNewFilter={this.updateFilteredState} categories={this.state.categoryNames}/>
-				<div className="photo-container">
+				<div className="photolist-container">
 					{this.renderPhotos()}
 				</div>
 				<AddPhotoBtn clickNewPhoto={this.handleNewUpload}/>

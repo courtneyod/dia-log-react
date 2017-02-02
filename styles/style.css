@@ -109,10 +109,17 @@ input {
     box-sizing: border-box !important;
 }
 
-.photo-container {
+/*.photo-container {
 	margin: 0 auto;
 	max-width: 600px;
 	width: 100%;
+}*/
+
+.photolist-container {
+	margin: 0 auto;
+	max-width: 600px;
+	width: 100%;
+    padding-bottom: 70px;
 }
 
 .photo-container img {
@@ -203,6 +210,14 @@ svg.icon {
 	color: #757575;
 	list-style-type: none;
 	padding-left: 30px;
+}
+
+.photo-details li {
+    font-weight: 300
+}
+
+.photo-details-title {
+    font-weight: 400;
 }
 
 /*upload photo styles */

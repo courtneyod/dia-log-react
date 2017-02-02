@@ -1,28 +1,40 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import NewEntryForm from './NewEntryForm'
 import UploadPhoto from './UploadPhoto'
 import NewEntryNav from './NewEntryNav'
 import ApiCalls from '../../api/database_api'
 
 export default class NewEntryContainer extends Component {
-	constructor(props){
-		super(props)
+	constructor(props, context){
+		super(props, context)
 
 		this.state = {
 			categoriesArray: []
 		}
 
+		this.handleFormEntry = this.handleFormEntry.bind(this)
 		this.handleCatergiesName = this.handleCatergiesName.bind(this)
 		this.handleCatergiesName()
+		this.handleBackToFeed = this.handleBackToFeed.bind(this)
+	}
+
+	static contextTypes = {
+		router: PropTypes.object
 	}
 
 	handleCatergiesName(){
 		var names = ApiCalls.getAllCatergies()
-			.then((data)=>{
+			.then((results)=>{
+				// console.log('alll the cats', results)
+				var catsArray = results.data.map(obj=>{
+					// console.log(obj.category, 'here are the objs')
+					return obj.category
+				})
 
 				this.setState({
-					categoriesArray: data
+					categoriesArray: catsArray
 				})
+				// console.log(this.state.categoriesArray, 'state')
 
 			}).catch((err)=>{
 				console.log(err, 'error fetching categories')
@@ -31,23 +43,38 @@ export default class NewEntryContainer extends Component {
 
 
   	handlePhotoEntry (obj){
-
 	}
 
 	handleFormEntry(obj){
+		// console.log(obj, 'returned in obj')
+		var postObj ={}
+		postObj.photo_url = obj.url
+		postObj.pre_meal_bdgs = obj.preBdgs
+		postObj.insulin_units = obj.unitsValue
+		postObj.customer_id = 1
+		var cat = obj.searchText.toLowerCase()
+		postObj.category = cat
+
+		ApiCalls.postNewPhoto(postObj)
+			.then((results)=>{
+				console.log(results)
+				this.context.router.push('/feed')
+			}).catch(err=>{
+				console.log(err)
+			})
 
 	}
 
-	handleGoBack(){
-
+	handleBackToFeed(){
+		this.context.router.push('/feed')
 	}
 
 	render(){
 		return (
 				<div >
-					<NewEntryNav categories={this.state.categoriesArray} onGoBack={this.handleGoBack}/>
+					<NewEntryNav goBackToFeed={this.handleBackToFeed}/>
 					<UploadPhoto onAddPhoto={this.handlePhotoEntry}/>
-					<NewEntryForm onFormSubmit={this.handleFormEntry} />
+					<NewEntryForm categories={this.state.categoriesArray} onFormSubmit={this.handleFormEntry} />
 				</div>
 		)
 	}

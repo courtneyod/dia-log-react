@@ -92,11 +92,11 @@ export default class Photo extends Component {
 		        </CardText>
 		        <CardText className="photo-details-container" expandable={true}>
 					<ul className="photo-details">
-						<li>Categories: {category.join(' ')}</li>
-						<li>Pre Meal Bdgs: {preMealBdgs}</li>
-						<li>Post Meal Bdgs: {postMealBdgs}</li>
-						<li>Units: {insulinUnits}</li>
-						<li>Date: {preMealBdgsTimeStamp}</li>
+						<li><span className="photo-details-title">Categories:</span> {category.join(' ')}</li>
+						<li><span className="photo-details-title">Pre Meal Bdgs:</span> {preMealBdgs}</li>
+						<li><span className="photo-details-title">Post Meal Bdgs:</span>Post Meal Bdgs: {postMealBdgs}</li>
+						<li><span className="photo-details-title">Units:</span> {insulinUnits}</li>
+						<li><span className="photo-details-title">Date:</span> {preMealBdgsTimeStamp}</li>
     				</ul>
 		        </CardText>
 		    </Card>
