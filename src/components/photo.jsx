@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TimeAgo from 'react-timeago';
+import Time from 'react-time';
 
 export default class Photo extends Component {
 	constructor(props){
@@ -13,9 +14,6 @@ export default class Photo extends Component {
       		expanded: false
     	}
 
-		// this.getCatergiesNames = this.getCatergiesNames.bind(this)
-		// this.getCatergiesNames(this.props.id)
-		// this.getCatergiesNames(this.props.id)
 	}
 
 	handleExpandChange = (expanded) => {
@@ -34,39 +32,26 @@ export default class Photo extends Component {
     	this.setState({expanded: false});
     };
 
-	// getCatergiesNames(photoId){
-	// 	// console.log(photoId)
-	// // console.log('here')
-	// var promiseCat = ApiCalls.getCatergiesNames(photoId)
-	// 			.then((data)=>{
-	// 				console.log(data.data, 'photos')
-	// 				return data.data;
-	// 			}).catch((err)=>{
-	// 				console.log(err)
-	// 			})
-	// // console.log(promiseCat, 'promises')
-	// promiseCat
-	// 	.then(values=>{
-	// 		if(values.length>0){
-	// 			var seting = new Set()
-	// 			values.forEach((data)=>{
-	// 				if(data.category !== undefined){
-	// 					seting.add(data.category)
-	// 					return seting
-	// 					// return string += data.category + " "
-	// 				}
-	// 			})
-	// 			this.setState({
-	// 				category: Array.from(seting)
-	// 			})
-	// 		}
-	//
-	// 	})
-	//
-	// }
+	renderOverlay(){
+		if(this.props.preMealBdgs > 180 && this.props.postMealBdgs > 180){
+			return <div className="overlay-bad overlay">this is the overlays</div>
+		} else if (this.props.preMealBdgs < 180 && this.props.postMealBdgs < 180){
+			return <div className="overlay-good overlay">this is the overlays</div>
+		} else if (this.props.preMealBdgs > 180 && this.props.postMealBdgs < 180){
+			return <div className="overlay-bad-good overlay">this is the overlays</div>
+		} else if (this.props.preMealBdgs < 180 && this.props.postMealBdgs > 180){
+			return <div className="overlay-good-bad overlay">this is the overlays</div>
+		} else if (this.props.preMealBdgs > 180 && !this.props.postMealBdgs){
+			return <div className="overlay-bad-unknown overlay">this is the overlays</div>
+		} else if (this.props.preMealBdgs < 180 && !this.props.postMealBdgs){
+			return <div className="overlay-good-unknown overlay">this is the overlays</div>
+		}
+	}
 
 
 	render(){
+		console.log(this.props.postMealBdgs, 'here')
+
 		let {photoUrl, id, preMealBdgs, postMealBdgs, insulinUnits, preMealBdgsTimeStamp, customerId, category} = this.props
 		var time=<TimeAgo className="time-ago" date={preMealBdgsTimeStamp} />
 		return (
@@ -80,6 +65,7 @@ export default class Photo extends Component {
 		        <CardMedia className="photo photo-container">
 				  <div className="photo-overlay">
 		          	<img src={photoUrl} />
+					{this.renderOverlay()}
 				  </div>
 		        </CardMedia>
 				<CardText>
@@ -94,9 +80,9 @@ export default class Photo extends Component {
 					<ul className="photo-details">
 						<li><span className="photo-details-title">Categories:</span> {category.join(' ')}</li>
 						<li><span className="photo-details-title">Pre Meal Bdgs:</span> {preMealBdgs}</li>
-						<li><span className="photo-details-title">Post Meal Bdgs:</span>Post Meal Bdgs: {postMealBdgs}</li>
+						<li><span className="photo-details-title">Post Meal Bdgs:</span>{postMealBdgs}</li>
 						<li><span className="photo-details-title">Units:</span> {insulinUnits}</li>
-						<li><span className="photo-details-title">Date:</span> {preMealBdgsTimeStamp}</li>
+						<li><span className="photo-details-title">Date:</span> <Time value={preMealBdgsTimeStamp} titleFormat="YYYY/MM/DD HH:mm" relative /></li>
     				</ul>
 		        </CardText>
 		    </Card>

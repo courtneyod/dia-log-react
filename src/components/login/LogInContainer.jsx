@@ -105,6 +105,8 @@ export default class LoginContainer extends Component {
 	}
 
 	render(){
+
+
 		return (
 				<div className="LoginContainer">
 					<LoginLogo />

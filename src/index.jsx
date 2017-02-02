@@ -2,7 +2,6 @@
 
 // Load up the application styles
 require("../styles/application.scss");
-// require('../styles/style.css')
 
 // Render the top-level React component
 import React from 'react';

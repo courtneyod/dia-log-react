@@ -76,6 +76,7 @@ export default class LoginForm extends Component {
 	}
 
 	render(){
+
 		return (
 				<div className="login-form-container">
 					<form className="form">

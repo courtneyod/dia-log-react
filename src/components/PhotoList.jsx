@@ -4,6 +4,8 @@ import AddPhotoBtn from './AddPhotoBtn'
 import Nav from './Nav'
 import ApiCalls from '../api/database_api'
 import CircularProgress from 'material-ui/CircularProgress';
+import cookie from 'react-cookie';
+
 
 var newSet = new Set()
 
@@ -88,9 +90,6 @@ export default class PhotoList extends Component {
 							/>)
 					}
 				}
-
-
-
 			})
 			return photoArray
 		}
@@ -138,6 +137,7 @@ export default class PhotoList extends Component {
 	}
 
 	render(){
+		console.log(this.state, 'ere')
 		return (
 			<div>
 				<Nav handleNewFilter={this.updateFilteredState} categories={this.state.categoryNames}/>

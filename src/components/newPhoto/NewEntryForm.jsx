@@ -103,7 +103,7 @@ export default class NewEntryForm extends Component {
     }
 
 	render(){
-        // console.log(this.props.categories, 'here are all the cats')
+
 		return (
 				<div className="form-container">
 					<form className="form">

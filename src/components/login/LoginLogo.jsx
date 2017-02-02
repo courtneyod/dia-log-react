@@ -9,6 +9,7 @@ export default class LoginLogo extends Component {
 	}
 
 	render(){
+
 		return (
 				<div className="logo-container">
 					<img className="icon-logo" src="../../styles/logo.png" alt=""/>

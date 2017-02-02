@@ -3,6 +3,7 @@ import NewEntryForm from './NewEntryForm'
 import UploadPhoto from './UploadPhoto'
 import NewEntryNav from './NewEntryNav'
 import ApiCalls from '../../api/database_api'
+import cookie from 'react-cookie';
 
 export default class NewEntryContainer extends Component {
 	constructor(props, context){
@@ -34,7 +35,6 @@ export default class NewEntryContainer extends Component {
 				this.setState({
 					categoriesArray: catsArray
 				})
-				// console.log(this.state.categoriesArray, 'state')
 
 			}).catch((err)=>{
 				console.log(err, 'error fetching categories')
@@ -47,6 +47,7 @@ export default class NewEntryContainer extends Component {
 
 	handleFormEntry(obj){
 		// console.log(obj, 'returned in obj')
+
 		var postObj ={}
 		postObj.photo_url = obj.url
 		postObj.pre_meal_bdgs = obj.preBdgs
@@ -70,6 +71,7 @@ export default class NewEntryContainer extends Component {
 	}
 
 	render(){
+
 		return (
 				<div >
 					<NewEntryNav goBackToFeed={this.handleBackToFeed}/>

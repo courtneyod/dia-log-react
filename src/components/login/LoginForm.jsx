@@ -34,7 +34,7 @@ export default class LoginForm extends Component {
 			'email': email,
 			'password': password
         }
-        
+
 	    if (password.length > 5) {
 	      this.props.onLogIn(loginObj);
 	    } else {
@@ -59,6 +59,7 @@ export default class LoginForm extends Component {
 	}
 
 	render(){
+
 		return (
 				<div className="login-form-container">
 					<div className="center-elements">

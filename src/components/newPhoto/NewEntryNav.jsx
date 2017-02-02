@@ -26,6 +26,7 @@ export default class NewEntryNav extends Component {
     }
 
 	render(){
+
 		return (
 				<div className="new-entry-nav">
                     <Tabs className="tab-container">
