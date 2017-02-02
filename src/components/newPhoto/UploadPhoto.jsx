@@ -35,19 +35,33 @@ export default class UploadPhoto extends Component {
 
         this.state = {
             avatarImagePreview: null,
-            avatarImage: null
+            avatarImage: null,
+            imageValue: ''
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.renderImage = this.renderImage.bind(this)
 	}
 
+    componentDidMount() {
+          uploadcare.start({
+            publicKey: "ca793afb2fedc93a3c57",
+            tabs: "all"
+          });
+}
+
     handleChange(e){
+        console.log('here?')
         console.log('here?', e)
         uploadcare.openDialog().done((file) => {
             console.log(file, 'now?')
           file.promise().done((fileInfo)=>{
-              console.log('working?')
-              console.log('ehrjerhejh', fileInfo)
+              console.log(fileInfo.originalUrl, 'url')
+              var fileUrl = fileInfo.originalUrl
+              this.setState({
+                  avatarImagePreview: fileUrl,
+                  imageValue: fileUrl
+              })
             this.setState({
               avatarImagePreview: this.refs.avatarImagePreview,
               avatarImage: this.refs.avatarImage
@@ -61,7 +75,8 @@ export default class UploadPhoto extends Component {
     }
 
     renderImage(e){
-        console.log(e.target.files[0], 'filesss')
+        console.log('render image')
+        console.log(e.target.value, 'filesss')
         var myImage = new Image(100, 200);
         var source = e.target.files[0].name
 
@@ -76,12 +91,16 @@ export default class UploadPhoto extends Component {
     }
 
 	render(){
+        console.log(this.state.imageValue, 'statessss')
 		return (
 				<div className="photo-upload-container">
 					<div className="upload-btn-container">
-                        <input onChange={this.handleChange} type="hidden" role="uploadcare-uploader" />
+                        <form action="" onSubmit={this.handleChange}>
+                        <input name="courtney" type="text" className="image-src" value={this.state.imageValue} onInput={this.renderImage} onChange={this.handleChange} role="uploadcare-uploader" />
+                        </form>
                             <div className="container">
-                              <img src={this.state.avatarImagePreview} />
+
+                              <img className="image-preview" src={this.state.avatarImagePreview} />
                               <img src={this.state.avatarImage} />
                             </div>
 

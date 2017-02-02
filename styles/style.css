@@ -134,6 +134,9 @@ input {
 
 .title-container {
 	text-align: right !important;
+    /*height: 64px;*/
+    padding: 14px 20px;
+    align-items: center;
 }
 
 .title-container div {
@@ -189,6 +192,7 @@ input {
     bottom: 26px;
     height: 30px;
     width: 100%;
+    z-index: 1000;
 }
 
 .add-btn-container svg {
@@ -246,10 +250,9 @@ svg.icon {
 
 /*new entry nav container */
 
-.new-entry-nav {
-
+.image-preview{
+    width: 100px;
 }
-
 .tab-container div{
     background-color: #7986CB !important;
 }
@@ -258,25 +261,6 @@ svg.icon {
     align-items: flex-start !important;
     padding-left: 5%;
 }
-
-
-
-/*drop zone styles*/
-
-.dropzone-image-container {
-    margin-top: -250px;
-}
-
-
-/*.dropzone-container div {
-    width: 424px;
-    height: 314px;
-    border-width: 2px;
-    border-color: rgb(102, 102, 102);
-    border-style: dashed;
-    border-radius: 5px;
-    margin: 0 auto;
-}*/
 
 /*overlay styles */
 
@@ -310,8 +294,8 @@ svg.icon {
    top: 1px;
    bottom: 30px;
    width: 600px;
-   height: 600px;
-    z-index: 100;
+   height: 400px;
+    z-index: 10;
 }
 
 .overlay-unknown-good {

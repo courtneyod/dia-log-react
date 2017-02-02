@@ -137,7 +137,7 @@ export default class PhotoList extends Component {
 	}
 
 	render(){
-		console.log(this.state, 'ere')
+		// console.log(this.state, 'ere')
 		return (
 			<div>
 				<Nav handleNewFilter={this.updateFilteredState} categories={this.state.categoryNames}/>

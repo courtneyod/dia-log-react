@@ -34,23 +34,23 @@ export default class Photo extends Component {
 
 	renderOverlay(){
 		if(this.props.preMealBdgs > 180 && this.props.postMealBdgs > 180){
-			return <div className="overlay-bad overlay">this is the overlays</div>
+			return <div className="overlay-bad overlay"></div>
 		} else if (this.props.preMealBdgs < 180 && this.props.postMealBdgs < 180){
-			return <div className="overlay-good overlay">this is the overlays</div>
+			return <div className="overlay-good overlay"></div>
 		} else if (this.props.preMealBdgs > 180 && this.props.postMealBdgs < 180){
-			return <div className="overlay-bad-good overlay">this is the overlays</div>
+			return <div className="overlay-bad-good overlay"></div>
 		} else if (this.props.preMealBdgs < 180 && this.props.postMealBdgs > 180){
-			return <div className="overlay-good-bad overlay">this is the overlays</div>
+			return <div className="overlay-good-bad overlay"></div>
 		} else if (this.props.preMealBdgs > 180 && !this.props.postMealBdgs){
-			return <div className="overlay-bad-unknown overlay">this is the overlays</div>
+			return <div className="overlay-bad-unknown overlay"></div>
 		} else if (this.props.preMealBdgs < 180 && !this.props.postMealBdgs){
-			return <div className="overlay-good-unknown overlay">this is the overlays</div>
+			return <div className="overlay-good-unknown overlay"></div>
 		}
 	}
 
 
 	render(){
-		console.log(this.props.postMealBdgs, 'here')
+		// console.log(this.props.postMealBdgs, 'here')
 
 		let {photoUrl, id, preMealBdgs, postMealBdgs, insulinUnits, preMealBdgsTimeStamp, customerId, category} = this.props
 		var time=<TimeAgo className="time-ago" date={preMealBdgsTimeStamp} />

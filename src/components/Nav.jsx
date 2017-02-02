@@ -56,9 +56,6 @@ export default class Nav extends Component {
 
     handleNewRequest = (text) => {
         console.log(text, 'skdjfksdjfkdj')
-        // this.setState({
-        //   searchText: false,
-        // });
         this.props.handleNewFilter(this.state.searchText)
 
       };
