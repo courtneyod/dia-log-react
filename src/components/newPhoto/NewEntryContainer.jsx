@@ -10,7 +10,9 @@ export default class NewEntryContainer extends Component {
 		super(props, context)
 
 		this.state = {
-			categoriesArray: []
+			categoriesArray: [],
+			awsLocation: '',
+			awsType: ''
 		}
 
 		this.handleFormEntry = this.handleFormEntry.bind(this)
@@ -42,13 +44,20 @@ export default class NewEntryContainer extends Component {
 	}
 
 
-  	handlePhotoEntry (obj){
+  	handlePhotoEntry (location, type){
+		console.log(location, type, 'container')
+		this.setState({
+			awsLocation: location,
+			awsType: type
+		})
 	}
 
 	handleFormEntry(obj){
 		// console.log(obj, 'returned in obj')
 
 		var postObj ={}
+		postObj.aws_location = this.state.awsLocation
+		postObj.aws_type = this.state.awsType
 		postObj.photo_url = obj.url
 		postObj.pre_meal_bdgs = obj.preBdgs
 		postObj.insulin_units = obj.unitsValue

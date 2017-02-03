@@ -183,7 +183,7 @@ function postNewPhoto(obj){
 	myHeaders.append('Access-Control-Request-Method', 'POST');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 	myHeaders.append('Accept', 'application/json')
-	myHeaders.append('Content-Type', 'application/json');
+	// myHeaders.append('Content-Type', 'application/json');
 
 	var myInit = { method: 'POST',
 			   body: JSON.stringify(obj),
@@ -197,6 +197,68 @@ function postNewPhoto(obj){
 		})
 		.then((data)=>{
 			console.log(data, 'this is the post')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
+function aws(obj){
+	const REQUEST_URL = `${URL}/aws`
+	var myHeaders = new Headers();
+	var jsonObj = JSON.stringify(obj)
+
+	var formData = new FormData();
+	formData.append("file", obj);
+
+	myHeaders.append('Access-Control-Request-Method', 'POST');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Accept', 'application/json')
+	// myHeaders.append("Content-Type","multipart/form-data");
+
+	var myInit = { method: 'POST',
+			   body: formData,
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			return forJSON.json()
+		})
+		.then((data)=>{
+			console.log(data, 'this is the aws')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+function fetchAwsPhoto(obj){
+	var name = 'GOPR0526.JPG'
+	var type = 'image/jpeg'
+	const REQUEST_URL = `${URL}/aws/?file-name=${name}?file-name=${type}`;
+	var myHeaders = new Headers();
+	var jsonObj = JSON.stringify(obj)
+
+	// var formData = new FormData();
+	// formData.append("file", obj);
+
+	myHeaders.append('Access-Control-Request-Method', 'GET');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Accept', 'application/json')
+	// myHeaders.append("Content-Type","multipart/form-data");
+
+	var myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			return forJSON.json()
+		})
+		.then((data)=>{
+			console.log(data, 'this is the get aws')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -234,4 +296,16 @@ function deleteCatFromPhoto(obj){
  		});
 }
 
-export default {googleAuth, getPhotoList, login, signUp, getCatergiesId, getCatergiesNames, getAllCatergies, postNewPhoto, deleteCatFromPhoto}
+export default {
+	googleAuth,
+	getPhotoList,
+	login,
+	signUp,
+	getCatergiesId,
+	getCatergiesNames,
+	getAllCatergies,
+	postNewPhoto,
+	deleteCatFromPhoto,
+	aws,
+	fetchAwsPhoto
+}

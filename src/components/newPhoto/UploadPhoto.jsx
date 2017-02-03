@@ -4,6 +4,7 @@ import FontIcon from 'material-ui/FontIcon';
 import ActionBackUp from 'material-ui/svg-icons/file/file-upload';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import ApiCalls from '../../api/database_api'
 
 import request from 'superagent';
 
@@ -31,7 +32,9 @@ export default class UploadPhoto extends Component {
 
         this.state = {
             file: '',
-            imagePreviewUrl: ''
+            imagePreviewUrl: '',
+            awsLocation: '',
+            awsType: ''
         }
 
         this._handleSubmit = this._handleSubmit.bind(this)
@@ -39,9 +42,23 @@ export default class UploadPhoto extends Component {
 	}
 
     _handleSubmit(e) {
-        e.preventDefault();
-        console.log('handle uploading', this.state.file);
+    e.preventDefault();
+    // TODO: do something with -> this.state.file
+    console.log('handle uploading-', this.state.file);
+    if(this.state.imagePreviewUrl.length > 0){
+
+        var url = ApiCalls.aws(this.state.file)
+            .then((data)=>{
+                var location = data.jsonObj.key
+                var type = data.jsonObj.mimetype
+
+                this.props.onAddPhoto(location, type)
+                console.log(location, type, 'results from aws')
+            }).catch((err)=> {
+                console.log(err)
+            })
     }
+  }
 
     _handleImageChange(e) {
         e.preventDefault();
@@ -61,15 +78,16 @@ export default class UploadPhoto extends Component {
     }
 
 	render(){
+        console.log(this.state, 'state')
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-          $imagePreview = (<img src={imagePreviewUrl} />);
+          $imagePreview = (<img width="442px" height="265px" src={imagePreviewUrl} />);
         } else {
           $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
         }
 		return (
-                <div className=" photo-upload-container previewComponent">
+              <div className="photo-upload-container previewComponent">
                 <form onSubmit={(e)=>this._handleSubmit(e)}>
                   <input className="fileInput" type="file" onChange={(e)=>this._handleImageChange(e)} />
                   <button className="submitButton" type="submit" onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>

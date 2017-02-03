@@ -131,6 +131,7 @@ export default class NewEntryForm extends Component {
                                  onChange={this.handlePreMealBdgsFieldChange}
                                />
                             <SelectField
+                                  labelStyle={{ color: '#757575' }}
                                   floatingLabelText="Units"
                                   value={this.state.unitsValue}
                                   onChange={this.handleUnitsChange}

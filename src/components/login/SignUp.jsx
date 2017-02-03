@@ -96,7 +96,6 @@ export default class LoginForm extends Component {
                           ref="email"
                           />
                       <TextField
-                          hintText="Password"
                           floatingLabelText="Password"
                           type="password"
                           id="names" className="login-input" ref="password"
@@ -106,10 +105,11 @@ export default class LoginForm extends Component {
                           ref="password"
                         />
                       <TextField
-                          hintText="Confirm Password"
                           floatingLabelText="Confirm Password"
                           type="password"
-                          id="names" className="login-input" ref="password"
+                          id="names"
+                          className="login-input"
+                          ref="password"
                           id="password-sign-up"
                           onChange={this._handleConfirmPasswordFieldChange}
                           className="login-input"
