@@ -40,7 +40,7 @@ export default class UploadPhoto extends Component {
 
     _handleSubmit(e) {
         e.preventDefault();
-        console.log('handle uploading-', this.state.file);
+        console.log('handle uploading', this.state.file);
     }
 
     _handleImageChange(e) {
@@ -55,7 +55,7 @@ export default class UploadPhoto extends Component {
             imagePreviewUrl: reader.result
           });
         }
-        console.log(this.state, 'this is the state)')
+        console.log(this.state, 'this is the state')
 
         reader.readAsDataURL(file)
     }

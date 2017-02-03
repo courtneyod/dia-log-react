@@ -203,4 +203,35 @@ function postNewPhoto(obj){
  		});
 }
 
-export default {googleAuth, getPhotoList, login, signUp, getCatergiesId, getCatergiesNames, getAllCatergies, postNewPhoto}
+function deleteCatFromPhoto(obj){
+	const category = obj.category
+	const id = obj.id
+
+	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
+	const REQUEST_URL = `${URL}/health-stat-categories/`
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'DELETE');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Accept', 'application/json')
+	myHeaders.append('Content-Type', 'application/json');
+
+	var myInit = { method: 'DELETE',
+			   body: JSON.stringify(obj),
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			console.log(forJSON)
+			return forJSON.json()
+		})
+		.then((data)=>{
+			console.log(data, 'this is the post')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
+export default {googleAuth, getPhotoList, login, signUp, getCatergiesId, getCatergiesNames, getAllCatergies, postNewPhoto, deleteCatFromPhoto}

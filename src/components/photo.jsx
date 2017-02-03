@@ -5,14 +5,99 @@ import Toggle from 'material-ui/Toggle';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TimeAgo from 'react-timeago';
 import Time from 'react-time';
+import Chip from 'material-ui/Chip';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
+import Dialog from 'material-ui/Dialog';
+
+const style = {
+  marginRight: 20,
+};
+
 
 export default class Photo extends Component {
 	constructor(props){
 		super(props)
 
 		this.state = {
-      		expanded: false
+      		expanded: false,
+			chipData: [],
+			deletedCat: '',
+			open: false,
     	}
+
+		this.styles = {
+	      chip: {
+	        margin: 4,
+	      },
+	      wrapper: {
+	        display: 'flex',
+	        flexWrap: 'wrap',
+	      },
+	    };
+
+	}
+
+	componentWillMount(){
+		var cats = this.props.category
+		var newArr = []
+
+		if(cats.length > 0 ){
+			// console.log(cats, 'in if')
+			for (var i = 0; i < cats.length; i++) {
+				var obj ={
+					'key': i,
+					'label': cats[i]
+				}
+				newArr.push(obj)
+			}
+		}
+		this.setState({chipData: newArr});
+	}
+
+	handleRequestDelete = (key) => {
+
+		  this.chipData = this.state.chipData;
+		  const chipToDelete = this.chipData.map((chip) => chip.key).indexOf(key);
+		//   console.log(chipToDelete, 'deleted')
+		  const removeCat = this.chipData[chipToDelete].label
+		  console.log(removeCat, 'here')
+		  this.chipData.splice(chipToDelete, 1);
+		  this.setState({
+			  chipData: this.chipData,
+			  deletedCat: removeCat
+		  });
+
+		  console.log(removeCat, this.props.id, 'state of fdelered')
+		var obj = {
+			category: removeCat,
+			id: this.props.id
+		}
+
+		var photoList = ApiCalls.deleteCatFromPhoto(obj)
+			.then((data)=>{
+				console.log(data, 'from api call in Component')
+			}).catch((err)=> {
+				console.log(err)
+			})
+
+	};
+
+	renderChip(data) {
+	    return (
+	      <Chip
+	        key={data.key}
+	        onRequestDelete={() => this.handleRequestDelete(data.key)}
+	        style={this.styles.chip}
+	      >
+	        {data.label}
+	      </Chip>
+	    );
+	  }
+
+	handleNewCatRequest(){
 
 	}
 
@@ -47,10 +132,25 @@ export default class Photo extends Component {
 			return <div className="overlay-good-unknown overlay"></div>
 		}
 	}
+	handleOpen = () => {
+  this.setState({open: true});
+};
+
+handleClose = () => {
+  this.setState({open: false});
+};
 
 
 	render(){
-		// console.log(this.props.postMealBdgs, 'here')
+		const actions = [
+		      <FlatButton
+		        label="Ok"
+		        primary={true}
+		        keyboardFocused={true}
+		        onTouchTap={this.handleClose}
+		      />,
+		    ];
+
 
 		let {photoUrl, id, preMealBdgs, postMealBdgs, insulinUnits, preMealBdgsTimeStamp, customerId, category} = this.props
 		var time=<TimeAgo className="time-ago" date={preMealBdgsTimeStamp} />
@@ -77,8 +177,26 @@ export default class Photo extends Component {
 		          />
 		        </CardText>
 		        <CardText className="photo-details-container" expandable={true}>
+
 					<ul className="photo-details">
-						<li><span className="photo-details-title">Categories:</span> {category.join(' ')}</li>
+
+						<li><span className="photo-details-title"><span style={this.styles.wrapper}>Categories:
+					        {this.state.chipData.map(this.renderChip, this)}
+							<FloatingActionButton onTouchTap={this.handleOpen} onClick={this.handleNewCatRequest} mini={true} secondary={true} style={style}>
+								 <ContentAdd />
+							</FloatingActionButton>
+
+								<Dialog
+						          actions={actions}
+						          modal={false}
+						          open={this.state.open}
+						          onRequestClose={this.handleClose}
+						        >
+						          Add a new category
+						          <DatePicker hintText="Date Picker" />
+						        </Dialog>
+
+						</span></span></li>
 						<li><span className="photo-details-title">Pre Meal Bdgs:</span> {preMealBdgs}</li>
 						<li><span className="photo-details-title">Post Meal Bdgs:</span>{postMealBdgs}</li>
 						<li><span className="photo-details-title">Units:</span> {insulinUnits}</li>

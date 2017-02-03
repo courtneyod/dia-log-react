@@ -265,83 +265,43 @@ svg.icon {
 /*overlay styles */
 
 .overlay-bad {
-    background: linear-gradient(to right, rgba(229,56,53,0.34) 0%, rgba(229,56,53,0.34) 100%);
+    background: linear-gradient(to right, rgba(229,56,53,0.45) 0%, rgba(229,56,53,0.45) 100%);
 }
 
 .overlay-bad-unknown {
-    background: linear-gradient(to right, rgba(229,56,53,0.34) 0%, rgba(255,255,255,0.34) 56%, rgba(255,255,255,0.34) 59%, rgba(255,255,255,0.34) 100%);
+    background: linear-gradient(to right, rgba(229,56,53,0.45) 0%, rgba(255,255,255,0.45) 56%, rgba(255,255,255,0.34) 59%, rgba(255,255,255,0.34) 100%);
+}
+
+.overlay-good-unknown {
+    background: linear-gradient(to right, rgba(67,160,72,0.45) 0%, rgba(255,255,255,0.45) 56%, rgba(255,255,255,0.34) 59%, rgba(255,255,255,0.34) 100%);
 }
 
 .overlay-unknown-bad {
-    background: linear-gradient(to right, rgba(255,255,255,0.34) 18%, rgba(255,255,255,0.34) 35%, rgba(229,56,53,0.34) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0.45) 18%, rgba(255,255,255,0.45) 35%, rgba(229,56,53,0.34) 100%);
 }
 
 .overlay-bad-good {
-    background: linear-gradient(to right, rgba(229,56,53,0.34) 0%, rgba(67,160,72,0.34) 100%);
+    background: linear-gradient(to right, rgba(229,56,53,0.45) 0%, rgba(67,160,72,0.45) 100%);
 }
 
 .overlay-good-bad {
-    background: linear-gradient(to right, rgba(67,160,72,0.34) 0%, rgba(229,56,53,0.34) 100%);
+    background: linear-gradient(to right, rgba(67,160,72,0.45) 0%, rgba(229,56,53,0.45) 100%);
 }
 
 .overlay-good {
-    background: linear-gradient(to right, rgba(67,160,72,0.34) 0%, rgba(67,160,72,0.34) 100%);
+    background: linear-gradient(to right, rgba(67,160,72,0.45) 0%, rgba(67,160,72,0.45) 100%);
 }
 
 .overlay {
-    background: linear-gradient(to right, rgba(67,160,72,0.34) 0%, rgba(255,255,255,0.34) 63%, rgba(255,255,255,0.34) 100%);
+    /*background: linear-gradient(to right, rgba(67,160,72,0.34) 0%, rgba(255,255,255,0.34) 63%, rgba(255,255,255,0.34) 100%);*/
     position: absolute;
-   top: 1px;
-   bottom: 30px;
-   width: 600px;
-   height: 400px;
+    top: 1px;
+    bottom: 30px;
+    width: 100%;
+    height: 99%;
     z-index: 10;
 }
 
 .overlay-unknown-good {
     background: linear-gradient(to right, rgba(255,255,255,0.34) 18%, rgba(255,255,255,0.34) 35%, rgba(67,160,72,0.34) 100%);
 }
-
-
-
-.fileInput {
-  border-bottom: 4px solid lightgray;
-  border-right: 4px solid lightgray;
-  border-top: 1px solid black;
-  border-left: 1px solid black;
-  padding: 10px;
-  margin: 15px;
-  cursor: pointer;
-  }
-
-.imgPreview {
-  text-align: center;
-  margin: 5px 15px;
-  height: 200px;
-  width: 500px;
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
-  border-top: 5px solid gray;
-  border-bottom: 5px solid gray;
-  img
-    width: 100%;
-    height: 100%;
-}
-
-.previewText {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.submitButton {
-  padding: 12px;
-  margin-left: 10px;
-  background: white;
-  border: 4px solid lightgray;
-  border-radius: 15px;
-  font-weight: 700;
-  font-size: 10pt;
-  cursor: pointer;
-  &:hover;
-  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
-  }

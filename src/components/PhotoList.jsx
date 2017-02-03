@@ -5,11 +5,13 @@ import Nav from './Nav'
 import ApiCalls from '../api/database_api'
 import CircularProgress from 'material-ui/CircularProgress';
 import cookie from 'react-cookie';
+import {connect} from 'react-redux'
+var actions =require('../actions/actions')
 
 
 var newSet = new Set()
 
-export default class PhotoList extends Component {
+class PhotoList extends Component {
 	constructor(props, context){
 		super(props, context)
 
@@ -33,14 +35,15 @@ export default class PhotoList extends Component {
 	}
 
 	componentWillMount(){
+		var dispatch = this.props.dispatch;
+
 		var photoList = ApiCalls.getPhotoList()
 			.then((data)=>{
 				var photoArray = data.data
-				this.setState({
-					photos: photoArray
-				})
-				// console.log(this.state.photos, 'this is sthe stae')
-				if(this.state.photos.length > 0){
+				dispatch(actions.getPhotoList(photoArray))
+
+				// console.log(this.props.photos, 'this is sthe stae')
+				if(this.props.photos.length > 0){
 					this.getAllCatergies()
 				}
 				return data.photo
@@ -50,13 +53,13 @@ export default class PhotoList extends Component {
 	}
 
 	renderPhotos(){
-		var {photos} = this.state
-		if(this.state.photos.length === 0){
+		var {photos} = this.props
+		if(this.props.photos.length === 0){
 			return (
 				<CircularProgress className="modal-waiting" size={100} thickness={5} />
 			)
 		} else {
-			// console.log(this.state.photos, 'sdjfksdjfkjksdjf')
+			// console.log(this.props.photos, 'sdjfksdjfkjksdjf')
 
 			var photoArray = photos.map((photo)=>{
 				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id, category} = photo
@@ -97,7 +100,7 @@ export default class PhotoList extends Component {
 
 
 	getAllCatergies(){
-		var photosArray = this.state.photos
+		var photosArray = this.props.photos
 
 		var photoPromises = photosArray.map((photo)=>{
 
@@ -131,6 +134,7 @@ export default class PhotoList extends Component {
 	}
 
 	updateFilteredState(text){
+		console.log(text, 'filetered')
 		this.setState({
 			filtered: text
 		})
@@ -149,3 +153,12 @@ export default class PhotoList extends Component {
 		)
 	}
 }
+
+//use matstate to prop when you need acces to store, if you only need to put in to the store you only need to dispatch
+function mapStateToProps(store){
+	return {
+		photos: store.photos
+	}
+}
+
+export default connect(mapStateToProps)(PhotoList)

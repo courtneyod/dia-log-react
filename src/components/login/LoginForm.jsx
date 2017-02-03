@@ -67,8 +67,14 @@ export default class LoginForm extends Component {
                         <p className="sign-up-link" onClick={this.handleClick}>Sign up!</p>
                     </div>
 					<form className="form">
-			          <TextField onChange={this._handleEmailFieldChange} id="email" className="login-input" type="text" ref="email" placeholder="Email"/>
-			          <TextField onChange={this._handlePasswordFieldChange} id="names" className="login-input" type="text" ref="password" placeholder="Password"/>
+			          <TextField floatingLabelText="Email" onChange={this._handleEmailFieldChange} id="email" className="login-input" type="text" ref="email" />
+                      <TextField
+                          hintText="Password Field"
+                          floatingLabelText="Password"
+                          type="password"
+                          id="names" className="login-input" ref="password"
+                          onChange={this._handlePasswordFieldChange}
+                        />
 					  <RaisedButton onClick={this.onFormSubmit} backgroundColor={'#9575CD'} className="btn" label="Submit" primary={true} style={style} ></RaisedButton>
 			        </form>
 				</div>

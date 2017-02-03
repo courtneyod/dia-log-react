@@ -38,11 +38,15 @@ export default class Nav extends Component {
             categoriesArray: [],
             searchText: ''
         }
-    this.renderAutoComplete = this.renderAutoComplete.bind(this)
-    this.renderAutoComplete()
-    this.handleUpdateInput = this.handleUpdateInput.bind(this)
-    this.handleNewRequest = this.handleNewRequest .bind(this)
+
+        this.renderAutoComplete = this.renderAutoComplete.bind(this)
+        this.renderAutoComplete()
+        this.handleUpdateInput = this.handleUpdateInput.bind(this)
+        this.handleNewRequest = this.handleNewRequest .bind(this)
 	}
+    test(e){
+        console.log(e.target.value, 'ugh')
+    }
 
     handleUpdateInput(text){
         // console.log(text, 'what is the fiter?')
@@ -55,7 +59,7 @@ export default class Nav extends Component {
     }
 
     handleNewRequest = (text) => {
-        console.log(text, 'skdjfksdjfkdj')
+        // console.log(text, 'skdjfksdjfkdj')
         this.props.handleNewFilter(this.state.searchText)
 
       };
@@ -82,10 +86,12 @@ export default class Nav extends Component {
 					        floatingLabelText="Filter By Categories"
 					        filter={AutoComplete.caseInsensitiveFilter}
 					        dataSource={this.props.categories}
-                            maxSearchResults={5}
+                            maxSearchResults={10}
                             searchText={this.state.searchText}
                             onUpdateInput={this.handleUpdateInput}
                             onNewRequest={this.handleNewRequest}
+                            animated={true}
+                            onChange={this.test}
 					      />
 			        </ToolbarGroup>
 			        <ToolbarGroup>
