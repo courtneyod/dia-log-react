@@ -174,8 +174,7 @@ function login(obj){
 }
 
 function postNewPhoto(obj){
-	const email = obj.email
-	const password = obj.password
+	console.log(obj, 'about tot send this obj')
 
 	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
 	const REQUEST_URL = `${URL}/photos`
@@ -183,7 +182,7 @@ function postNewPhoto(obj){
 	myHeaders.append('Access-Control-Request-Method', 'POST');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 	myHeaders.append('Accept', 'application/json')
-	// myHeaders.append('Content-Type', 'application/json');
+	myHeaders.append('Content-Type', 'application/json');
 
 	var myInit = { method: 'POST',
 			   body: JSON.stringify(obj),

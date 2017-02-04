@@ -11,10 +11,11 @@ export default class NewEntryContainer extends Component {
 
 		this.state = {
 			categoriesArray: [],
-			awsLocation: '',
+			awsName: '',
 			awsType: ''
 		}
 
+		this.handlePhotoEntry = this.handlePhotoEntry.bind(this)
 		this.handleFormEntry = this.handleFormEntry.bind(this)
 		this.handleCatergiesName = this.handleCatergiesName.bind(this)
 		this.handleCatergiesName()
@@ -47,7 +48,7 @@ export default class NewEntryContainer extends Component {
   	handlePhotoEntry (location, type){
 		console.log(location, type, 'container')
 		this.setState({
-			awsLocation: location,
+			awsName: location,
 			awsType: type
 		})
 	}
@@ -56,9 +57,11 @@ export default class NewEntryContainer extends Component {
 		// console.log(obj, 'returned in obj')
 
 		var postObj ={}
-		postObj.aws_location = this.state.awsLocation
+		var name = this.state.awsName
+		console.log(name, 'name that will be added to aws')
+		postObj.aws_name = this.state.awsName
 		postObj.aws_type = this.state.awsType
-		postObj.photo_url = obj.url
+		postObj.photo_url = `https://s3.amazonaws.com/dialog-courtney/${name}`
 		postObj.pre_meal_bdgs = obj.preBdgs
 		postObj.insulin_units = obj.unitsValue
 		postObj.customer_id = 1
@@ -67,8 +70,10 @@ export default class NewEntryContainer extends Component {
 
 		ApiCalls.postNewPhoto(postObj)
 			.then((results)=>{
-				console.log(results)
-				this.context.router.push('/feed')
+				console.log(results, 'new post!!!!')
+				setTimeout(()=>{
+		                    this.context.router.push('/feed')
+		                }, 400);
 			}).catch(err=>{
 				console.log(err)
 			})

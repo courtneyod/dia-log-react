@@ -44,23 +44,29 @@ export default class Nav extends Component {
         this.handleUpdateInput = this.handleUpdateInput.bind(this)
         this.handleNewRequest = this.handleNewRequest .bind(this)
 	}
-    test(e){
-        console.log(e.target.value, 'ugh')
-    }
 
     handleUpdateInput(text){
         // console.log(text, 'what is the fiter?')
         if(text.length === 0){
-            text = false
+            this.setState({
+              searchText: '',
+            });
+            this.props.handleNewFilter(this.state.searchText)
+
         }
         this.setState({
           searchText: text,
         });
     }
 
+
     handleNewRequest = (text) => {
         // console.log(text, 'skdjfksdjfkdj')
         this.props.handleNewFilter(this.state.searchText)
+        setTimeout(()=>{
+                    // this.refs[`autocomplete`].setState({searchText:''});
+                    this.refs[`autocomplete`].focus();
+                }, 700);
 
       };
 
@@ -82,6 +88,7 @@ export default class Nav extends Component {
 			        </ToolbarGroup>
 			        <ToolbarGroup>
 						<AutoComplete
+                            ref={`autocomplete`}
 							className="auto-complete"
 					        floatingLabelText="Filter By Categories"
 					        filter={AutoComplete.caseInsensitiveFilter}
@@ -91,7 +98,6 @@ export default class Nav extends Component {
                             onUpdateInput={this.handleUpdateInput}
                             onNewRequest={this.handleNewRequest}
                             animated={true}
-                            onChange={this.test}
 					      />
 			        </ToolbarGroup>
 			        <ToolbarGroup>

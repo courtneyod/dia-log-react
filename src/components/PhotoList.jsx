@@ -66,7 +66,7 @@ class PhotoList extends Component {
 
 				var filteredState = this.state.filtered
 
-				if(!filteredState){
+				if(!filteredState || filteredState === ''){
 					return (
 						<Photo
 							category={category}
@@ -138,6 +138,9 @@ class PhotoList extends Component {
 		this.setState({
 			filtered: text
 		})
+		if(text.length === 0){
+			this.renderPhotos()
+		}
 	}
 
 	render(){
