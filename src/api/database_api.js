@@ -295,6 +295,35 @@ function deleteCatFromPhoto(obj){
  		});
 }
 
+function addCatToPhoto(obj){
+
+	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
+	const REQUEST_URL = `${URL}/health-stat-categories/addcat`
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'POST');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Accept', 'application/json')
+	myHeaders.append('Content-Type', 'application/json');
+
+	var myInit = { method: 'POST',
+			   body: JSON.stringify(obj),
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			console.log(forJSON)
+			return forJSON.json()
+		})
+		.then((data)=>{
+			console.log(data, 'this is the post')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
 export default {
 	googleAuth,
 	getPhotoList,
@@ -306,5 +335,6 @@ export default {
 	postNewPhoto,
 	deleteCatFromPhoto,
 	aws,
-	fetchAwsPhoto
+	fetchAwsPhoto,
+	addCatToPhoto
 }

@@ -9,8 +9,9 @@ import Chip from 'material-ui/Chip';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import RaisedButton from 'material-ui/RaisedButton';
-import DatePicker from 'material-ui/DatePicker';
 import Dialog from 'material-ui/Dialog';
+import ChipInput from 'material-ui-chip-input'
+
 
 const style = {
   marginRight: 20,
@@ -26,6 +27,7 @@ export default class Photo extends Component {
 			chipData: [],
 			deletedCat: '',
 			open: false,
+			newChips: []
     	}
 
 		this.styles = {
@@ -37,7 +39,7 @@ export default class Photo extends Component {
 	        flexWrap: 'wrap',
 	      },
 	    };
-
+	this.handleAddChip = this.handleAddChip.bind(this)
 	}
 
 	componentWillMount(){
@@ -61,7 +63,6 @@ export default class Photo extends Component {
 
 		  this.chipData = this.state.chipData;
 		  const chipToDelete = this.chipData.map((chip) => chip.key).indexOf(key);
-		//   console.log(chipToDelete, 'deleted')
 		  const removeCat = this.chipData[chipToDelete].label
 		  console.log(removeCat, 'here')
 		  this.chipData.splice(chipToDelete, 1);
@@ -70,7 +71,6 @@ export default class Photo extends Component {
 			  deletedCat: removeCat
 		  });
 
-		  console.log(removeCat, this.props.id, 'state of fdelered')
 		var obj = {
 			category: removeCat,
 			id: this.props.id
@@ -133,13 +133,41 @@ export default class Photo extends Component {
 		}
 	}
 	handleOpen = () => {
-  this.setState({open: true});
-};
+  		this.setState({open: true});
+	};
 
-handleClose = () => {
-  this.setState({open: false});
-};
+	handleClose = () => {
+	  this.setState({open: false});
+	  console.log(this.state.newChips, 'chips to add')
+	  var addCats = this.state.newChips
 
+	  if(addCats.length > 0){
+		  for (var i = 0; i < addCats.length; i++) {
+		  var obj = {
+			  category: addCats[i],
+			  id: this.props.id
+		  }
+
+		  var photoList = ApiCalls.addCatToPhoto(obj)
+			  .then((data)=>{
+				  console.log(data, 'from api call in adding cats Component')
+			  }).catch((err)=> {
+				  console.log(err)
+			  })
+	    }
+	   }
+	};
+
+	handleAddChip(chip){
+		// console.log(e.tagert)
+		console.log('added chips', chip)
+		this.setState({newChips: chip});
+
+	}
+
+	handleDeleteChip(chip, index){
+		console.log('deleted chips', chip)
+	}
 
 	render(){
 		const actions = [
@@ -193,9 +221,12 @@ handleClose = () => {
 						          onRequestClose={this.handleClose}
 						        >
 						          Add a new category
-						          <DatePicker hintText="Date Picker" />
+								  <ChipInput
+									  onChange={this.handleAddChip}
+									  onRequestAdd={(chip) => handleAddChip(chip)}
+									  onRequestDelete={(chip, index) => handleDeleteChip(chip, index)}
+									/>
 						        </Dialog>
-
 						</span></span></li>
 						<li><span className="photo-details-title">Pre Meal Bdgs:</span> {preMealBdgs}</li>
 						<li><span className="photo-details-title">Post Meal Bdgs:</span>{postMealBdgs}</li>

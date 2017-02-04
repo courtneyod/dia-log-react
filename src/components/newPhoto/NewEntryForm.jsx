@@ -43,7 +43,6 @@ export default class NewEntryForm extends Component {
             preBdgs: 150,
             url: ''
         }
-    this.handlePhotoChange = this.handlePhotoChange.bind(this)
     this.handlePreMealBdgsFieldChange = this.handlePreMealBdgsFieldChange.bind(this)
     this.handleUnitsChange = this.handleUnitsChange.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -67,14 +66,6 @@ export default class NewEntryForm extends Component {
         })
         console.log(this.state.unitsValue, 'units')
     };
-
-    handlePhotoChange(event){
-        // console.log(event.target.value, 'url')
-        var photoUrl = event.target.value
-        this.setState({
-            url: photoUrl
-        })
-    }
 
     handleUpdateInput(text){
         // console.log(text, 'what is the fiter?')
@@ -107,7 +98,6 @@ export default class NewEntryForm extends Component {
 		return (
 				<div className="form-container">
 					<form className="form">
-				          <TextField onChange={this.handlePhotoChange} id="photo" className="login-input" type="text" placeholder="Photo Url"/>
                                 <AutoComplete
         							className="login-input"
         					        floatingLabelText="Add categories"
