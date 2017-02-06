@@ -63,7 +63,6 @@ class PhotoList extends Component {
 
 			var photoArray = photos.map((photo)=>{
 				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id, category} = photo
-
 				var filteredState = this.state.filtered
 
 				if(!filteredState || filteredState === ''){
@@ -134,13 +133,12 @@ class PhotoList extends Component {
 	}
 
 	updateFilteredState(text){
+		console.log('helo')
 		console.log(text, 'filetered')
 		this.setState({
 			filtered: text
 		})
-		if(text.length === 0){
-			this.renderPhotos()
-		}
+		console.log(this.state.filtered)
 	}
 
 	render(){

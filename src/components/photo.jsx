@@ -10,8 +10,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
-import ChipInput from 'material-ui-chip-input'
-
+import ChipInput from 'material-ui-chip-input';
+import Slider from 'material-ui/Slider';
 
 const style = {
   marginRight: 20,
@@ -26,8 +26,10 @@ export default class Photo extends Component {
       		expanded: false,
 			chipData: [],
 			deletedCat: '',
-			open: false,
-			newChips: []
+			catOpen: false,
+            bdgsOpen: false,
+			newChips: [],
+            postBdgs: this.props.postMealBdgs
     	}
 
 		this.styles = {
@@ -40,6 +42,8 @@ export default class Photo extends Component {
 	      },
 	    };
 	this.handleAddChip = this.handleAddChip.bind(this)
+    this.handlePostMealBdgsFieldChange = this.handlePostMealBdgsFieldChange.bind(this)
+    this.handleBdgsClose = this.handleBdgsClose.bind(this)
 	}
 
 	componentWillMount(){
@@ -97,10 +101,6 @@ export default class Photo extends Component {
 	    );
 	  }
 
-	handleNewCatRequest(){
-
-	}
-
 	handleExpandChange = (expanded) => {
     	this.setState({expanded: expanded});
     };
@@ -126,18 +126,22 @@ export default class Photo extends Component {
 			return <div className="overlay-bad-good overlay"></div>
 		} else if (this.props.preMealBdgs < 180 && this.props.postMealBdgs > 180){
 			return <div className="overlay-good-bad overlay"></div>
-		} else if (this.props.preMealBdgs > 180 && !this.props.postMealBdgs){
+		} else if (this.props.preMealBdgs > 180 && (!this.props.postMealBdgs)){
 			return <div className="overlay-bad-unknown overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && !this.props.postMealBdgs){
+		} else if (this.props.preMealBdgs < 180 && (!this.props.postMealBdgs)){
 			return <div className="overlay-good-unknown overlay"></div>
 		}
 	}
-	handleOpen = () => {
-  		this.setState({open: true});
+	handleCatOpen = () => {
+  		this.setState({catOpen: true});
 	};
 
-	handleClose = () => {
-	  this.setState({open: false});
+	handleBdgsOpen = () => {
+  		this.setState({bdgsOpen: true});
+	};
+
+	handleCatClose = () => {
+	  this.setState({catOpen: false});
 	  console.log(this.state.newChips, 'chips to add')
 	  var addCats = this.state.newChips
 
@@ -158,6 +162,24 @@ export default class Photo extends Component {
 	   }
 	};
 
+	handleBdgsClose = () => {
+        // console.log(this.state.postBdgs, 'new postBdgs value')
+	  this.setState({bdgsOpen: false});
+	  var postBdgs = this.state.postBdgs
+      var obj = {
+          postBdgs: postBdgs,
+          id: this.props.id
+      }
+      console.log(obj, 'reee')
+
+		  var bdgs = ApiCalls.addPostBdgs(obj)
+			  .then((data)=>{
+				  console.log(data, 'from api call in adding postBdgs')
+			  }).catch((err)=> {
+				  console.log(err)
+			  })
+	};
+
 	handleAddChip(chip){
 		// console.log(e.tagert)
 		console.log('added chips', chip)
@@ -169,13 +191,25 @@ export default class Photo extends Component {
 		console.log('deleted chips', chip)
 	}
 
+    handlePostMealBdgsFieldChange = (event, value) => {
+        this.setState({postBdgs: value});
+      };
+
 	render(){
-		const actions = [
+		const catActions = [
 		      <FlatButton
 		        label="Ok"
 		        primary={true}
 		        keyboardFocused={true}
-		        onTouchTap={this.handleClose}
+		        onTouchTap={this.handleCatClose}
+		      />,
+		    ];
+		const bdgsActions = [
+		      <FlatButton
+		        label="Ok"
+		        primary={true}
+		        keyboardFocused={true}
+		        onTouchTap={this.handleBdgsClose}
 		      />,
 		    ];
 
@@ -210,15 +244,15 @@ export default class Photo extends Component {
 
 						<li><span className="photo-details-title"><span style={this.styles.wrapper}>Categories:
 					        {this.state.chipData.map(this.renderChip, this)}
-							<FloatingActionButton onTouchTap={this.handleOpen} onClick={this.handleNewCatRequest} mini={true} secondary={true} style={style}>
+							<FloatingActionButton onTouchTap={this.handleCatOpen} mini={true} secondary={true} style={style}>
 								 <ContentAdd />
 							</FloatingActionButton>
 
 								<Dialog
-						          actions={actions}
+						          actions={catActions}
 						          modal={false}
-						          open={this.state.open}
-						          onRequestClose={this.handleClose}
+						          open={this.state.catOpen}
+						          onRequestClose={this.handleCatClose}
 						        >
 						          Add a new category
 								  <ChipInput
@@ -229,7 +263,32 @@ export default class Photo extends Component {
 						        </Dialog>
 						</span></span></li>
 						<li><span className="photo-details-title">Pre Meal Bdgs:</span> {preMealBdgs}</li>
-						<li><span className="photo-details-title">Post Meal Bdgs:</span>{postMealBdgs}</li>
+						<li><span className="photo-details-title">Post Meal Bdgs:</span>{this.state.postBdgs}
+                            <FloatingActionButton onTouchTap={this.handleBdgsOpen} mini={true} secondary={true} style={style}>
+								 <ContentAdd />
+							</FloatingActionButton>
+
+								<Dialog
+                                className="test"
+						          actions={bdgsActions}
+						          modal={false}
+						          open={this.state.bdgsOpen}
+						          onRequestClose={this.handleBdgsClose}
+						        >
+                                <p>
+                                   <span>{'Update your post meal bdgs: '}</span>
+                                   <span>{this.state.postBdgs}</span>
+                                 </p>
+                                  <Slider
+                                    min={40}
+                                    max={500}
+                                    step={1}
+                                    defaultValue={150}
+                                    value={this.state.postBdgs}
+                                    onChange={this.handlePostMealBdgsFieldChange}
+                                  />
+						        </Dialog>
+                        </li>
 						<li><span className="photo-details-title">Units:</span> {insulinUnits}</li>
 						<li><span className="photo-details-title">Date:</span> <Time value={preMealBdgsTimeStamp} titleFormat="YYYY/MM/DD HH:mm" relative /></li>
     				</ul>

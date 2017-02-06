@@ -18,16 +18,16 @@ const styles = {
   },
 };
 
-const categoriesNames = [
-  'Red',
-  'Orange',
-  'Yellow',
-  'Green',
-  'Blue',
-  'Purple',
-  'Black',
-  'White',
-];
+// const categoriesNames = [
+//   'Red',
+//   'Orange',
+//   'Yellow',
+//   'Green',
+//   'Blue',
+//   'Purple',
+//   'Black',
+//   'White',
+// ];
 
 
 const nearbyIcon = <IconLocationOn />;
