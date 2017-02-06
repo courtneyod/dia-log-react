@@ -21,12 +21,10 @@ class PhotoList extends Component {
 			fitered: false
 		}
 
-		// this.setPhotoFeed()
 		this.renderPhotos = this.renderPhotos.bind(this)
 		this.handleNewUpload = this.handleNewUpload.bind(this)
 		this.getAllCatergies = this.getAllCatergies.bind(this)
 		this.updateFilteredState = this.updateFilteredState.bind(this)
-		// this.getCatergory = this.getCatergory.bind(this)
 
 	}
 
@@ -42,7 +40,6 @@ class PhotoList extends Component {
 				var photoArray = data.data
 				dispatch(actions.getPhotoList(photoArray))
 
-				// console.log(this.props.photos, 'this is sthe stae')
 				if(this.props.photos.length > 0){
 					this.getAllCatergies()
 				}
@@ -133,12 +130,11 @@ class PhotoList extends Component {
 	}
 
 	updateFilteredState(text){
-		console.log('helo')
 		console.log(text, 'filetered')
 		this.setState({
 			filtered: text
 		})
-		console.log(this.state.filtered)
+		console.log(this.state.filtered, 'sate of filtered text')
 	}
 
 	render(){

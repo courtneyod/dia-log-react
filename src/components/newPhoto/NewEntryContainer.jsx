@@ -45,12 +45,22 @@ export default class NewEntryContainer extends Component {
 	}
 
 
-  	handlePhotoEntry (location, type){
-		console.log(location, type, 'container')
-		this.setState({
-			awsName: location,
-			awsType: type
-		})
+  	handlePhotoEntry (file){
+		var url = ApiCalls.aws(file)
+		    .then((data)=>{
+		        var name = data.jsonObj.key
+		        var type = data.jsonObj.mimetype
+
+				console.log(name, type, 'results from aws')
+				this.setState({
+					awsName: name,
+					awsType: type
+				})
+		    }).catch((err)=> {
+		        console.log(err)
+		    })
+
+
 	}
 
 	handleFormEntry(obj){

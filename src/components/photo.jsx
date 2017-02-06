@@ -14,7 +14,7 @@ import ChipInput from 'material-ui-chip-input';
 import Slider from 'material-ui/Slider';
 
 const style = {
-  marginRight: 20,
+  marginLeft: 20,
 };
 
 
@@ -80,9 +80,8 @@ export default class Photo extends Component {
 			id: this.props.id
 		}
 
-		var photoList = ApiCalls.deleteCatFromPhoto(obj)
+		var catList = ApiCalls.deleteCatFromPhoto(obj)
 			.then((data)=>{
-				console.log(data, 'from api call in Component')
 			}).catch((err)=> {
 				console.log(err)
 			})
@@ -118,17 +117,17 @@ export default class Photo extends Component {
     };
 
 	renderOverlay(){
-		if(this.props.preMealBdgs > 180 && this.props.postMealBdgs > 180){
+		if(this.props.preMealBdgs > 180 && this.state.postBdgs > 180){
 			return <div className="overlay-bad overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.props.postMealBdgs < 180){
+		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs < 180 && this.state.postBdgs !== null){
 			return <div className="overlay-good overlay"></div>
-		} else if (this.props.preMealBdgs > 180 && this.props.postMealBdgs < 180){
+		} else if (this.props.preMealBdgs > 180 && this.state.postBdgs < 180 && this.state.postBdgs !== null){
 			return <div className="overlay-bad-good overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.props.postMealBdgs > 180){
+		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs > 180){
 			return <div className="overlay-good-bad overlay"></div>
-		} else if (this.props.preMealBdgs > 180 && (!this.props.postMealBdgs)){
+		} else if (this.props.preMealBdgs > 180 && this.state.postBdgs === null){
 			return <div className="overlay-bad-unknown overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && (!this.props.postMealBdgs)){
+		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs === null){
 			return <div className="overlay-good-unknown overlay"></div>
 		}
 	}
@@ -142,7 +141,7 @@ export default class Photo extends Component {
 
 	handleCatClose = () => {
 	  this.setState({catOpen: false});
-	  console.log(this.state.newChips, 'chips to add')
+	//   console.log(this.state.newChips, 'chips to add')
 	  var addCats = this.state.newChips
 
 	  if(addCats.length > 0){
@@ -151,6 +150,7 @@ export default class Photo extends Component {
 			  category: addCats[i],
 			  id: this.props.id
 		  }
+          console.log(obj, 'obj that is sent to addcat')
 
 		  var photoList = ApiCalls.addCatToPhoto(obj)
 			  .then((data)=>{
@@ -170,7 +170,6 @@ export default class Photo extends Component {
           postBdgs: postBdgs,
           id: this.props.id
       }
-      console.log(obj, 'reee')
 
 		  var bdgs = ApiCalls.addPostBdgs(obj)
 			  .then((data)=>{
@@ -181,8 +180,6 @@ export default class Photo extends Component {
 	};
 
 	handleAddChip(chip){
-		// console.log(e.tagert)
-		console.log('added chips', chip)
 		this.setState({newChips: chip});
 
 	}
@@ -262,9 +259,13 @@ export default class Photo extends Component {
 									/>
 						        </Dialog>
 						</span></span></li>
-						<li><span className="photo-details-title">Pre Meal Bdgs:</span> {preMealBdgs}</li>
-						<li><span className="photo-details-title">Post Meal Bdgs:</span>{this.state.postBdgs}
-                            <FloatingActionButton onTouchTap={this.handleBdgsOpen} mini={true} secondary={true} style={style}>
+						<li><span className="photo-details-title">Pre Meal Bdgs: </span>{preMealBdgs}</li>
+						<li><span className="photo-details-title">Post Meal Bdgs: </span>{this.state.postBdgs}
+                             <FloatingActionButton
+                                 onTouchTap={this.handleBdgsOpen}
+                                 mini={true}
+                                 secondary={true}
+                                 style={style}>
 								 <ContentAdd />
 							</FloatingActionButton>
 
@@ -289,8 +290,8 @@ export default class Photo extends Component {
                                   />
 						        </Dialog>
                         </li>
-						<li><span className="photo-details-title">Units:</span> {insulinUnits}</li>
-						<li><span className="photo-details-title">Date:</span> <Time value={preMealBdgsTimeStamp} titleFormat="YYYY/MM/DD HH:mm" relative /></li>
+						<li><span className="photo-details-title">Units: </span> {insulinUnits}</li>
+						<li><span className="photo-details-title">Date: </span> <Time value={preMealBdgsTimeStamp} titleFormat="YYYY/MM/DD HH:mm" relative /></li>
     				</ul>
 		        </CardText>
 		    </Card>

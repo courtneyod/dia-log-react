@@ -12,23 +12,12 @@ import Slider from 'material-ui/Slider';
 const style = {
   margin: 12,
 };
+
 const styles = {
   customWidth: {
     width: 150,
   },
 };
-
-// const categoriesNames = [
-//   'Red',
-//   'Orange',
-//   'Yellow',
-//   'Green',
-//   'Blue',
-//   'Purple',
-//   'Black',
-//   'White',
-// ];
-
 
 const nearbyIcon = <IconLocationOn />;
 
@@ -99,7 +88,7 @@ export default class NewEntryForm extends Component {
 				<div className="form-container">
 					<form className="form">
                                 <AutoComplete
-        							className="login-input"
+        							className="auto-complete-form"
         					        floatingLabelText="Add categories"
         					        filter={AutoComplete.caseInsensitiveFilter}
         					        dataSource={this.props.categories}
@@ -108,11 +97,12 @@ export default class NewEntryForm extends Component {
                                     onUpdateInput={this.handleUpdateInput}
                                     onNewRequest={this.handleNewRequest}
         					      />
-                              <p>
-                                 <span>{'Pre Meal Bdgs: '}</span>
+                              <span className="slider-text-container">
+                                 <span className="slider-text">{'Pre Meal Bdgs: '}</span>
                                  <span>{this.state.preBdgs}</span>
-                               </p>
+                               </span>
                                <Slider
+                                 className="form-slider"
                                  min={40}
                                  max={500}
                                  step={1}
@@ -121,6 +111,7 @@ export default class NewEntryForm extends Component {
                                  onChange={this.handlePreMealBdgsFieldChange}
                                />
                             <SelectField
+                                  className="select-field"
                                   labelStyle={{ color: '#757575' }}
                                   floatingLabelText="Units"
                                   value={this.state.unitsValue}
@@ -139,8 +130,12 @@ export default class NewEntryForm extends Component {
                                   <MenuItem value={10} primaryText="10 units" />
                             </SelectField>
 						  <RaisedButton
+                              className="form-btn btn"
 							  icon={nearbyIcon}
-							  onClick={this.onFormSubmit} backgroundColor={'#9575CD'} className="btn" primary={true} style={style} ></RaisedButton>
+							  onClick={this.onFormSubmit}
+                              backgroundColor={'#9575CD'}
+                              primary={true}
+                              style={style} ></RaisedButton>
 				        </form>
 				</div>
 		)

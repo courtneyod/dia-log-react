@@ -37,28 +37,8 @@ export default class UploadPhoto extends Component {
             awsType: ''
         }
 
-        this._handleSubmit = this._handleSubmit.bind(this)
         this._handleImageChange = this._handleImageChange.bind(this)
 	}
-
-    _handleSubmit(e) {
-    e.preventDefault();
-    // TODO: do something with -> this.state.file
-    console.log('handle uploading-', this.state.file);
-    if(this.state.imagePreviewUrl.length > 0){
-
-        var url = ApiCalls.aws(this.state.file)
-            .then((data)=>{
-                var location = data.jsonObj.key
-                var type = data.jsonObj.mimetype
-
-                this.props.onAddPhoto(location, type)
-                console.log(location, type, 'results from aws')
-            }).catch((err)=> {
-                console.log(err)
-            })
-    }
-  }
 
     _handleImageChange(e) {
         e.preventDefault();
@@ -71,28 +51,31 @@ export default class UploadPhoto extends Component {
             file: file,
             imagePreviewUrl: reader.result
           });
+          if(this.state.imagePreviewUrl.length > 0){
+              console.log('sendt', this.state.file)
+              this.props.onAddPhoto(this.state.file)
+          }
         }
-        console.log(this.state, 'this is the state')
 
         reader.readAsDataURL(file)
+
     }
 
 	render(){
-        console.log(this.state, 'state')
+        // console.log(this.state, 'state')
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-          $imagePreview = (<img width="442px" height="265px" src={imagePreviewUrl} />);
+          $imagePreview = (<img width="403px" height="314px" src={imagePreviewUrl} />);
         } else {
           $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
         }
 		return (
               <div className="photo-upload-container previewComponent">
-                <form onSubmit={(e)=>this._handleSubmit(e)}>
-                  <input className="fileInput" type="file" onChange={(e)=>this._handleImageChange(e)} />
-                  <button className="submitButton" type="submit" onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
-                </form>
                 <div className="imgPreview">
+                    <form onSubmit={(e)=>this._handleSubmit(e)}>
+                      <input className="fileInput" name="file" type="file" onChange={(e)=>this._handleImageChange(e)} />
+                    </form>
                   {$imagePreview}
                 </div>
               </div>

@@ -54,6 +54,8 @@ input {
 .form {
 	display: flex;
 	flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
 }
 
 .login-form-container {
@@ -239,10 +241,10 @@ svg.icon {
 }
 
 .photo-upload-container {
-    width: 33%;
+    width: 28%;
     margin: auto;
     background-color: white;
-    height: 360px;
+    height: 404px;
     margin-top: 40px;
 }
 
@@ -254,6 +256,24 @@ svg.icon {
 .btn button {
     background-color: #7986CB !important;
 }
+
+.slider-text-container {
+  margin-top: 19px;
+}
+
+.form-slider div {
+    margin-bottom: 9px !important;
+}
+
+.auto-complete-form, .select-field {
+    width: 400px !important;
+}
+
+.form-btn {
+    margin: 27px 0 !important;
+    width: 100% !important;
+}
+
 
 /*new entry nav container */
 
@@ -315,25 +335,19 @@ svg.icon {
 
 
 .fileInput {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.298039);;
-  border-right: 1px solid rgba(0, 0, 0, 0.298039);;
-  border-top: 1px solid rgba(0, 0, 0, 0.298039);;
-  border-left: 1px solid rgba(0, 0, 0, 0.298039);;
   padding: 10px;
   margin: 15px;
   cursor: pointer;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #efefef;
 }
 
 .imgPreview {
     text-align: center;
-      margin: 5px 15px;
+      margin: 0 auto !important;
       height: 200px;
-      width: 443px;
-      border-left: 1px solid rgba(0, 0, 0, 0.298039);;
-      border-right: 1px solid rgba(0, 0, 0, 0.298039);;
-      border-top: 1px solid rgba(0, 0, 0, 0.298039);;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.298039);;
-      height: 74%;
+      /*width: 443px;*/
+      height: 78%;
 }
 
 .previewText {
