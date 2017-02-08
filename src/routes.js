@@ -6,6 +6,7 @@ import App from './App';
 import PhotoList from "./components/PhotoList";
 import LoginContainer from "./components/login/LoginContainer";
 import NewEntryContainer from "./components/newPhoto/NewEntryContainer";
+import ProfileContainer from "./components/profile/ProfileContainer";
 import Auth from './components/login/Auth';
 
 export default (
@@ -15,6 +16,7 @@ export default (
 			<Route path="/login" component={LoginContainer} />
 			<Route path="/feed" component={PhotoList} />
 			<Route path="/upload" component={NewEntryContainer} />
+			<Route path="/profile" component={ProfileContainer} />
 		</Route>
 	</Router>
 )

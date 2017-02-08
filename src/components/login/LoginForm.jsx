@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 
+
 const style = {
   margin: 12,
 };
@@ -23,10 +24,8 @@ export default class LoginForm extends Component {
         this._handlePasswordFieldChange = this._handlePasswordFieldChange.bind(this)
 	}
 
-
 	onFormSubmit(e) {
 	    e.preventDefault();
-        console.log(this.state, 'this is the state in on form')
 	    var email = this.state.email;
 	    var password = this.state.password;
 
@@ -67,8 +66,19 @@ export default class LoginForm extends Component {
                         <p className="sign-up-link" onClick={this.handleClick}>Sign up!</p>
                     </div>
 					<form className="form">
-			          <TextField onChange={this._handleEmailFieldChange} id="email" className="login-input" type="text" ref="email" placeholder="Email"/>
-			          <TextField onChange={this._handlePasswordFieldChange} id="names" className="login-input" type="text" ref="password" placeholder="Password"/>
+			          <TextField
+                          floatingLabelText="Email"
+                          onChange={this._handleEmailFieldChange}
+                          id="email"
+                          className="login-input"
+                          type="text" ref="email" />
+                      <TextField
+                          className="login-input"
+                          floatingLabelText="Password"
+                          type="password"
+                          id="names" className="login-input" ref="password"
+                          onChange={this._handlePasswordFieldChange}
+                        />
 					  <RaisedButton onClick={this.onFormSubmit} backgroundColor={'#9575CD'} className="btn" label="Submit" primary={true} style={style} ></RaisedButton>
 			        </form>
 				</div>

@@ -80,10 +80,41 @@ export default class LoginForm extends Component {
 		return (
 				<div className="login-form-container">
 					<form className="form">
-			          <TextField id="name-sign-up" onChange={this._handleFirstNameFieldChange} className="login-input" type="text" ref="email" placeholder="First Name"/>
-			          <TextField id="email-sign-up" onChange={this._handleEmailFieldChange} className="login-input" type="text" ref="email" placeholder="Email"/>
-			          <TextField id="password-sign-up" onChange={this._handlePasswordFieldChange} className="login-input" type="text" ref="password" placeholder="Password"/>
-			          <TextField id="cp-sign-up" onChange={this._handleConfirmPasswordFieldChange} className="login-input" type="text" ref="confirmPassword" placeholder="Confirm Password"/>
+			          <TextField
+                          floatingLabelText="First Name"
+                          id="name-sign-up"
+                          onChange={this._handleFirstNameFieldChange}
+                          className="login-input"
+                          type="text"
+                          ref="name"/>
+			          <TextField
+                          id="email-sign-up"
+                          onChange={this._handleEmailFieldChange}
+                          className="login-input"
+                          type="email"
+                          floatingLabelText="Email"
+                          ref="email"
+                          />
+                      <TextField
+                          floatingLabelText="Password"
+                          type="password"
+                          id="names" className="login-input" ref="password"
+                          id="password-sign-up"
+                          onChange={this._handlePasswordFieldChange}
+                          className="login-input"
+                          ref="password"
+                        />
+                      <TextField
+                          floatingLabelText="Confirm Password"
+                          type="password"
+                          id="names"
+                          className="login-input"
+                          ref="password"
+                          id="password-sign-up"
+                          onChange={this._handleConfirmPasswordFieldChange}
+                          className="login-input"
+                          ref="password"
+                        />
 					  <RaisedButton onClick={this.onFormSubmit} label="Submit" primary={true} style={style} ></RaisedButton>
 			        </form>
 				</div>

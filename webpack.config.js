@@ -2,12 +2,15 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map',
   resolve: {
     root: __dirname,
     alias: {
       Main: 'app/components/Main.jsx',
-      Weather: 'app/components/Weather.jsx',
+      reducers: 'src/reducers/reducers.jsx',
+      actions: 'src/actions/actions.jsx',
+      store: 'src/store/configureStore.jsx',
+      Weather: 'src/components/Weather.jsx',
       Nav: 'src/components/Nav.jsx',
       About: 'src/components/About.jsx',
       AddPhotoBtn: 'src/components/AddPhotoBtn.jsx',
@@ -34,7 +37,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/build/'
-  },
+},
   module: {
     loaders: [
       {
@@ -47,6 +50,4 @@ module.exports = {
         loaders: ["style", "css", "sass"]
       }
     ]
-  },
-  devtool: "cheap-module-eval-source-map"
-}
+}};
