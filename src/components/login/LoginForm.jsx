@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 
+
 const style = {
   margin: 12,
 };
@@ -23,10 +24,8 @@ export default class LoginForm extends Component {
         this._handlePasswordFieldChange = this._handlePasswordFieldChange.bind(this)
 	}
 
-
 	onFormSubmit(e) {
 	    e.preventDefault();
-        console.log(this.state, 'this is the state in on form')
 	    var email = this.state.email;
 	    var password = this.state.password;
 
@@ -68,7 +67,6 @@ export default class LoginForm extends Component {
                     </div>
 					<form className="form">
 			          <TextField
-                          textStyle={{ color: 'green' }}
                           floatingLabelText="Email"
                           onChange={this._handleEmailFieldChange}
                           id="email"

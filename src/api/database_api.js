@@ -48,6 +48,7 @@ function getCatergiesId(photoId){
     		console.log('Fetch Error :-S', err);
  		});
 }
+
 function getCatergiesNames(photoId){
 	const REQUEST_URL = `${URL}/health-stat-categories/name/${photoId}`
 	var myHeaders = new Headers();
@@ -91,6 +92,30 @@ function getAllCatergies(){
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
  		});
+}
+
+function googleAuth(){
+	const REQUEST_URL = `${URL}/auth/google`
+
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'GET');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+
+	var myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default'
+		   };
+
+   	return fetch(REQUEST_URL, myInit)
+	   .then((forJSON)=>{
+		   return forJSON.json()
+	   })
+	   .then((data)=>{
+		   return data
+	   }).catch(function(err) {
+		   console.log('Fetch Error :-S', err);
+		   });
 }
 
 function googleAuth(){
@@ -167,8 +192,7 @@ function login(obj){
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log("hello?????")
-			console.log(data, 'this is in data from loogin up call')
+			console.log(data, 'this is in data from login api call')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);

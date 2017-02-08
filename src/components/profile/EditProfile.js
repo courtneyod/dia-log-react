@@ -4,6 +4,7 @@ import Editor from 'material-ui/svg-icons/editor/mode-edit';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 export default class EditProfile extends Component {
 
@@ -12,8 +13,22 @@ export default class EditProfile extends Component {
 
 		this.state = {
             open: false,
+			firstName: '',
+			minBdgs: '',
+			maxBdgs: ''
 		}
 	}
+
+	handleNameChange = (event, value) => {
+		this.setState({firstName: value});
+	  };
+
+	handleMinBdgsChange = (event, value) => {
+		this.setState({minBdgs: value});
+	  };
+	handleMaxBdgsChange = (event, value) => {
+		this.setState({maxBdgs: value});
+	  };
 
 	handleOpen = () => {
     	this.setState({open: true});
@@ -21,6 +36,13 @@ export default class EditProfile extends Component {
 
 	handleClose = () => {
 	    this.setState({open: false});
+
+		// var user = ApiCalls.updateProfile(obj)
+		// 	.then((data)=>{
+		// 		console.log(data, 'from api call in adding postBdgs')
+		// 	}).catch((err)=> {
+		// 		console.log(err)
+		// 	})
 	};
 
 	render(){
@@ -41,13 +63,34 @@ export default class EditProfile extends Component {
 							color={'#9E9E9E'} hoverColor={'#757575'}
 							/>
 							<Dialog
-						          title="Dialog With Date Picker"
+						          title="Update Your Profile"
 						          actions={actions}
 						          modal={false}
 						          open={this.state.open}
 						          onRequestClose={this.handleClose}
+								  autoScrollBodyContent={true}
 						          >
-						          Open a Date Picker dialog from within a dialog.
+								  <TextField
+		  							className="profile-input"
+									onChange={this.handleNameChange}
+		  						    id="text-field-default"
+		  						    defaultValue={this.state.firstName}
+		  							floatingLabelText="First Name"
+		  						/>
+		  					    <TextField
+		  						    className="profile-input"
+									onChange={this.handleMinBdgsChange}
+		  						    id="text-field-default"
+		  						    defaultValue={this.state.minBdgs}
+		  							floatingLabelText="Bdg Range (low)"
+		  						/>
+		  					    <TextField
+		  						    className="profile-input"
+									onChange={this.handleMaxBdgsChange}
+		  						    id="text-field-default"
+		  						    defaultValue={this.state.maxBdgs}
+		  							floatingLabelText="Bdg Range (high)"
+		  						/>
 						        </Dialog>
 					</div>
 				</div>

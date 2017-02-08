@@ -4,6 +4,8 @@ import ProfileImage from './ProfileImage'
 import EditProfile from './EditProfile'
 import Nav from '../newPhoto/NewEntryNav'
 import ApiCalls from '../../api/database_api'
+import {connect} from 'react-redux'
+var actions =require('../../actions/actions')
 
 export default class ProfileContainer extends Component {
 
@@ -13,12 +15,15 @@ export default class ProfileContainer extends Component {
 		this.state = {
 
 		}
+
+	this.handleBackToFeed = this.handleBackToFeed.bind(this)
 	}
 
 	static contextTypes = {
 		router: PropTypes.object
 	}
 
+	
 	handleFormEntry(obj){
 		// console.log(obj, 'returned in obj')
 
@@ -46,11 +51,15 @@ export default class ProfileContainer extends Component {
 
 	}
 
+	handleBackToFeed(){
+		this.context.router.push('/feed')
+	}
+
 
 	render(){
 		return (
 				<div >
-					<Nav />
+					<Nav goBackToFeed={this.handleBackToFeed}/>
 					<ProfileImage />
 					<EditProfile />
 					<ProfileForm onFormSubmit={this.handleFormEntry} />
