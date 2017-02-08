@@ -49,13 +49,12 @@ export default class LoginContainer extends Component {
 
 		ApiCalls.login(obj)
 			.then(function(data){
-				var userId = data.data.id
-				that.setState({
-					userId
-				});
-				cookie.save('userId', userId, { path: '/' });
-				cookie.load('userId')
-				that.context.router.push('/feed')
+
+				if(data.authenticated){
+					console.log(data)
+					localStorage.setItem("jwt", data.jwt);
+					that.context.router.push('/feed')
+				}
 			})
 			.catch((err)=> {
 				console.log(err)
@@ -79,11 +78,17 @@ export default class LoginContainer extends Component {
 		const confirmPassword = obj.confirmPassword
 		const firstName = obj.firstName
 		var that = this
-		console.log(email, password, confirmPassword, firstName, 'signup login continers')
 
 		var signUp = ApiCalls.signUp(obj)
 			.then(function(data){
-				that.handleApiSignUpCall(data)
+
+				if(data.authenticated){
+					console.log(data)
+					localStorage.setItem("jwt", data.jwt);
+					that.context.router.push('/feed')
+				} else {
+					that.context.router.push('/login')
+				}
 			})
 			.catch((err)=> {
 				console.log(err)
@@ -91,18 +96,18 @@ export default class LoginContainer extends Component {
 
 	}
 
-	handleApiSignUpCall(data) {
-		console.log(data, "data")
-		var userId = data[0].id
-		console.log(userId, 'this is the sign up call')
-		this.setState({
-			userId
-		});
-		cookie.save('userId', userId, { path: '/' });
-		cookie.load('userId')
-		this.context.router.push('/feed')
-		return data
-	}
+	// handleApiSignUpCall(data) {
+	// 	console.log(data, "data")
+	// 	var userId = data[0].id
+	// 	console.log(userId, 'this is the sign up call')
+	// 	this.setState({
+	// 		userId
+	// 	});
+	// 	cookie.save('userId', userId, { path: '/' });
+	// 	cookie.load('userId')
+	// 	this.context.router.push('/feed')
+	// 	return data
+	// }
 
 	render(){
 

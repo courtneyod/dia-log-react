@@ -38,15 +38,14 @@ input {
 	font-size: 50px;
 	margin-left: 30px;
 	line-height: 119px;
-	color: #757575;
+	color: #5C6BC0;
 	font-weight: 500;
 }
 
 .icon-logo {
 	width: 122px;
-    /* border-radius: 50%; */
     height: 100%;
-    z-index: 1;
+    z-index: 10;
 }
 
 
@@ -58,22 +57,26 @@ input {
     margin: 0 auto;
 }
 
+.btn {
+    margin: 20px 0 !important;
+}
+
 .login-form-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	padding: 40px 0 0 0;
-	width: 300px;
+	width: 100%;
 	margin: 0 auto;
 }
 
 .sign-up-link {
 	display: inline;
-	color: #2196F3;
+	color: #5C6BC0;
 }
 
 .sign-up-link:hover {
-	color: #1565C0;
+	color: #3949AB;
 }
 
 .login-input {
@@ -367,4 +370,38 @@ svg.icon {
   cursor: pointer;
   &:hover
     background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+}
+
+/*profile image styles*/
+
+.profile-image-svg {
+     width: 150px !important;
+     height: 150px !important;
+     fill: #9FA8DA !important;
+     margin: 0 auto !important;
+     display: block !important;
+}
+
+.profile-image {
+     border-radius: 50%;
+}
+
+.svg-container {
+    align-items: inherit;
+    display: flex;
+    justify-content: flex-end;
+    width: 95%;
+}
+
+/*profile form styles*/
+
+.profile-input {
+    width: 100% !important;
+}
+
+
+/*nav styles */
+
+.new-entry-nav {
+    margin-bottom: 40px;
 }

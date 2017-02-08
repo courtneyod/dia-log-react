@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 var {Link, IndexLink} = require('react-router')
 import ActionHome from 'material-ui/svg-icons/content/sort';
 import ActionLogOut from 'material-ui/svg-icons/content/sort';
@@ -12,6 +12,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import AutoComplete from 'material-ui/AutoComplete';
 import FlatButton from 'material-ui/FlatButton';
+import Drawer from 'material-ui/Drawer';
+import PersonAdd from 'material-ui/svg-icons/social/person-add';
+import ExitApp from 'material-ui/svg-icons/action/exit-to-app';
+
+
 
 const styles = {
   imageInput: {
@@ -31,19 +36,38 @@ const iconStyles = {
 };
 
 export default class Nav extends Component {
-	constructor(props){
-		super(props)
+	constructor(props, context){
+		super(props, context)
 
         this.state={
             categoriesArray: [],
-            searchText: ''
+            searchText: '',
+            open: false
         }
 
         this.renderAutoComplete = this.renderAutoComplete.bind(this)
         this.renderAutoComplete()
         this.handleUpdateInput = this.handleUpdateInput.bind(this)
-        this.handleNewRequest = this.handleNewRequest .bind(this)
+        this.handleNewRequest = this.handleNewRequest.bind(this)
+        this.handleLogOut = this.handleLogOut.bind(this)
 	}
+
+    static contextTypes = {
+		router: PropTypes.object
+	}
+
+    handleToggle = () => this.setState({open: !this.state.open});
+
+    handleLogOut = () =>{
+       this.setState({open: false});
+       const JWT = localStorage.removeItem("jwt");
+       this.context.router.push('/login')
+    }
+
+    handleProfile = () =>{
+       this.setState({open: false});
+       this.context.router.push('/profile')
+    }
 
     handleUpdateInput(text){
         this.setState({
@@ -96,13 +120,28 @@ export default class Nav extends Component {
 			        </ToolbarGroup>
 			        <ToolbarGroup>
 						<FlatButton
+                              onTouchTap={this.handleToggle}
 							  className="nav-text"
-						      href="https://github.com/callemall/material-ui"
 						      target="_blank"
 						      label="Settings"
 						      secondary={true}
 						      icon={<ActionLogOut />}
 						    />
+                            <Drawer
+                              docked={false}
+                              width={200}
+                              open={this.state.open}
+                              onRequestChange={(open) => this.setState({open})}
+                            >
+                              <MenuItem
+                                  onTouchTap={this.handleProfile}
+                                  leftIcon={<PersonAdd />}
+                                  >Profile
+                              </MenuItem>
+                              <MenuItem
+                                  leftIcon={<ExitApp />}
+                                  onTouchTap={this.handleLogOut}>Logout</MenuItem>
+                            </Drawer>
 			        </ToolbarGroup>
 			      </Toolbar>
 	  </div>

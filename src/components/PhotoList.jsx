@@ -56,7 +56,6 @@ class PhotoList extends Component {
 				<CircularProgress className="modal-waiting" size={100} thickness={5} />
 			)
 		} else {
-			// console.log(this.props.photos, 'sdjfksdjfkjksdjf')
 
 			var photoArray = photos.map((photo)=>{
 				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id, category} = photo

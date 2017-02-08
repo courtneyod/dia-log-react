@@ -2,7 +2,9 @@ const URL = "http://localhost:8000"
 const EMAIL = 'courtney.od@gmail.com'
 
 function getPhotoList(){
-	const REQUEST_URL = `${URL}/photos?email=${EMAIL}`
+
+	const JWT = localStorage.getItem("jwt");
+	const REQUEST_URL = `${URL}/photos?jwt=${JWT}`
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'GET');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
