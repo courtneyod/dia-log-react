@@ -1,5 +1,6 @@
-import React, {Component, PropTypes} from 'react'
-import ApiCalls from '../../api/database_api'
+import React, {Component, PropTypes} from 'react';
+import ApiCalls from '../../api/database_api';
+import UploadPhoto from '../newPhoto/UploadPhoto';
 import Editor from 'material-ui/svg-icons/editor/mode-edit';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -36,14 +37,20 @@ export default class EditProfile extends Component {
 
 	handleClose = () => {
 	    this.setState({open: false});
-
-		// var user = ApiCalls.updateProfile(obj)
-		// 	.then((data)=>{
-		// 		console.log(data, 'from api call in adding postBdgs')
-		// 	}).catch((err)=> {
-		// 		console.log(err)
-		// 	})
 	};
+
+	handlePhotoEntry (file){
+		var url = ApiCalls.aws(file)
+			.then((data)=>{
+				var name = data.jsonObj.key
+				var type = data.jsonObj.mimetype
+
+			}).catch((err)=> {
+				console.log(err)
+			})
+
+
+	}
 
 	render(){
 		const actions = [
@@ -70,6 +77,9 @@ export default class EditProfile extends Component {
 						          onRequestClose={this.handleClose}
 								  autoScrollBodyContent={true}
 						          >
+								  <UploadPhoto
+									   onAddPhoto={this.handlePhotoEntry}
+								 />
 								  <TextField
 		  							className="profile-input"
 									onChange={this.handleNameChange}

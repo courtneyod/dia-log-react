@@ -7,7 +7,7 @@ import ApiCalls from '../../api/database_api'
 import {connect} from 'react-redux'
 var actions =require('../../actions/actions')
 
-export default class ProfileContainer extends Component {
+class ProfileContainer extends Component {
 
 	constructor(props, context){
 		super(props, context)
@@ -23,13 +23,16 @@ export default class ProfileContainer extends Component {
 		router: PropTypes.object
 	}
 
-	
+	componentWillMount(){
+		
+	}
+
+
 	handleFormEntry(obj){
 		// console.log(obj, 'returned in obj')
 
 		var postObj ={}
 		var name = this.state.awsName
-		console.log(name, 'name that will be added to aws')
 		postObj.aws_name = this.state.awsName
 		postObj.aws_type = this.state.awsType
 		postObj.photo_url = `https://s3.amazonaws.com/dialog-courtney/${name}`
@@ -67,3 +70,16 @@ export default class ProfileContainer extends Component {
 		)
 	}
 }
+
+
+
+//use matstate to prop when you need acces to store, if you only need to put in to the store you only need to dispatch
+function mapStateToProps(store){
+	return {
+		user: store.user
+	}
+}
+
+// when you dont need to change the store nothing goes in the first argument
+
+export default connect(mapStateToProps)(ProfileContainer)

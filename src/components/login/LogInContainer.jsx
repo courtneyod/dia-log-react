@@ -49,13 +49,15 @@ class LoginContainer extends Component {
 		const password = obj.password
 		var that = this
 		var dispatch = this.props.dispatch;
+		console.log(actions.getUser, 'what is this get user')
 
 		ApiCalls.login(obj)
 			.then(function(data){
 				console.log(data, 'user logined in')
 
-				if(data.authenticated.authenticated){
-					localStorage.setItem("jwt", data.authenticated.jwt);
+				if(data.authentication.authenticated){
+					console.log('authenticated')
+					localStorage.setItem("jwt", data.authentication.jwt+'&id='+data.user.id+'&email='+data.user.email);
 
 					dispatch(actions.getUser(data))
 

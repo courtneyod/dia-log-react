@@ -1,3 +1,4 @@
+var getUserFromJWT = require('./helpers');
 const URL = "http://localhost:8000"
 const EMAIL = 'courtney.od@gmail.com'
 
@@ -94,29 +95,6 @@ function getAllCatergies(){
  		});
 }
 
-function googleAuth(){
-	const REQUEST_URL = `${URL}/auth/google`
-
-	var myHeaders = new Headers();
-	myHeaders.append('Access-Control-Request-Method', 'GET');
-	myHeaders.append('Access-Control-Allow-Origin', '*');
-
-	var myInit = { method: 'GET',
-               headers: myHeaders,
-               mode: 'cors',
-               cache: 'default'
-		   };
-
-   	return fetch(REQUEST_URL, myInit)
-	   .then((forJSON)=>{
-		   return forJSON.json()
-	   })
-	   .then((data)=>{
-		   return data
-	   }).catch(function(err) {
-		   console.log('Fetch Error :-S', err);
-		   });
-}
 
 function googleAuth(){
 	const REQUEST_URL = `${URL}/auth/google`
@@ -155,6 +133,34 @@ function signUp(obj){
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 
 	var myInit = { method: 'POST',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default'
+		   };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			return forJSON.json()
+		})
+		.then((data)=>{
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
+function getUser(obj){
+	var userObj = getUserFromJWT()
+	console.log(userObj)
+	var id = userObj.id
+
+	const REQUEST_URL = `${URL}/login/${id}`
+
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'GET');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+
+	var myInit = { method: 'GET',
                headers: myHeaders,
                mode: 'cors',
                cache: 'default'
@@ -384,6 +390,7 @@ function addPostBdgs(obj){
 export default {
 	googleAuth,
 	getPhotoList,
+	getUser,
 	login,
 	signUp,
 	getCatergiesId,

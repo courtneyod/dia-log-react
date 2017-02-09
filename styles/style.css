@@ -391,12 +391,25 @@ svg.icon {
     display: flex;
     justify-content: flex-end;
     width: 95%;
+    margin: 10px 0;
+}
+
+.image-container {
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
 }
 
 /*profile form styles*/
 
 .profile-input {
     width: 100% !important;
+}
+
+/*profile table styles*/
+
+.table-header {
+    font-weight: 700;
 }
 
 
