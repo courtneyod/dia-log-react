@@ -357,8 +357,6 @@ function addCatToPhoto(obj){
 }
 
 function addPostBdgs(obj){
-	console.log('ugh')
-	console.log(obj, 'adding api ' )
 
 	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
 	const REQUEST_URL = `${URL}/photos/addPostBdgs`

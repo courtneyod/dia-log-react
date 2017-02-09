@@ -58,7 +58,7 @@ class PhotoList extends Component {
 		} else {
 
 			var photoArray = photos.map((photo)=>{
-				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id, category} = photo
+				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, post_meal_bdgs_time_stamp, customer_id, id, category} = photo
 				var filteredState = this.state.filtered
 
 				if(!filteredState || filteredState === ''){
@@ -71,6 +71,7 @@ class PhotoList extends Component {
 							postMealBdgs={post_meal_bdgs}
 							insulinUnits = {insulin_units}
 							preMealBdgsTimeStamp = {pre_meal_bdgs_time_stamp}
+							postMealBdgsTimeStamp = {post_meal_bdgs_time_stamp}
 							customerId = {customer_id}
 					/>)
 				} else {
