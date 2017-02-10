@@ -32,7 +32,6 @@ class ProfileForm extends Component {
             height: '100%',
         };
 
-    this.onFormSubmit = this.onFormSubmit.bind(this)
 	}
 
     componentWillMount(){
@@ -55,12 +54,6 @@ class ProfileForm extends Component {
 			})
     }
 
-
-
-    onFormSubmit(e){
-        this.props.onFormSubmit(this.state)
-    }
-
 	render(){
         var name  = this.state.firstName
 
@@ -78,27 +71,18 @@ class ProfileForm extends Component {
                              >
                                  <TableRow >
                                    <TableRowColumn className="table-header">First Name</TableRowColumn>
-                                   <TableRowColumn>{this.props.user.first_name || ''}</TableRowColumn>
+                                   <TableRowColumn className="table-value">{this.props.user.first_name || ''}</TableRowColumn>
                                  </TableRow>
                                  <TableRow >
                                    <TableRowColumn className="table-header">Bdg Range (low)</TableRowColumn>
-                                   <TableRowColumn>{this.props.user.bdgs_low_range || ''}</TableRowColumn>
+                                   <TableRowColumn className="table-value">{this.props.user.bdgs_low_range || ''}</TableRowColumn>
                                  </TableRow>
                                  <TableRow >
                                    <TableRowColumn className="table-header">Bdg Range (high)</TableRowColumn>
-                                   <TableRowColumn>{this.props.user.bdgs_high_range || ''}</TableRowColumn>
+                                   <TableRowColumn className="table-value">{this.props.user.bdgs_high_range || ''}</TableRowColumn>
                                  </TableRow>
                              </TableBody>
                            </Table>
-
-						<RaisedButton
-                            className="form-btn btn"
-							icon={nearbyIcon}
-							onClick={this.onFormSubmit}
-                            backgroundColor={'#9575CD'}
-                            primary={true}
-                            style={style} >
-						</RaisedButton>
 				    </form>
 				</div>
 		)

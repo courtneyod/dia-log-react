@@ -310,7 +310,7 @@ export default class Photo extends Component {
                                         <span className="photo-details-title-bdgs">Post Meal Bdgs {this.handleTimeStamp(this.props.postMealBdgsTimeStamp)}</span>
                                     </div>
                                     <div className="photo-details-bdgs">
-                                        {this.state.postBdgs}
+                                        {this.state.postBdgs || "?"}
                                     </div>
                                 </div>
                             </div>

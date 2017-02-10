@@ -22,13 +22,12 @@ class ProfileImage extends Component {
 	}
 
 	renderImage(){
-		console.log(this.props.user, 'HEREHHEEHHEHE')
+		console.log(this.props.user.photo, 'HEREHHEEHHEHE')
+		var photoUrl = "";
 		if (this.props.user) {
 			var photoUrl = this.props.user.photo
-		} else {
-			var photoUrl = "";
 		}
-		if (photoUrl.length === 0){
+		if (photoUrl === ""){
 			return (
 			<div className="svg-container">
 				<Person className="profile-image-svg"/>
