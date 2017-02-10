@@ -40,10 +40,10 @@ var editPhoto = (data) => {
     };
 };
 
-var addCats = (data) => {
+var addCats = (category) => {
     return {
         type: "ADD_CATS",
-        payload: data
+        payload: category
     };
 };
 

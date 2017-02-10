@@ -130,15 +130,12 @@ class PhotoList extends Component {
 	}
 
 	updateFilteredState(text){
-		console.log(text, 'filetered')
 		this.setState({
 			filtered: text
 		})
-		console.log(this.state.filtered, 'sate of filtered text')
 	}
 
 	render(){
-		// console.log(this.state, 'ere')
 		return (
 			<div>
 				<Nav handleNewFilter={this.updateFilteredState} categories={this.state.categoryNames}/>

@@ -6,7 +6,9 @@ var photoListReducer = (state = [], action) => {
             return action.payload;
         case "ADD_CATS":
             var newState = JSON.parse(JSON.stringify(state))
-            newState[action.payload.index]['category'] = action.payload.value
+            var update = newState[action.payload.index]['category']
+            update.push(action.payload.value[0])
+            newState[action.payload.index]['category'] = update
             return newState
         default:
             return state;

@@ -12,7 +12,7 @@ import ChipInput from 'material-ui-chip-input';
 import Slider from 'material-ui/Slider';
 import Editor from 'material-ui/svg-icons/editor/mode-edit';
 import {connect} from 'react-redux'
-var actions =require('../actions/actions')
+var actions = require('../actions/actions')
 
 const style = {
   marginLeft: 20,
@@ -48,23 +48,11 @@ class Photo extends Component {
 	}
 
 	componentWillMount(){
-        console.log(this.props.photos, "PHOTOS")
         var photoId = this.props.id
-		var newArr = []
-        // console.log(getPhotoIndex, "PROPS")
         var index = getPhotoIndex(photoId, this)
-        console.log(index, "INDEX")
         var cats = this.props.photos[index].category
 
-		if(cats.length > 0 ){
-			for (var i = 0; i < cats.length; i++) {
-				var obj = {
-					'key': i,
-					'label': cats[i]
-				}
-				newArr.push(obj)
-			}
-		}
+		var newArr = createCatObjForChips(cats)
 		this.setState({chipData: newArr});
 
         var dispatch = this.props.dispatch;
@@ -76,18 +64,28 @@ class Photo extends Component {
 				console.log(err)
 			})
 	}
+
     handleAddChip(chip){
-		this.setState({newChips: chip});
+        console.log(chip, "EACH TIME??????????")
+        var photoId = this.props.id;
+        var index = getPhotoIndex(photoId, this)
+        var dispatch = this.props.dispatch;
 
-        var photoId = this.props.id
+		dispatch(actions.addCats({
+            'value': chip,
+            'index': index
+        }));
 
-        console.log(this.props.id, "PROPS")
-        for (var i = 0; i < this.props.photos.length; i++) {
-            if(this.props.photos[i].id === photoId){
-                cats = this.props.photos[i].category
-            }
+        var lastChip = chip[chip.length-1]
+        var newArray = this.props.photos[index].category
+        newArray.push(lastChip)
+        console.log(newArray, "CHOIPSOSIDJSI")
+        var obj = createCatObjForChips(newArray)
 
-        }
+        this.setState({
+            'newChips': chip,
+            'chipData': obj
+        });
 	}
 
 	handleRequestDelete = (key) => {
@@ -95,7 +93,6 @@ class Photo extends Component {
 		  this.chipData = this.state.chipData;
 		  const chipToDelete = this.chipData.map((chip) => chip.key).indexOf(key);
 		  const removeCat = this.chipData[chipToDelete].label
-		  console.log(removeCat, 'here')
 		  this.chipData.splice(chipToDelete, 1);
 		  this.setState({
 			  chipData: this.chipData,
@@ -363,11 +360,27 @@ class Photo extends Component {
 	}
 }
 
+function createCatObjForChips(arr){
+    var newArr = []
+    if(arr.length > 0 ){
+        for (var i = 0; i < arr.length; i++) {
+            var obj = {
+                'key': i,
+                'label': arr[i]
+            }
+            newArr.push(obj)
+        }
+        return newArr;
+    } else {
+        return newArr
+    }
+}
+
 function getPhotoIndex(photoId, that){
-    console.log(that.props, "HERE")
+    // console.log(that.props, "HERE")
     for (var i = 0; i < that.props.photos.length; i++) {
         if(that.props.photos[i].id === photoId){
-            console.log(i, 'YES')
+            // console.log(i, 'YES')
             return i;
         }
     }
