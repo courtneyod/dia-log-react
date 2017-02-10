@@ -59,24 +59,20 @@ export default class NewEntryContainer extends Component {
 		    }).catch((err)=> {
 		        console.log(err)
 		    })
-
-
 	}
 
 	handleFormEntry(obj){
-		// console.log(obj, 'returned in obj')
+		console.log(obj, 'returned in obj')
 
 		var postObj ={}
 		var name = this.state.awsName
 		console.log(name, 'name that will be added to aws')
-		postObj.aws_name = this.state.awsName
+		postObj.aws_name = name
 		postObj.aws_type = this.state.awsType
 		postObj.photo_url = `https://s3.amazonaws.com/dialog-courtney/${name}`
 		postObj.pre_meal_bdgs = obj.preBdgs
 		postObj.insulin_units = obj.unitsValue
-		postObj.customer_id = 1
-		var cat = obj.searchText.toLowerCase()
-		postObj.category = cat
+		postObj.category = obj.newChips[0].toLowerCase()
 
 		ApiCalls.postNewPhoto(postObj)
 			.then((results)=>{

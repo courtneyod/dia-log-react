@@ -383,7 +383,9 @@ function getPhotoList(){
 
 function postNewPhoto(obj){
 	console.log(obj, 'about tot send this obj')
-
+	var userObj = getUserFromJWT()
+	var id = userObj.id
+	obj.id = id
 	const REQUEST_URL = `${URL}/photos`
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'POST');

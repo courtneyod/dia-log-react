@@ -134,11 +134,11 @@ input {
 
 .bdgs-div-container {
     text-align: center;
+    width: 50%;
 }
 
 .bdgs-div-container:first-child {
     border-right: 2px solid #d5d5d5;
-    padding-right: 65px;
     padding-bottom: 20px
 }
 
@@ -231,6 +231,7 @@ svg.icon {
 
 .photo-insulin{
     font-size: 25px;
+    vertical-align: middle;
 }
 
 .photo-li {
@@ -279,6 +280,9 @@ svg.icon {
 }
 
 /*upload photo styles */
+.form-new-cat {
+    margin-top: 50px;
+}
 
 .form-container {
     width: 31%;
@@ -340,11 +344,11 @@ svg.icon {
 }
 
 .overlay-bad-unknown {
-    background: linear-gradient(to right, rgba(229,56,53,0.70) 0%, rgba(255,255,255,0.70) 56%, rgba(255,255,255,0.34) 59%, rgba(255,255,255,0.34) 100%);
+    background: linear-gradient(to right, rgba(229,56,53,0.75) 30%, rgba(255,255,255,0.30) 56%, rgba(255,255,255,0.24) 59%, rgba(255,255,255,0.14) 100%);
 }
 
 .overlay-good-unknown {
-    background: linear-gradient(to right, rgba(67,160,72,0.70) 0%, rgba(255,255,255,0.70) 56%, rgba(255,255,255,0.34) 59%, rgba(255,255,255,0.34) 100%);
+    background: linear-gradient(to right, rgba(67,160,72,0.75) 30%, rgba(255,255,255,0.30) 56%, rgba(255,255,255,0.24) 59%, rgba(255,255,255,0.14) 100%);
 }
 
 .overlay-unknown-bad {
@@ -363,8 +367,11 @@ svg.icon {
     background: linear-gradient(to right, rgba(67,160,72,0.70) 0%, rgba(67,160,72,0.70) 100%);
 }
 
+.overlay-unknown-good {
+    background: linear-gradient(to right, rgba(255,255,255,0.34) 18%, rgba(255,255,255,0.34) 35%, rgba(67,160,72,0.34) 100%);
+}
+
 .overlay {
-    /*background: linear-gradient(to right, rgba(67,160,72,0.34) 0%, rgba(255,255,255,0.34) 63%, rgba(255,255,255,0.34) 100%);*/
     position: absolute;
     top: 0px;
     bottom: 30px;
@@ -372,11 +379,6 @@ svg.icon {
     height: 99%;
     z-index: 10;
 }
-
-.overlay-unknown-good {
-    background: linear-gradient(to right, rgba(255,255,255,0.34) 18%, rgba(255,255,255,0.34) 35%, rgba(67,160,72,0.34) 100%);
-}
-
 
 .fileInput {
   padding: 10px;

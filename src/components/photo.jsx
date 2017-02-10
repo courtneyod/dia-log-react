@@ -4,15 +4,15 @@ import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TimeAgo from 'react-timeago';
-import Time from 'react-time';
 import Chip from 'material-ui/Chip';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import ChipInput from 'material-ui-chip-input';
 import Slider from 'material-ui/Slider';
 import Editor from 'material-ui/svg-icons/editor/mode-edit';
+import {connect} from 'react-redux'
+var actions =require('../actions/actions')
 
 
 const style = {
@@ -20,7 +20,7 @@ const style = {
 };
 
 
-export default class Photo extends Component {
+class Photo extends Component {
 	constructor(props){
 		super(props)
 
@@ -49,11 +49,11 @@ export default class Photo extends Component {
 	}
 
 	componentWillMount(){
+        var i = 0
 		var cats = this.props.category
 		var newArr = []
 
 		if(cats.length > 0 ){
-			// console.log(cats, 'in if')
 			for (var i = 0; i < cats.length; i++) {
 				var obj ={
 					'key': i,
@@ -63,6 +63,16 @@ export default class Photo extends Component {
 			}
 		}
 		this.setState({chipData: newArr});
+
+        var dispatch = this.props.dispatch;
+
+		var user = ApiCalls.getUser()
+			.then((user)=>{
+                console.log("dispatching user ", user.user);
+				dispatch(actions.getUser(user.user))
+			}).catch((err)=> {
+				console.log(err)
+			})
 	}
 
 	handleRequestDelete = (key) => {
@@ -118,27 +128,42 @@ export default class Photo extends Component {
     	this.setState({expanded: false});
     };
 
+//add user max and min
 	renderOverlay(){
-		if(this.props.preMealBdgs > 180 && this.state.postBdgs > 180){
+        var high = this.props.user.bdgs_high_range || 180;
+        var low = this.props.user.bdgs_low_range || 80;
+        var preMealBdgs = this.props.preMealBdgs;
+        var postMealBdgs = this.state.postBdgs;
+        // console.log(this.props.user, "USER")
+		if(preMealBdgs > high && postMealBdgs > high){
 			return <div className="overlay-bad overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs < 180 && this.state.postBdgs !== null){
-			return <div className="overlay-good overlay"></div>
-		} else if (this.props.preMealBdgs > 180 && this.state.postBdgs < 180 && this.state.postBdgs !== null){
+
+        } else if (preMealBdgs > high && postMealBdgs < high && postMealBdgs > low  && postMealBdgs !== null){
 			return <div className="overlay-bad-good overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs > 180){
+
+        } else if (preMealBdgs > high && postMealBdgs < low && postMealBdgs !== null){
+			return <div className="overlay-bad overlay"></div>
+
+        } else if (preMealBdgs > high && postMealBdgs === null){
+            return <div className="overlay-bad-unknown overlay"></div>
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs < high && postMealBdgs > low && postMealBdgs !== null){
+			return <div className="overlay-good overlay"></div>
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs < low && postMealBdgs !== null){
 			return <div className="overlay-good-bad overlay"></div>
-		} else if (this.props.preMealBdgs > 180 && this.state.postBdgs === null){
-			return <div className="overlay-bad-unknown overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs === null){
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs > high){
+			return <div className="overlay-good-bad overlay"></div>
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs === null){
 			return <div className="overlay-good-unknown overlay"></div>
 		}
 	}
 
-
 	handleOpen = () => {
   		this.setState({Open: true});
 	};
-
 
 	handleClose = () => {
 	    this.setState({Open: false});
@@ -155,8 +180,6 @@ export default class Photo extends Component {
     		    console.log(err)
     	    })
 
-        // this.setState({catOpen: false});
-    	//   console.log(this.state.newChips, 'chips to add')
     	var addCats = this.state.newChips
 
     	if(addCats.length > 0){
@@ -165,7 +188,6 @@ export default class Photo extends Component {
     		    category: addCats[i],
     			id: this.props.id
     		}
-            //   console.log(obj, 'obj that is sent to addcat')
 
     		var photoList = ApiCalls.addCatToPhoto(obj)
     			.then((data)=>{
@@ -250,7 +272,7 @@ export default class Photo extends Component {
 		            toggled={this.state.expanded}
 		            onToggle={this.handleToggle}
 		            labelPosition="right"
-		            label="Details"
+		            label="Meal Stats"
 		          />
 		        </CardText>
 		        <CardText className="photo-details-container" expandable={true}>
@@ -329,3 +351,13 @@ export default class Photo extends Component {
 		)
 	}
 }
+
+//use matstate to prop when you need acces to store, if you only need to put in to the store you only need to dispatch
+function mapStateToProps(store){
+	return {
+		photos: store.photos,
+        user: store.user
+	}
+}
+
+export default connect(mapStateToProps)(Photo)
