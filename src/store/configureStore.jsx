@@ -7,7 +7,8 @@ import {
 
 import {
     photoListReducer,
-    userReducer
+    userReducer,
+    fileReducer
 } from "../reducers/reducers";
 // import promise from "redux-promise";
 
@@ -15,7 +16,8 @@ import {
 export var configure = (initialState = {loggedIn: null}) => {
     var reducers = combineReducers({
         photos: photoListReducer,
-        user: userReducer
+        user: userReducer,
+        file: fileReducer
     });
 
     // var createStoreWithMiddleware = applyMiddleware(promise)(createStore);

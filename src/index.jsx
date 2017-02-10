@@ -15,7 +15,7 @@ import {Route, Router, IndexRoute, hashHistory} from 'react-router';
 var actions = require("./actions/actions");
 var store = require("./store/configureStore").configure();
 
-console.log(store)
+console.log(store, 'store')
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -23,7 +23,7 @@ injectTapEventPlugin();
 //state of entire store every time dispatch runs
 store.subscribe(() => {
     var state = store.getState();
-    console.log("New state:", state);
+    console.log("New state from redux store:", state);
 });
 
 ReactDOM.render(

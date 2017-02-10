@@ -58,7 +58,7 @@ class PhotoList extends Component {
 		} else {
 
 			var photoArray = photos.map((photo)=>{
-				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, customer_id, id, category} = photo
+				let {photo_url, pre_meal_bdgs, post_meal_bdgs, insulin_units, pre_meal_bdgs_time_stamp, post_meal_bdgs_time_stamp, customer_id, id, category} = photo
 				var filteredState = this.state.filtered
 
 				if(!filteredState || filteredState === ''){
@@ -71,6 +71,7 @@ class PhotoList extends Component {
 							postMealBdgs={post_meal_bdgs}
 							insulinUnits = {insulin_units}
 							preMealBdgsTimeStamp = {pre_meal_bdgs_time_stamp}
+							postMealBdgsTimeStamp = {post_meal_bdgs_time_stamp}
 							customerId = {customer_id}
 					/>)
 				} else {
@@ -129,15 +130,12 @@ class PhotoList extends Component {
 	}
 
 	updateFilteredState(text){
-		console.log(text, 'filetered')
 		this.setState({
 			filtered: text
 		})
-		console.log(this.state.filtered, 'sate of filtered text')
 	}
 
 	render(){
-		// console.log(this.state, 'ere')
 		return (
 			<div>
 				<Nav handleNewFilter={this.updateFilteredState} categories={this.state.categoryNames}/>

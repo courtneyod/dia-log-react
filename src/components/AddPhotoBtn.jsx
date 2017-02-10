@@ -6,6 +6,7 @@ import FontIcon from 'material-ui/FontIcon';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import IconLocationOn from 'material-ui/svg-icons/content/add-circle';
+const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
 
 const nearbyIcon = <IconLocationOn className="icon"/>;
 
@@ -33,21 +34,15 @@ export default class AddPhotoBtn extends Component {
 	render(){
 
 		return (
-			<Paper className="add-btn-container" zDepth={1}>
-		        <BottomNavigation onClick={this.handleUploadRequest} selectedIndex={this.state.selectedIndex}>
-		          <BottomNavigationItem className="btn"
-		            icon={nearbyIcon}
-		            onTouchTap={() => this.select(2)}
-		          />
-		        </BottomNavigation>
-		    </Paper>
-				// <div>
-				// 	<div className="add-btn-container">
-				// 	    <FloatingActionButton style={style}>
-				// 	      <ContentAdd />
-				// 	    </FloatingActionButton>
-				// 	</div>
-				// </div>
+            <Paper className="add-btn-container" zDepth={1}>
+                <BottomNavigation onClick={this.handleUploadRequest} selectedIndex={this.state.selectedIndex}>
+                  <BottomNavigationItem
+                    label="Favorites"
+                    icon={nearbyIcon}
+                    onTouchTap={() => this.select(1)}
+                  />
+                </BottomNavigation>
+              </Paper>
 		)
 	}
 }

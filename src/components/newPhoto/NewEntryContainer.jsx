@@ -3,22 +3,17 @@ import NewEntryForm from './NewEntryForm'
 import UploadPhoto from './UploadPhoto'
 import NewEntryNav from './NewEntryNav'
 import ApiCalls from '../../api/database_api'
-import cookie from 'react-cookie';
+import {connect} from 'react-redux'
+var actions =require('../../actions/actions')
 
-export default class NewEntryContainer extends Component {
+class NewEntryContainer extends Component {
 	constructor(props, context){
 		super(props, context)
 
-		this.state = {
-			categoriesArray: [],
-			awsName: '',
-			awsType: ''
-		}
+		this.state = {}
 
 		this.handlePhotoEntry = this.handlePhotoEntry.bind(this)
 		this.handleFormEntry = this.handleFormEntry.bind(this)
-		this.handleCatergiesName = this.handleCatergiesName.bind(this)
-		this.handleCatergiesName()
 		this.handleBackToFeed = this.handleBackToFeed.bind(this)
 	}
 
@@ -26,68 +21,54 @@ export default class NewEntryContainer extends Component {
 		router: PropTypes.object
 	}
 
-	handleCatergiesName(){
-		var names = ApiCalls.getAllCatergies()
-			.then((results)=>{
-				// console.log('alll the cats', results)
-				var catsArray = results.data.map(obj=>{
-					// console.log(obj.category, 'here are the objs')
-					return obj.category
-				})
-
-				this.setState({
-					categoriesArray: catsArray
-				})
-
-			}).catch((err)=>{
-				console.log(err, 'error fetching categories')
-			})
-	}
-
-
   	handlePhotoEntry (file){
-		var url = ApiCalls.aws(file)
-		    .then((data)=>{
-		        var name = data.jsonObj.key
-		        var type = data.jsonObj.mimetype
-
-				console.log(name, type, 'results from aws')
-				this.setState({
-					awsName: name,
-					awsType: type
-				})
-		    }).catch((err)=> {
-		        console.log(err)
-		    })
-
-
+		var dispatch = this.props.dispatch;
+		dispatch(actions.postFile(file))
+		console.log(this.props.file, "FILE STORE")
 	}
 
 	handleFormEntry(obj){
-		// console.log(obj, 'returned in obj')
+		console.log(this.props.file, "FILE OBJ FROM STORE")
+		var file = this.props.file
+		ApiCalls.aws(file)
+		    .then((data)=>{
+				console.log(data, "FROM AWS CALL")
 
-		var postObj ={}
-		var name = this.state.awsName
-		console.log(name, 'name that will be added to aws')
-		postObj.aws_name = this.state.awsName
-		postObj.aws_type = this.state.awsType
-		postObj.photo_url = `https://s3.amazonaws.com/dialog-courtney/${name}`
-		postObj.pre_meal_bdgs = obj.preBdgs
-		postObj.insulin_units = obj.unitsValue
-		postObj.customer_id = 1
-		var cat = obj.searchText.toLowerCase()
-		postObj.category = cat
+		        var name = data.jsonObj.location.split('s3.amazonaws.com/')[1]
+		        var type = data.jsonObj.mimetype
+// "https://dialog-courtney.s3.amazonaws.com/cheatdayeats%20clinton%20st%20baking%20chocolate%20chip%20pancakes.png"
+				return name
 
-		ApiCalls.postNewPhoto(postObj)
-			.then((results)=>{
-				console.log(results, 'new post!!!!')
-				setTimeout(()=>{
-		                    this.context.router.push('/feed')
-		                }, 400);
-			}).catch(err=>{
-				console.log(err)
+		    }).then((name) => {
+
+				var postObj ={}
+				postObj.aws_name = name
+				postObj.photo_url = `https://s3.amazonaws.com/dialog-courtney/${name}`
+				postObj.pre_meal_bdgs = obj.preBdgs
+				postObj.insulin_units = obj.unitsValue
+				console.log(obj.newChips, "CHIPS")
+
+				if(obj.newChips.length > 0){
+					//need to figure out how to manage more than 1 category add
+					postObj.categories = obj.newChips
+				} else {
+					postObj.categories = []
+				}
+				console.log(postObj, "POST OBJ")
+
+				ApiCalls.postNewPhoto(postObj)
+					.then((results)=>{
+						setTimeout(()=>{
+				                    this.context.router.push('/feed')
+				                }, 100);
+					}).catch(err=>{
+						console.log(err)
+					})
+
 			})
-
+			.catch((err)=> {
+		        console.log(err)
+		    })
 	}
 
 	handleBackToFeed(){
@@ -105,3 +86,14 @@ export default class NewEntryContainer extends Component {
 		)
 	}
 }
+
+
+//use matstate to prop when you need acces to store, if you only need to put in to the store you only need to dispatch
+function mapStateToProps(store){
+	return {
+		file: store.file
+	}
+}
+
+// when you dont need to change the store nothing goes in the first argument
+export default connect(mapStateToProps)(NewEntryContainer)

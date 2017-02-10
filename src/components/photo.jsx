@@ -4,21 +4,22 @@ import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TimeAgo from 'react-timeago';
-import Time from 'react-time';
 import Chip from 'material-ui/Chip';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import ChipInput from 'material-ui-chip-input';
 import Slider from 'material-ui/Slider';
+import Editor from 'material-ui/svg-icons/editor/mode-edit';
+import {connect} from 'react-redux'
+var actions = require('../actions/actions')
 
 const style = {
   marginLeft: 20,
 };
 
 
-export default class Photo extends Component {
+class Photo extends Component {
 	constructor(props){
 		super(props)
 
@@ -26,8 +27,7 @@ export default class Photo extends Component {
       		expanded: false,
 			chipData: [],
 			deletedCat: '',
-			catOpen: false,
-            bdgsOpen: false,
+            Open: false,
 			newChips: [],
             postBdgs: this.props.postMealBdgs
     	}
@@ -43,24 +43,49 @@ export default class Photo extends Component {
 	    };
 	this.handleAddChip = this.handleAddChip.bind(this)
     this.handlePostMealBdgsFieldChange = this.handlePostMealBdgsFieldChange.bind(this)
-    this.handleBdgsClose = this.handleBdgsClose.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleTimeStamp = this.handleTimeStamp.bind(this)
 	}
 
 	componentWillMount(){
-		var cats = this.props.category
-		var newArr = []
+        var photoId = this.props.id
+        var index = getPhotoIndex(photoId, this)
+        var cats = this.props.photos[index].category
 
-		if(cats.length > 0 ){
-			// console.log(cats, 'in if')
-			for (var i = 0; i < cats.length; i++) {
-				var obj ={
-					'key': i,
-					'label': cats[i]
-				}
-				newArr.push(obj)
-			}
-		}
+		var newArr = createCatObjForChips(cats)
 		this.setState({chipData: newArr});
+
+        var dispatch = this.props.dispatch;
+
+		var user = ApiCalls.getUser()
+			.then((user)=>{
+				dispatch(actions.getUser(user.user))
+			}).catch((err)=> {
+				console.log(err)
+			})
+	}
+
+    handleAddChip(chip){
+        console.log(chip, "EACH TIME??????????")
+        var photoId = this.props.id;
+        var index = getPhotoIndex(photoId, this)
+        var dispatch = this.props.dispatch;
+
+		dispatch(actions.addCats({
+            'value': chip,
+            'index': index
+        }));
+
+        var lastChip = chip[chip.length-1]
+        var newArray = this.props.photos[index].category
+        newArray.push(lastChip)
+        console.log(newArray, "CHOIPSOSIDJSI")
+        var obj = createCatObjForChips(newArray)
+
+        this.setState({
+            'newChips': chip,
+            'chipData': obj
+        });
 	}
 
 	handleRequestDelete = (key) => {
@@ -68,7 +93,6 @@ export default class Photo extends Component {
 		  this.chipData = this.state.chipData;
 		  const chipToDelete = this.chipData.map((chip) => chip.key).indexOf(key);
 		  const removeCat = this.chipData[chipToDelete].label
-		  console.log(removeCat, 'here')
 		  this.chipData.splice(chipToDelete, 1);
 		  this.setState({
 			  chipData: this.chipData,
@@ -116,73 +140,76 @@ export default class Photo extends Component {
     	this.setState({expanded: false});
     };
 
+//add user max and min
 	renderOverlay(){
-		if(this.props.preMealBdgs > 180 && this.state.postBdgs > 180){
+        var high = this.props.user.bdgs_high_range || 180;
+        var low = this.props.user.bdgs_low_range || 80;
+        var preMealBdgs = this.props.preMealBdgs;
+        var postMealBdgs = this.state.postBdgs;
+        // console.log(this.props.user, "USER")
+		if(preMealBdgs > high && postMealBdgs > high){
 			return <div className="overlay-bad overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs < 180 && this.state.postBdgs !== null){
-			return <div className="overlay-good overlay"></div>
-		} else if (this.props.preMealBdgs > 180 && this.state.postBdgs < 180 && this.state.postBdgs !== null){
+
+        } else if (preMealBdgs > high && postMealBdgs < high && postMealBdgs > low  && postMealBdgs !== null){
 			return <div className="overlay-bad-good overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs > 180){
+
+        } else if (preMealBdgs > high && postMealBdgs < low && postMealBdgs !== null){
+			return <div className="overlay-bad overlay"></div>
+
+        } else if (preMealBdgs > high && postMealBdgs === null){
+            return <div className="overlay-bad-unknown overlay"></div>
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs < high && postMealBdgs > low && postMealBdgs !== null){
+			return <div className="overlay-good overlay"></div>
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs < low && postMealBdgs !== null){
 			return <div className="overlay-good-bad overlay"></div>
-		} else if (this.props.preMealBdgs > 180 && this.state.postBdgs === null){
-			return <div className="overlay-bad-unknown overlay"></div>
-		} else if (this.props.preMealBdgs < 180 && this.state.postBdgs === null){
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs > high){
+			return <div className="overlay-good-bad overlay"></div>
+
+		} else if (preMealBdgs < high && preMealBdgs > low && postMealBdgs === null){
 			return <div className="overlay-good-unknown overlay"></div>
 		}
 	}
-	handleCatOpen = () => {
-  		this.setState({catOpen: true});
+
+	handleOpen = () => {
+  		this.setState({Open: true});
 	};
 
-	handleBdgsOpen = () => {
-  		this.setState({bdgsOpen: true});
+	handleClose = () => {
+	    this.setState({Open: false});
+	    var postBdgs = this.state.postBdgs
+        var obj = {
+            postBdgs: postBdgs,
+            id: this.props.id
+        }
+
+        var bdgs = ApiCalls.addPostBdgs(obj)
+    	    .then((data)=>{
+    		    console.log(data, 'from api call in adding postBdgs')
+    	    }).catch((err)=> {
+    		    console.log(err)
+    	    })
+
+    	var addCats = this.state.newChips
+
+    	if(addCats.length > 0){
+    		for (var i = 0; i < addCats.length; i++) {
+    		var obj = {
+    		    category: addCats[i],
+    			id: this.props.id
+    		}
+
+    		var photoList = ApiCalls.addCatToPhoto(obj)
+    			.then((data)=>{
+    				console.log(data, 'ADDED CATS')
+    			}).catch((err)=> {
+    				console.log(err)
+    			})
+    	    }
+    	}
 	};
-
-	handleCatClose = () => {
-	  this.setState({catOpen: false});
-	//   console.log(this.state.newChips, 'chips to add')
-	  var addCats = this.state.newChips
-
-	  if(addCats.length > 0){
-		  for (var i = 0; i < addCats.length; i++) {
-		  var obj = {
-			  category: addCats[i],
-			  id: this.props.id
-		  }
-          console.log(obj, 'obj that is sent to addcat')
-
-		  var photoList = ApiCalls.addCatToPhoto(obj)
-			  .then((data)=>{
-				  console.log(data, 'from api call in adding cats Component')
-			  }).catch((err)=> {
-				  console.log(err)
-			  })
-	    }
-	   }
-	};
-
-	handleBdgsClose = () => {
-        // console.log(this.state.postBdgs, 'new postBdgs value')
-	  this.setState({bdgsOpen: false});
-	  var postBdgs = this.state.postBdgs
-      var obj = {
-          postBdgs: postBdgs,
-          id: this.props.id
-      }
-
-		  var bdgs = ApiCalls.addPostBdgs(obj)
-			  .then((data)=>{
-				  console.log(data, 'from api call in adding postBdgs')
-			  }).catch((err)=> {
-				  console.log(err)
-			  })
-	};
-
-	handleAddChip(chip){
-		this.setState({newChips: chip});
-
-	}
 
 	handleDeleteChip(chip, index){
 		console.log('deleted chips', chip)
@@ -190,7 +217,30 @@ export default class Photo extends Component {
 
     handlePostMealBdgsFieldChange = (event, value) => {
         this.setState({postBdgs: value});
-      };
+    };
+
+    handleTimeStamp(time){
+        if(!time){
+            return '';
+        }
+        var date = new Date(time)
+        var newDate = date.toString()
+        var newTime = newDate.split(' ')[4]
+        var hours = newTime.split(':')[0]
+        var minutes = newTime.split(':')[1]
+        var timeConvention = 'am';
+
+        if (hours > 12) {
+              timeConvention = 'pm';
+              hours -= 12;
+          } else if (hours == 12) {
+              timeConvention = 'pm';
+          } else if (hours == 0) {
+              hours = 12;
+           }
+
+        return ` @ ${hours}:${minutes} ${timeConvention}`
+    }
 
 	render(){
 		const catActions = [
@@ -206,20 +256,19 @@ export default class Photo extends Component {
 		        label="Ok"
 		        primary={true}
 		        keyboardFocused={true}
-		        onTouchTap={this.handleBdgsClose}
+		        onTouchTap={this.handleClose}
 		      />,
 		    ];
 
 
-		let {photoUrl, id, preMealBdgs, postMealBdgs, insulinUnits, preMealBdgsTimeStamp, customerId, category} = this.props
+		let {photoUrl, id, preMealBdgs, postMealBdgs, postMealBdgsTimeStamp, insulinUnits, preMealBdgsTimeStamp, customerId, category} = this.props
 		var time=<TimeAgo className="time-ago" date={preMealBdgsTimeStamp} />
+
 		return (
 			<Card className="photo-card" expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
 		        <CardHeader
 				  className="title-container"
-		          title={time} />
-		          actAsExpander={true}
-		          showExpandableButton={true}
+		          title={time}
 		        />
 		        <CardMedia className="photo photo-container">
 				  <div className="photo-overlay">
@@ -227,74 +276,124 @@ export default class Photo extends Component {
 					{this.renderOverlay()}
 				  </div>
 		        </CardMedia>
-				<CardText>
+				<CardText
+                    className="photo-toggle"
+                    >
 		          <Toggle
 		            toggled={this.state.expanded}
 		            onToggle={this.handleToggle}
 		            labelPosition="right"
-		            label="Details"
+		            label="Meal Stats"
 		          />
 		        </CardText>
 		        <CardText className="photo-details-container" expandable={true}>
 
 					<ul className="photo-details">
+                        <li className="photo-edit">
+                            <Editor
+    						    onTouchTap={this.handleOpen}
+    							color={'#9E9E9E'} hoverColor={'#757575'}
+    							/>
 
-						<li><span className="photo-details-title"><span style={this.styles.wrapper}>Categories:
-					        {this.state.chipData.map(this.renderChip, this)}
-							<FloatingActionButton onTouchTap={this.handleCatOpen} mini={true} secondary={true} style={style}>
-								 <ContentAdd />
-							</FloatingActionButton>
-
-								<Dialog
-						          actions={catActions}
-						          modal={false}
-						          open={this.state.catOpen}
-						          onRequestClose={this.handleCatClose}
-						        >
-						          Add a new category
-								  <ChipInput
-									  onChange={this.handleAddChip}
-									  onRequestAdd={(chip) => handleAddChip(chip)}
-									  onRequestDelete={(chip, index) => handleDeleteChip(chip, index)}
-									/>
-						        </Dialog>
-						</span></span></li>
-						<li><span className="photo-details-title">Pre Meal Bdgs: </span>{preMealBdgs}</li>
-						<li><span className="photo-details-title">Post Meal Bdgs: </span>{this.state.postBdgs}
-                             <FloatingActionButton
-                                 onTouchTap={this.handleBdgsOpen}
-                                 mini={true}
-                                 secondary={true}
-                                 style={style}>
-								 <ContentAdd />
-							</FloatingActionButton>
-
-								<Dialog
-                                className="test"
-						          actions={bdgsActions}
-						          modal={false}
-						          open={this.state.bdgsOpen}
-						          onRequestClose={this.handleBdgsClose}
-						        >
-                                <p>
-                                   <span>{'Update your post meal bdgs: '}</span>
-                                   <span>{this.state.postBdgs}</span>
-                                 </p>
-                                  <Slider
-                                    min={40}
-                                    max={500}
-                                    step={1}
-                                    defaultValue={150}
-                                    value={this.state.postBdgs}
-                                    onChange={this.handlePostMealBdgsFieldChange}
-                                  />
-						        </Dialog>
+                           <Dialog
+                           className="test"
+                             actions={bdgsActions}
+                             modal={false}
+                             open={this.state.Open}
+                             onRequestClose={this.handleClose}
+                           >
+                           <div>
+                           <p>
+                              <span>{'Update your post meal bdgs: '}</span>
+                              <span>{this.state.postBdgs}</span>
+                            </p>
+                             <Slider
+                               min={40}
+                               max={500}
+                               step={1}
+                               defaultValue={150}
+                               value={this.state.postBdgs}
+                               onChange={this.handlePostMealBdgsFieldChange}
+                             />
+                     </div>
+                     <div>
+                         <div>Add a new category</div>
+                         <ChipInput
+                             onChange={this.handleAddChip}
+                             onRequestAdd={(chip) => handleAddChip(chip)}
+                             onRequestDelete={(chip, index) => handleDeleteChip(chip, index)}
+                           />
+                     </div>
+                           </Dialog>
                         </li>
-						<li><span className="photo-details-title">Units: </span> {insulinUnits}</li>
-						<li><span className="photo-details-title">Date: </span> <Time value={preMealBdgsTimeStamp} titleFormat="YYYY/MM/DD HH:mm" relative /></li>
+                        <li className="bdgs-photo-container">
+                            <div className="bdgs-div-container">
+                                <div >
+                                    <div>
+                                        <span className="photo-details-title-bdgs">Pre Meal Bdgs {this.handleTimeStamp(this.props.preMealBdgsTimeStamp)}</span>
+                                    </div>
+                                    <div className="photo-details-bdgs">
+                                        {preMealBdgs}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bdgs-div-container">
+                                <div>
+                                    <div>
+                                        <span className="photo-details-title-bdgs">Post Meal Bdgs {this.handleTimeStamp(this.props.postMealBdgsTimeStamp)}</span>
+                                    </div>
+                                    <div className="photo-details-bdgs">
+                                        {this.state.postBdgs || "?"}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+						<li className="photo-li">
+                            <span className="photo-details-title">Units: </span> <span className="photo-insulin">{insulinUnits}</span>
+                        </li>
+                        <li className="photo-li">
+                            <span className="photo-details-title"><span style={this.styles.wrapper}>Categories:
+    					        {this.state.chipData.map(this.renderChip, this)}
+    						</span></span></li>
     				</ul>
 		        </CardText>
 		    </Card>
 		)
 	}
 }
+
+function createCatObjForChips(arr){
+    var newArr = []
+    if(arr.length > 0 ){
+        for (var i = 0; i < arr.length; i++) {
+            var obj = {
+                'key': i,
+                'label': arr[i]
+            }
+            newArr.push(obj)
+        }
+        return newArr;
+    } else {
+        return newArr
+    }
+}
+
+function getPhotoIndex(photoId, that){
+    // console.log(that.props, "HERE")
+    for (var i = 0; i < that.props.photos.length; i++) {
+        if(that.props.photos[i].id === photoId){
+            // console.log(i, 'YES')
+            return i;
+        }
+    }
+}
+//use matstate to prop when you need acces to store, if you only need to put in to the store you only need to dispatch
+function mapStateToProps(store){
+	return {
+		photos: store.photos,
+        user: store.user
+	}
+}
+
+export default connect(mapStateToProps)(Photo)

@@ -52,14 +52,16 @@ class LoginContainer extends Component {
 
 		ApiCalls.login(obj)
 			.then(function(data){
-				console.log(data, 'user logined in')
 
-				if(data.authenticated.authenticated){
-					localStorage.setItem("jwt", data.authenticated.jwt);
+				if(data.authentication.authenticated){
+					console.log('authenticated')
+					localStorage.setItem("jwt", data.authentication.jwt+'&id='+data.user.id+'&email='+data.user.email);
 
 					dispatch(actions.getUser(data))
 
 					that.context.router.push('/feed')
+				} else {
+
 				}
 			})
 			.catch((err)=> {
@@ -68,7 +70,6 @@ class LoginContainer extends Component {
 	}
 
 	handleGoogleAuth(){
-		console.log('here in gogle auth log ni contianere')
 		var googleAuth = ApiCalls.googleAuth()
 			.then((data)=>{
 				console.log(data, 'made it!')
@@ -93,6 +94,7 @@ class LoginContainer extends Component {
 					localStorage.setItem("jwt", data.jwt);
 					that.context.router.push('/feed')
 				} else {
+					//add to state, failure to login error message
 					that.context.router.push('/login')
 				}
 			})

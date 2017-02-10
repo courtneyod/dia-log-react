@@ -52,7 +52,7 @@ export default class UploadPhoto extends Component {
             imagePreviewUrl: reader.result
           });
           if(this.state.imagePreviewUrl.length > 0){
-              console.log('sendt', this.state.file)
+              console.log('send the file to parent', this.state.file)
               this.props.onAddPhoto(this.state.file)
           }
         }
@@ -62,13 +62,12 @@ export default class UploadPhoto extends Component {
     }
 
 	render(){
-        // console.log(this.state, 'state')
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-          $imagePreview = (<img width="403px" height="314px" src={imagePreviewUrl} />);
+          $imagePreview = (<img width="319px" src={imagePreviewUrl} />);
         } else {
-          $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+          $imagePreview = (<div className="previewText">Select an Image</div>);
         }
 		return (
               <div className="photo-upload-container previewComponent">

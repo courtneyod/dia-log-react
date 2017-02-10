@@ -12,9 +12,57 @@ var getUser = (user) => {
     };
 };
 
+var editMaxBdgRange = (data) => {
+    return {
+        type: "EDIT_MAX_BDG_RANGE",
+        payload: data
+    };
+};
+
+var editMinBdgRange = (data) => {
+    return {
+        type: "EDIT_MIN_BDG_RANGE",
+        payload: data
+    };
+};
+
+var editUserName = (data) => {
+    return {
+        type: "EDIT_USER_NAME",
+        payload: data
+    };
+};
+
+var editPhoto = (data) => {
+    return {
+        type: "EDIT_PHOTO",
+        payload: data
+    };
+};
+
+var addCats = (category) => {
+    return {
+        type: "ADD_CATS",
+        payload: category
+    };
+};
+
+var postFile = (data) => {
+    return {
+        type: "POST_FILE",
+        payload: data
+    };
+};
+
 
 
 module.exports = {
     getPhotoList,
-    getUser
+    getUser,
+    editMaxBdgRange,
+    editMinBdgRange,
+    editUserName,
+    editPhoto,
+    postFile,
+    addCats
 };
