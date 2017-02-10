@@ -62,11 +62,10 @@ export default class UploadPhoto extends Component {
     }
 
 	render(){
-        // console.log(this.state, 'state')
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-          $imagePreview = (<img width="403px" height="314px" src={imagePreviewUrl} />);
+          $imagePreview = (<img width="319px" src={imagePreviewUrl} />);
         } else {
           $imagePreview = (<div className="previewText">Select an Image</div>);
         }

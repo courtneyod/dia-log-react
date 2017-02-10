@@ -253,7 +253,7 @@ function aws(obj){
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is the aws')
+			// console.log(data, 'this is the aws')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);

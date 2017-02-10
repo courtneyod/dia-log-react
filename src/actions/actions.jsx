@@ -40,6 +40,13 @@ var editPhoto = (data) => {
     };
 };
 
+var postFile = (data) => {
+    return {
+        type: "POST_FILE",
+        payload: data
+    };
+};
+
 
 
 module.exports = {
@@ -48,5 +55,6 @@ module.exports = {
     editMaxBdgRange,
     editMinBdgRange,
     editUserName,
-    editPhoto
+    editPhoto,
+    postFile
 };
