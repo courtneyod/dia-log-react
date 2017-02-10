@@ -68,7 +68,7 @@ export default class UploadPhoto extends Component {
         if (imagePreviewUrl) {
           $imagePreview = (<img width="403px" height="314px" src={imagePreviewUrl} />);
         } else {
-          $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+          $imagePreview = (<div className="previewText">Select an Image</div>);
         }
 		return (
               <div className="photo-upload-container previewComponent">

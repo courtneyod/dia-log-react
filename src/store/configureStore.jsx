@@ -15,7 +15,7 @@ import {
 export var configure = (initialState = {loggedIn: null}) => {
     var reducers = combineReducers({
         photos: photoListReducer,
-        user: userReducer
+        user: userReducer,
     });
 
     // var createStoreWithMiddleware = applyMiddleware(promise)(createStore);

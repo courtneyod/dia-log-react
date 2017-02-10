@@ -262,11 +262,13 @@ svg.icon {
 
 .photo-details li {
     font-weight: 300;
+    font-size: 18px;
     text-transform: uppercase;
 }
 
 .photo-details-title {
     font-weight: 300;
+    font-size: 13px;
 }
 
 .photo-details-title-bdgs {
@@ -275,7 +277,6 @@ svg.icon {
     font-weight: 200;
     text-transform: uppercase;
 }
-
 
 /*upload photo styles */
 
@@ -288,7 +289,6 @@ svg.icon {
     width: 28%;
     margin: auto;
     background-color: white;
-    height: 404px;
     margin-top: 40px;
 }
 
@@ -450,7 +450,9 @@ svg.icon {
 /*profile table styles*/
 
 .table-header {
-    font-weight: 700;
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 200;
 }
 
 

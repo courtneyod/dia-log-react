@@ -40,7 +40,8 @@ class ProfileForm extends Component {
 
 		var user = ApiCalls.getUser()
 			.then((user)=>{
-				dispatch(actions.getUser(user))
+                console.log("dispatching user ", user.user);
+				dispatch(actions.getUser(user.user))
 				// return user
                 this.setState({
                     maxBdgs: user.user.bdgs_high_range,
@@ -48,13 +49,13 @@ class ProfileForm extends Component {
                     firstName: user.user.first_name,
                     photo: user.user.photo
                 })
-                console.log(this.state, 'state in form')
+                // console.log(this.state, 'state in form')
 			}).catch((err)=> {
 				console.log(err)
 			})
-
-
     }
+
+
 
     onFormSubmit(e){
         this.props.onFormSubmit(this.state)
@@ -77,15 +78,15 @@ class ProfileForm extends Component {
                              >
                                  <TableRow >
                                    <TableRowColumn className="table-header">First Name</TableRowColumn>
-                                   <TableRowColumn>{this.state.firstName}</TableRowColumn>
+                                   <TableRowColumn>{this.props.user.first_name || ''}</TableRowColumn>
                                  </TableRow>
                                  <TableRow >
                                    <TableRowColumn className="table-header">Bdg Range (low)</TableRowColumn>
-                                   <TableRowColumn>{this.state.minBdgs}</TableRowColumn>
+                                   <TableRowColumn>{this.props.user.bdgs_low_range || ''}</TableRowColumn>
                                  </TableRow>
                                  <TableRow >
                                    <TableRowColumn className="table-header">Bdg Range (high)</TableRowColumn>
-                                   <TableRowColumn>{this.state.maxBdgs}</TableRowColumn>
+                                   <TableRowColumn>{this.props.user.bdgs_high_range || ''}</TableRowColumn>
                                  </TableRow>
                              </TableBody>
                            </Table>

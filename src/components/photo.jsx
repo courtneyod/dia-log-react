@@ -284,7 +284,7 @@ export default class Photo extends Component {
                              />
                      </div>
                      <div>
-                         Add a new category
+                         <div>Add a new category</div>
                          <ChipInput
                              onChange={this.handleAddChip}
                              onRequestAdd={(chip) => handleAddChip(chip)}

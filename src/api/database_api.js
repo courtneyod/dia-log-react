@@ -1,31 +1,9 @@
 var getUserFromJWT = require('./helpers');
 const URL = "http://localhost:8000"
-const EMAIL = 'courtney.od@gmail.com'
 
-function getPhotoList(){
-
-	const JWT = localStorage.getItem("jwt");
-	const REQUEST_URL = `${URL}/photos?jwt=${JWT}`
-	var myHeaders = new Headers();
-	myHeaders.append('Access-Control-Request-Method', 'GET');
-	myHeaders.append('Access-Control-Allow-Origin', '*');
-
-	var myInit = { method: 'GET',
-               headers: myHeaders,
-               mode: 'cors',
-               cache: 'default' };
-
-	return fetch(REQUEST_URL, myInit)
-		.then((forJSON)=>{
-			return forJSON.json()
-		})
-		.then((data)=>{
-			// console.log(data, 'this is the list of photos')
-			return data
-		}).catch(function(err) {
-    		console.log('Fetch Error :-S', err);
- 		});
-}
+// --------------------------------------------
+// ----------- GET/UPDATE CATEGORIES ----------
+// --------------------------------------------
 
 function getCatergiesId(photoId){
 	const REQUEST_URL = `${URL}/health-stat-categories/${photoId}`
@@ -95,6 +73,9 @@ function getAllCatergies(){
  		});
 }
 
+// --------------------------------------------
+// ------------------ GOOGLE AUTH -------------
+// --------------------------------------------
 
 function googleAuth(){
 	const REQUEST_URL = `${URL}/auth/google`
@@ -120,6 +101,10 @@ function googleAuth(){
 		   });
 }
 
+// --------------------------------------------
+// -------------- LOGIN /SIGN UP --------------
+// --------------------------------------------
+
 function signUp(obj){
 	// console.log(obj, 'this is the obj in sign up api')
 	const email = obj.email
@@ -133,34 +118,6 @@ function signUp(obj){
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 
 	var myInit = { method: 'POST',
-               headers: myHeaders,
-               mode: 'cors',
-               cache: 'default'
-		   };
-
-	return fetch(REQUEST_URL, myInit)
-		.then((forJSON)=>{
-			return forJSON.json()
-		})
-		.then((data)=>{
-			return data
-		}).catch(function(err) {
-    		console.log('Fetch Error :-S', err);
- 		});
-}
-
-function getUser(obj){
-	var userObj = getUserFromJWT()
-	console.log(userObj)
-	var id = userObj.id
-
-	const REQUEST_URL = `${URL}/login/${id}`
-
-	var myHeaders = new Headers();
-	myHeaders.append('Access-Control-Request-Method', 'GET');
-	myHeaders.append('Access-Control-Allow-Origin', '*');
-
-	var myInit = { method: 'GET',
                headers: myHeaders,
                mode: 'cors',
                cache: 'default'
@@ -205,34 +162,72 @@ function login(obj){
  		});
 }
 
-function postNewPhoto(obj){
-	console.log(obj, 'about tot send this obj')
+// --------------------------------------------
+// -------------- GET & UPDATE USER------------
+// --------------------------------------------
 
-	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
-	const REQUEST_URL = `${URL}/photos`
+function getUser(obj){
+	var userObj = getUserFromJWT()
+	var id = userObj.id
+
+	const REQUEST_URL = `${URL}/login/${id}`
+
 	var myHeaders = new Headers();
-	myHeaders.append('Access-Control-Request-Method', 'POST');
+	myHeaders.append('Access-Control-Request-Method', 'GET');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
-	myHeaders.append('Accept', 'application/json')
-	myHeaders.append('Content-Type', 'application/json');
 
-	var myInit = { method: 'POST',
-			   body: JSON.stringify(obj),
+	var myInit = { method: 'GET',
                headers: myHeaders,
                mode: 'cors',
-               cache: 'default' };
+               cache: 'default'
+		   };
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is the post')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
  		});
 }
+
+function updateUser(obj){
+	var userObj = getUserFromJWT()
+	var id = userObj.id
+	console.log(obj, 'obj emplty? ')
+	var bodyObj = obj
+
+	const REQUEST_URL = `${URL}/login/${id}`
+
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'PUT');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Content-Type', 'application/json')
+
+	var myInit = {
+		method: 'PUT',
+		body: JSON.stringify(bodyObj),
+        headers: myHeaders,
+        mode: 'cors',
+        cache: 'default'
+		};
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			return forJSON.json()
+		})
+		.then((data)=>{
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
+// --------------------------------------------
+// ----------------- AWS CALLS ----------------
+// --------------------------------------------
 
 function aws(obj){
 	const REQUEST_URL = `${URL}/aws`
@@ -296,11 +291,13 @@ function fetchAwsPhoto(obj){
  		});
 }
 
+// --------------------------------------------
+// -------------- CATEGORIES ------------------
+// --------------------------------------------
 function deleteCatFromPhoto(obj){
 	const category = obj.category
 	const id = obj.id
 
-	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
 	const REQUEST_URL = `${URL}/health-stat-categories/`
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'DELETE');
@@ -356,9 +353,68 @@ function addCatToPhoto(obj){
  		});
 }
 
+// --------------------------------------------
+// -------------- GET/UPDATE/ADD PHOTO --------
+// --------------------------------------------
+function getPhotoList(){
+
+	const JWT = localStorage.getItem("jwt");
+	const REQUEST_URL = `${URL}/photos?jwt=${JWT}`
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'GET');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+
+	var myInit = { method: 'GET',
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			return forJSON.json()
+		})
+		.then((data)=>{
+			// console.log(data, 'this is the list of photos')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
+function postNewPhoto(obj){
+	console.log(obj, 'about tot send this obj')
+
+	const REQUEST_URL = `${URL}/photos`
+	var myHeaders = new Headers();
+	myHeaders.append('Access-Control-Request-Method', 'POST');
+	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Accept', 'application/json')
+	myHeaders.append('Content-Type', 'application/json');
+
+	var myInit = { method: 'POST',
+			   body: JSON.stringify(obj),
+               headers: myHeaders,
+               mode: 'cors',
+               cache: 'default' };
+
+	return fetch(REQUEST_URL, myInit)
+		.then((forJSON)=>{
+			return forJSON.json()
+		})
+		.then((data)=>{
+			console.log(data, 'this is the post')
+			return data
+		}).catch(function(err) {
+    		console.log('Fetch Error :-S', err);
+ 		});
+}
+
+// --------------------------------------------
+// ------------------ POST BDGS ---------------
+// --------------------------------------------
+
 function addPostBdgs(obj){
 
-	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
 	const REQUEST_URL = `${URL}/photos/addPostBdgs`
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'POST');
@@ -389,6 +445,7 @@ export default {
 	googleAuth,
 	getPhotoList,
 	getUser,
+	updateUser,
 	login,
 	signUp,
 	getCatergiesId,
