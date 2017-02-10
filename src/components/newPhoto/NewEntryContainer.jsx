@@ -10,14 +10,10 @@ class NewEntryContainer extends Component {
 	constructor(props, context){
 		super(props, context)
 
-		this.state = {
-			categoriesArray: [],
-		}
+		this.state = {}
 
 		this.handlePhotoEntry = this.handlePhotoEntry.bind(this)
 		this.handleFormEntry = this.handleFormEntry.bind(this)
-		this.handleCatergiesName = this.handleCatergiesName.bind(this)
-		this.handleCatergiesName()
 		this.handleBackToFeed = this.handleBackToFeed.bind(this)
 	}
 
@@ -25,36 +21,18 @@ class NewEntryContainer extends Component {
 		router: PropTypes.object
 	}
 
-	handleCatergiesName(){
-		var names = ApiCalls.getAllCatergies()
-			.then((results)=>{
-				// console.log('alll the cats', results)
-				var catsArray = results.data.map(obj=>{
-					// console.log(obj.category, 'here are the objs')
-					return obj.category
-				})
-
-				this.setState({
-					categoriesArray: catsArray
-				})
-
-			}).catch((err)=>{
-				console.log(err, 'error fetching categories')
-			})
-	}
-
-
   	handlePhotoEntry (file){
 		var dispatch = this.props.dispatch;
 		dispatch(actions.postFile(file))
-		// console.log(this.props.file, "FILE STORE")
+		console.log(this.props.file, "FILE STORE")
 	}
 
 	handleFormEntry(obj){
-		// console.log(this.props.file, "FILE OBJ")
+		console.log(this.props.file, "FILE OBJ FROM STORE")
 		var file = this.props.file
 		ApiCalls.aws(file)
 		    .then((data)=>{
+				console.log(data, "FROM AWS CALL")
 
 		        var name = data.jsonObj.location.split('s3.amazonaws.com/')[1]
 		        var type = data.jsonObj.mimetype

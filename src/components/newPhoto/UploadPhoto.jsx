@@ -52,7 +52,7 @@ export default class UploadPhoto extends Component {
             imagePreviewUrl: reader.result
           });
           if(this.state.imagePreviewUrl.length > 0){
-              console.log('sendt', this.state.file)
+              console.log('send the file to parent', this.state.file)
               this.props.onAddPhoto(this.state.file)
           }
         }

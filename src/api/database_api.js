@@ -231,8 +231,10 @@ function updateUser(obj){
 
 function aws(obj){
 	const REQUEST_URL = `${URL}/aws`
+
+
 	var myHeaders = new Headers();
-	var jsonObj = JSON.stringify(obj)
+	var json =  JSON.stringify(fileObj);
 
 	var formData = new FormData();
 	formData.append("file", obj);
@@ -248,12 +250,13 @@ function aws(obj){
                mode: 'cors',
                cache: 'default' };
 
+
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
 			return forJSON.json()
 		})
 		.then((data)=>{
-			// console.log(data, 'this is the aws')
+			console.log(data, 'DATA FROM AWS CALL')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -266,13 +269,9 @@ function fetchAwsPhoto(obj){
 	var myHeaders = new Headers();
 	var jsonObj = JSON.stringify(obj)
 
-	// var formData = new FormData();
-	// formData.append("file", obj);
-
 	myHeaders.append('Access-Control-Request-Method', 'GET');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 	myHeaders.append('Accept', 'application/json')
-	// myHeaders.append("Content-Type","multipart/form-data");
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
