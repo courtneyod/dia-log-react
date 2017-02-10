@@ -223,10 +223,13 @@ class Photo extends Component {
         if(!time){
             return '';
         }
-        var newTime = time.split('T')[1]
+        var date = new Date(time)
+        var newDate = date.toString()
+        var newTime = newDate.split(' ')[4]
         var hours = newTime.split(':')[0]
         var minutes = newTime.split(':')[1]
         var timeConvention = 'am';
+
         if (hours > 12) {
               timeConvention = 'pm';
               hours -= 12;
@@ -235,8 +238,8 @@ class Photo extends Component {
           } else if (hours == 0) {
               hours = 12;
            }
-        return ` @ ${hours}:${minutes} ${timeConvention}`
 
+        return ` @ ${hours}:${minutes} ${timeConvention}`
     }
 
 	render(){

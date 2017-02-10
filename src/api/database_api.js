@@ -233,7 +233,7 @@ function aws(obj){
 	const REQUEST_URL = `${URL}/aws`
 
 	var myHeaders = new Headers();
-	var json =  JSON.stringify(fileObj);
+	var json =  JSON.stringify(obj);
 
 	var formData = new FormData();
 	formData.append("file", obj);

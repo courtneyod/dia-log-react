@@ -49,11 +49,9 @@ class LoginContainer extends Component {
 		const password = obj.password
 		var that = this
 		var dispatch = this.props.dispatch;
-		console.log(actions.getUser, 'what is this get user')
 
 		ApiCalls.login(obj)
 			.then(function(data){
-				console.log(data, 'user logined in')
 
 				if(data.authentication.authenticated){
 					console.log('authenticated')
@@ -62,6 +60,8 @@ class LoginContainer extends Component {
 					dispatch(actions.getUser(data))
 
 					that.context.router.push('/feed')
+				} else {
+
 				}
 			})
 			.catch((err)=> {
@@ -70,7 +70,6 @@ class LoginContainer extends Component {
 	}
 
 	handleGoogleAuth(){
-		console.log('here in gogle auth log ni contianere')
 		var googleAuth = ApiCalls.googleAuth()
 			.then((data)=>{
 				console.log(data, 'made it!')
@@ -95,6 +94,7 @@ class LoginContainer extends Component {
 					localStorage.setItem("jwt", data.jwt);
 					that.context.router.push('/feed')
 				} else {
+					//add to state, failure to login error message
 					that.context.router.push('/login')
 				}
 			})
