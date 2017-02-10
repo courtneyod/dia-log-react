@@ -14,7 +14,6 @@ import Editor from 'material-ui/svg-icons/editor/mode-edit';
 import {connect} from 'react-redux'
 var actions =require('../actions/actions')
 
-
 const style = {
   marginLeft: 20,
 };
@@ -49,13 +48,17 @@ class Photo extends Component {
 	}
 
 	componentWillMount(){
-        var i = 0
-		var cats = this.props.category
+        console.log(this.props.photos, "PHOTOS")
+        var photoId = this.props.id
 		var newArr = []
+        // console.log(getPhotoIndex, "PROPS")
+        var index = getPhotoIndex(photoId, this)
+        console.log(index, "INDEX")
+        var cats = this.props.photos[index].category
 
 		if(cats.length > 0 ){
 			for (var i = 0; i < cats.length; i++) {
-				var obj ={
+				var obj = {
 					'key': i,
 					'label': cats[i]
 				}
@@ -68,11 +71,23 @@ class Photo extends Component {
 
 		var user = ApiCalls.getUser()
 			.then((user)=>{
-                console.log("dispatching user ", user.user);
 				dispatch(actions.getUser(user.user))
 			}).catch((err)=> {
 				console.log(err)
 			})
+	}
+    handleAddChip(chip){
+		this.setState({newChips: chip});
+
+        var photoId = this.props.id
+
+        console.log(this.props.id, "PROPS")
+        for (var i = 0; i < this.props.photos.length; i++) {
+            if(this.props.photos[i].id === photoId){
+                cats = this.props.photos[i].category
+            }
+
+        }
 	}
 
 	handleRequestDelete = (key) => {
@@ -191,17 +206,13 @@ class Photo extends Component {
 
     		var photoList = ApiCalls.addCatToPhoto(obj)
     			.then((data)=>{
-    				console.log(data, 'from api call in adding cats Component')
+    				console.log(data, 'ADDED CATS')
     			}).catch((err)=> {
     				console.log(err)
     			})
     	    }
     	}
 	};
-
-	handleAddChip(chip){
-		this.setState({newChips: chip});
-	}
 
 	handleDeleteChip(chip, index){
 		console.log('deleted chips', chip)
@@ -352,6 +363,15 @@ class Photo extends Component {
 	}
 }
 
+function getPhotoIndex(photoId, that){
+    console.log(that.props, "HERE")
+    for (var i = 0; i < that.props.photos.length; i++) {
+        if(that.props.photos[i].id === photoId){
+            console.log(i, 'YES')
+            return i;
+        }
+    }
+}
 //use matstate to prop when you need acces to store, if you only need to put in to the store you only need to dispatch
 function mapStateToProps(store){
 	return {

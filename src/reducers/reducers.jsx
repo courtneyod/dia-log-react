@@ -4,6 +4,10 @@ var photoListReducer = (state = [], action) => {
     switch (action.type) {
         case "GET_PHOTO_LIST":
             return action.payload;
+        case "ADD_CATS":
+            var newState = JSON.parse(JSON.stringify(state))
+            newState[action.payload.index]['category'] = action.payload.value
+            return newState
         default:
             return state;
     }

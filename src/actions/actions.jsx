@@ -40,6 +40,13 @@ var editPhoto = (data) => {
     };
 };
 
+var addCats = (data) => {
+    return {
+        type: "ADD_CATS",
+        payload: data
+    };
+};
+
 var postFile = (data) => {
     return {
         type: "POST_FILE",
@@ -56,5 +63,6 @@ module.exports = {
     editMinBdgRange,
     editUserName,
     editPhoto,
-    postFile
+    postFile,
+    addCats
 };

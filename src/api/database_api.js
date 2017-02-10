@@ -232,7 +232,6 @@ function updateUser(obj){
 function aws(obj){
 	const REQUEST_URL = `${URL}/aws`
 
-
 	var myHeaders = new Headers();
 	var json =  JSON.stringify(fileObj);
 
@@ -325,9 +324,9 @@ function deleteCatFromPhoto(obj){
 
 function addCatToPhoto(obj){
 
-	// const REQUEST_URL = `${URL}/photos?email=${email}&password=${password}`
 	const REQUEST_URL = `${URL}/health-stat-categories/addcat`
 	var myHeaders = new Headers();
+
 	myHeaders.append('Access-Control-Request-Method', 'POST');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 	myHeaders.append('Accept', 'application/json')
