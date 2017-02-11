@@ -4,9 +4,9 @@ import {Route, Router, IndexRoute, hashHistory}  from 'react-router';
 import App from './App';
 // import PostsIndex from './components/posts_index'
 import PhotoList from "./components/PhotoList";
-import LoginContainer from "./components/login/LoginContainer";
 import NewEntryContainer from "./components/newPhoto/NewEntryContainer";
 import ProfileContainer from "./components/profile/ProfileContainer";
+import LoginContainer from "./components/login/LoginContainer";
 
 export default (
 	<Router history={hashHistory}>
