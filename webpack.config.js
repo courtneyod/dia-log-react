@@ -19,7 +19,7 @@ module.exports = {
       NewEntryNav: 'src/components/newPhoto/NewEntryNav.jsx',
       AddHealthStats: 'src/api/AddHealthStats.js',
       Photo: 'src/components/Photo.jsx',
-      PhotoList: 'src/components/Photo.jsx',
+      PhotoList: 'src/components/PhotoList.jsx',
       Auth: 'src/components/login/Auth.jsx',
       LoginContainer: 'src/components/login/LoginContainer.jsx',
       GoogleAuth: 'src/components/login/GoogleAuth.jsx',
