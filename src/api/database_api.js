@@ -1,5 +1,6 @@
 var getUserFromJWT = require('./helpers');
-const URL = process.env.URL
+const URL = 'https://dialog-dev.herokuapp.com'
+// console.log(process.env, process.env.URL, process)
 
 // --------------------------------------------
 // ----------- GET/UPDATE CATEGORIES ----------
