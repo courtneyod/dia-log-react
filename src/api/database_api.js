@@ -1,5 +1,5 @@
 var getUserFromJWT = require('./helpers');
-const URL = "http://localhost:8000"
+const URL = process.env.URL
 
 // --------------------------------------------
 // ----------- GET/UPDATE CATEGORIES ----------
