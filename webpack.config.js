@@ -30,7 +30,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?https://dialog-dev.herokuapp.com',
     './src/index.jsx'
   ],
   output: {
