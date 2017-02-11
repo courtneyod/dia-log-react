@@ -7,7 +7,6 @@ import PhotoList from "./components/PhotoList";
 import LoginContainer from "./components/login/LoginContainer";
 import NewEntryContainer from "./components/newPhoto/NewEntryContainer";
 import ProfileContainer from "./components/profile/ProfileContainer";
-import Auth from './components/login/Auth';
 
 export default (
 	<Router history={hashHistory}>
