@@ -4,7 +4,11 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   devServer: {
-   headers: { "Access-Control-Allow-Origin": "*" }
+   headers: {
+       "Access-Control-Allow-Origin": "*" ,
+       "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+},
+
   },
   resolve: {
     root: __dirname,
