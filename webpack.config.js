@@ -37,7 +37,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   entry: [
-    'webpack-dev-server/client?https://protected-depths-72825.herokuapp.com/',
+    'webpack-dev-server/client?http://' + require("os").hostname() + 'https://dialogg.herokuapp.com/',
     './src/index.jsx'
   ],
   output: {
