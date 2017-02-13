@@ -52,6 +52,7 @@ class LoginContainer extends Component {
 
 		ApiCalls.login(obj)
 			.then(function(data){
+				console.log(data, 'data from login')
 
 				if(data.authentication.authenticated){
 					console.log('authenticated')
