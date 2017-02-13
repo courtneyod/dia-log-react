@@ -144,6 +144,7 @@ function login(obj){
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'POST');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Access-Control-Allow-Headers', 'Content-Type,x-requested-with,Authorization,Access-Control-Allow-Origin');
 
 	var myInit = { method: 'POST',
                headers: myHeaders,
@@ -263,8 +264,8 @@ function aws(obj){
  		});
 }
 function fetchAwsPhoto(obj){
-	var name = 'GOPR0526.JPG'
-	var type = 'image/jpeg'
+	var name = obj.name
+	var type = obj.type
 	const REQUEST_URL = `${URL}/aws/?file-name=${name}?file-name=${type}`;
 	var myHeaders = new Headers();
 	var jsonObj = JSON.stringify(obj)
@@ -362,6 +363,9 @@ function getPhotoList(){
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'GET');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
+	myHeaders.append('Accept', 'application/json');
+	myHeaders.append('Access-Control-Allow-Headers', 'Content-Type,x-requested-with,Authorization,Access-Control-Allow-Origin');
+
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
