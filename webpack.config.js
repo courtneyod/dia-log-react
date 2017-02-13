@@ -37,7 +37,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   entry: [
-    'webpack-dev-server/client?https://dialogg.herokuapp.com/',
+    'webpack-dev-server/client?https://' + require("ip").address() + 'https://dialogg.herokuapp.com/',
     './src/index.jsx'
   ],
   output: {
