@@ -11,5 +11,5 @@ new WebpackDevServer(webpack(config), {
     if (err) {
       console.log(err);
     }
-    console.log(`Running at http://0.0.0.0:${PORT}`);
+    console.log(`Running at https://0.0.0.0:${PORT}`);
   })
