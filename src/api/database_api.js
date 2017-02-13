@@ -143,13 +143,12 @@ function login(obj){
 
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'POST');
-	myHeaders.append('mode', 'no-cors');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 	myHeaders.append('Access-Control-Allow-Headers', 'Content-Type,x-requested-with,Authorization,Access-Control-Allow-Origin');
 
 	var myInit = { method: 'POST',
                headers: myHeaders,
-               mode: 'cors',
+               mode: 'no-cors',
                cache: 'default'
 		   };
 
