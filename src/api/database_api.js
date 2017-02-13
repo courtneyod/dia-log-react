@@ -364,7 +364,7 @@ function getPhotoList(){
 	myHeaders.append('Access-Control-Request-Method', 'GET');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
 	myHeaders.append('Accept', 'application/json');
-	myHeaders.append('Access-Control-Allow-Headers', 'Content-Type,x-requested-with,Authorization,Access-Control-Allow-Origin');
+	myHeaders.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
 
 	var myInit = { method: 'GET',

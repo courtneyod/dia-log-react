@@ -4,7 +4,7 @@ var config = require('./webpack.config');
 var PORT = process.env.PORT || 3000;
 var cors = require('cors');
 
-new WebpackDevServer(webpack(config), {
+var server = new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath
   })
   .listen(PORT, '0.0.0.0', function (err, result) {
@@ -13,4 +13,5 @@ new WebpackDevServer(webpack(config), {
     }
     console.log(`Running at http://0.0.0.0:${PORT}`);
   })
-  .use(cors());
+
+  server.use(cors())
