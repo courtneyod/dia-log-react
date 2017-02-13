@@ -40,7 +40,8 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/build/'
-},
+ },
+  crossOriginLoading: 'false',
   module: {
     loaders: [
       {
