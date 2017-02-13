@@ -14,4 +14,6 @@ var server = new WebpackDevServer(webpack(config), {
     console.log(`Running at http://0.0.0.0:${PORT}`);
   })
 
+  console.log(server, "SERVER")
+
   server.use(cors())
