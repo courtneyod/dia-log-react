@@ -153,11 +153,11 @@ function login(obj){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			console.log(forJSON, "JSON")
+			// console.log(forJSON, "JSON")
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is in data from login api call')
+			// console.log(data, 'this is in data from login api call')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -198,7 +198,7 @@ function getUser(obj){
 function updateUser(obj){
 	var userObj = getUserFromJWT()
 	var id = userObj.id
-	console.log(obj, 'obj emplty? ')
+	// console.log(obj, 'obj emplty? ')
 	var bodyObj = obj
 
 	const REQUEST_URL = `${URL}/login/${id}`
@@ -257,7 +257,7 @@ function aws(obj){
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'DATA FROM AWS CALL')
+			// console.log(data, 'DATA FROM AWS CALL')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -284,7 +284,7 @@ function fetchAwsPhoto(obj){
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is the get aws')
+			// console.log(data, 'this is the get aws')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -313,11 +313,11 @@ function deleteCatFromPhoto(obj){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			console.log(forJSON)
+			// console.log(forJSON)
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is the post')
+			// console.log(data, 'this is the post')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -342,7 +342,7 @@ function addCatToPhoto(obj){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			console.log(forJSON)
+			// console.log(forJSON)
 			return forJSON.json()
 		})
 		.then((data)=>{
@@ -385,7 +385,7 @@ function getPhotoList(){
 }
 
 function postNewPhoto(obj){
-	console.log(obj, 'about tot send this obj')
+	// console.log(obj, 'about tot send this obj')
 	var userObj = getUserFromJWT()
 	var id = userObj.id
 	obj.id = id
@@ -407,7 +407,7 @@ function postNewPhoto(obj){
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is the post')
+			// console.log(data, 'this is the post')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);
@@ -435,11 +435,11 @@ function addPostBdgs(obj){
 
 	return fetch(REQUEST_URL, myInit)
 		.then((forJSON)=>{
-			console.log(forJSON)
+			// console.log(forJSON)
 			return forJSON.json()
 		})
 		.then((data)=>{
-			console.log(data, 'this is the post')
+			// console.log(data, 'this is the post')
 			return data
 		}).catch(function(err) {
     		console.log('Fetch Error :-S', err);

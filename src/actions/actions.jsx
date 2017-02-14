@@ -12,6 +12,20 @@ var getUser = (user) => {
     };
 };
 
+var editUser = (user) => {
+    return {
+        type: "EDIT_USER",
+        payload: user
+    };
+};
+
+var editUserFirstName = (user) => {
+    return {
+        type: "EDIT_USER_FIRST_NAME",
+        payload: user
+    };
+};
+
 var editMaxBdgRange = (data) => {
     return {
         type: "EDIT_MAX_BDG_RANGE",
@@ -22,13 +36,6 @@ var editMaxBdgRange = (data) => {
 var editMinBdgRange = (data) => {
     return {
         type: "EDIT_MIN_BDG_RANGE",
-        payload: data
-    };
-};
-
-var editUserName = (data) => {
-    return {
-        type: "EDIT_USER_NAME",
         payload: data
     };
 };
@@ -59,10 +66,11 @@ var postFile = (data) => {
 module.exports = {
     getPhotoList,
     getUser,
+    editUser,
     editMaxBdgRange,
     editMinBdgRange,
-    editUserName,
     editPhoto,
     postFile,
-    addCats
+    addCats,
+    editUserFirstName
 };

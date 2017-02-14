@@ -34,13 +34,21 @@ var userReducer = (state = [], action) => {
             return action.payload;
         case "EDIT_MAX_BDG_RANGE":
             var newState = JSON.parse(JSON.stringify(state))
+            console.log(action.payload.value, 'high bdgs')
             newState['bdgs_high_range'] = action.payload.value
+            return newState
+        case "EDIT_USER":
+            var newState = JSON.parse(JSON.stringify(state))
+            newState['bdgs_high_range'] = action.payload.value.bdgs_high_range
+            newState['bdgs_low_range'] = action.payload.value.bdgs_low_range
+            newState['photo'] = action.payload.value.photo
+            newState['first_name'] = action.payload.value.first_name
             return newState
         case "EDIT_MIN_BDG_RANGE":
             var newState = JSON.parse(JSON.stringify(state))
             newState['bdgs_low_range'] = action.payload.value
             return newState
-        case "EDIT_USER_NAME":
+        case "EDIT_USER_FIRST_NAME":
             var newState = JSON.parse(JSON.stringify(state))
             newState['first_name'] = action.payload.value
             return newState

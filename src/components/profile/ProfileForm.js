@@ -39,7 +39,7 @@ class ProfileForm extends Component {
 
 		var user = ApiCalls.getUser()
 			.then((user)=>{
-                console.log("dispatching user ", user.user);
+                // console.log("dispatching user ", user.user);
 				dispatch(actions.getUser(user.user))
 				// return user
                 this.setState({

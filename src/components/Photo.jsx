@@ -66,7 +66,6 @@ class Photo extends Component {
 	}
 
     handleAddChip(chip){
-        console.log(chip, "EACH TIME??????????")
         var photoId = this.props.id;
         var index = getPhotoIndex(photoId, this)
         var dispatch = this.props.dispatch;
@@ -79,7 +78,6 @@ class Photo extends Component {
         var lastChip = chip[chip.length-1]
         var newArray = this.props.photos[index].category
         newArray.push(lastChip)
-        console.log(newArray, "CHOIPSOSIDJSI")
         var obj = createCatObjForChips(newArray)
 
         this.setState({
@@ -263,7 +261,7 @@ class Photo extends Component {
 
 		let {photoUrl, id, preMealBdgs, postMealBdgs, postMealBdgsTimeStamp, insulinUnits, preMealBdgsTimeStamp, customerId, category} = this.props
 		var time=<TimeAgo className="time-ago" date={preMealBdgsTimeStamp} />
-
+        console.log(this.props.postMealBdgsTimeStamp, "TIME")
 		return (
 			<Card className="photo-card" expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
 		        <CardHeader

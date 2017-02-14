@@ -16,13 +16,11 @@ class ProfileImage extends Component {
 	}
 
 	componentWillMount(){
-		var dispatch = this.props.dispatch;
 
-		// dispatch(actions.getUser(user))
 	}
 
 	renderImage(){
-		console.log(this.props.user.photo, 'HEREHHEEHHEHE')
+		// console.log(this.props.user.photo, 'HEREHHEEHHEHE')
 		var photoUrl = "";
 		if (this.props.user) {
 			var photoUrl = this.props.user.photo
@@ -44,7 +42,7 @@ class ProfileImage extends Component {
 	}
 
 	render(){
-		console.log(this.props.user, 'HERE')
+		// console.log(this.props.user, 'HERE')
 
 		return (
 				<div className="form-container">

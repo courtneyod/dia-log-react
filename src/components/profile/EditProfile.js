@@ -27,7 +27,8 @@ class EditProfile extends Component {
 
 	handleNameChange = (event, value) => {
 		if(value.length> 0){
-			this.props.user.first_name = value
+			var dispatch = this.props.dispatch;
+			dispatch(actions.editUserFirstName({value}))
 		}
 	  };
 
@@ -50,17 +51,21 @@ class EditProfile extends Component {
 
 	handleClose = () => {
 	    this.setState({open: false});
-		console.log(this.props.user.photo, 'photo url')
-		var obj = {
+		// console.log(this.props.user.photo, 'photo url')
+		var dispatch = this.props.dispatch;
+		var value = this.props.user.first_name;
+
+		var value = {
 			'first_name': this.props.user.first_name,
 			'bdgs_high_range': this.props.user.bdgs_high_range,
 			'bdgs_low_range': this.props.user.bdgs_low_range,
 			'photo': this.props.user.photo
 		}
-		console.log(obj, 'what im sending ')
-		var user = ApiCalls.updateUser(obj)
+		// dispatch(actions.editUser(value))
+		// console.log(value, 'what im sending ')
+		var user = ApiCalls.updateUser(value)
 			.then((data)=>{
-				console.log('data back about new user', data)
+				// console.log('data back about new user', data)
 				return data
 
 			}).catch((err)=> {

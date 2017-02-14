@@ -117,17 +117,17 @@ class NewEntryForm extends Component {
                             onChange={this.handleUnitsChange}
                             style={styles.customWidth}
                         >
-                                  <MenuItem value={1} primaryText="0 units" />
-                                  <MenuItem value={2} primaryText="1 units" />
-                                  <MenuItem value={3} primaryText="2 units" />
-                                  <MenuItem value={4} primaryText="3 units" />
-                                  <MenuItem value={5} primaryText="4 units" />
-                                  <MenuItem value={6} primaryText="5 units" />
-                                  <MenuItem value={7} primaryText="6 units" />
-                                  <MenuItem value={8} primaryText="7 units" />
-                                  <MenuItem value={9} primaryText="8 units" />
-                                  <MenuItem value={10} primaryText="9 units" />
-                                  <MenuItem value={11} primaryText="10 units" />
+                                  <MenuItem value={0} primaryText="0 units" />
+                                  <MenuItem value={1} primaryText="1 units" />
+                                  <MenuItem value={2} primaryText="2 units" />
+                                  <MenuItem value={3} primaryText="3 units" />
+                                  <MenuItem value={4} primaryText="4 units" />
+                                  <MenuItem value={5} primaryText="5 units" />
+                                  <MenuItem value={6} primaryText="6 units" />
+                                  <MenuItem value={7} primaryText="7 units" />
+                                  <MenuItem value={8} primaryText="8 units" />
+                                  <MenuItem value={9} primaryText="9 units" />
+                                  <MenuItem value={10} primaryText="10 units" />
                             </SelectField>
 						  <RaisedButton
                               className="form-btn btn"
