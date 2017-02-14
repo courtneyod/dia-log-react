@@ -17,7 +17,7 @@ class LoginContainer extends Component {
 
 		this.state = {
 			'member': true,
-			'userId': cookie.load('userId')
+			'textClass': 'false-show'
 		}
 
 		this.renderForm = this.renderForm.bind(this)
@@ -52,7 +52,12 @@ class LoginContainer extends Component {
 
 		ApiCalls.login(obj)
 			.then(function(data){
-				console.log(data, 'data from login')
+				if (data === 'bad password or email'){
+					console.log('bad password or email')
+					that.setState({
+						'textClass': 'show-error'
+					})
+				}
 
 				if(data.authentication.authenticated){
 					console.log('authenticated')
@@ -110,6 +115,7 @@ class LoginContainer extends Component {
 		return (
 				<div className="LoginContainer">
 					<LoginLogo />
+					<div className={this.state.textClass}>Bad password or email</div>
 					{this.renderForm()}
 					<GoogleAuth clickGoogleAuth={this.handleGoogleAuth}/>
 				</div>

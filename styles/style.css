@@ -468,3 +468,16 @@ svg.icon {
 .new-entry-nav {
     margin-bottom: 40px;
 }
+
+
+.false-show {
+    display: none;
+}
+
+.show-error {
+    display: block;
+    text-align: center;
+    color: #E53935;
+    font-style: italic;
+    margin-bottom: 25px;
+}
