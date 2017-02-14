@@ -1,5 +1,5 @@
 var getUserFromJWT = require('./helpers');
-const URL = 'https://dialog-dev.herokuapp.com'
+const URL = 'http://localhost:8000'
 
 // --------------------------------------------
 // ----------- GET/UPDATE CATEGORIES ----------
@@ -13,7 +13,7 @@ function getCatergiesId(photoId){
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -36,7 +36,7 @@ function getCatergiesNames(photoId){
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -59,7 +59,7 @@ function getAllCatergies(){
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -86,7 +86,7 @@ function googleAuth(){
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default'
 		   };
 
@@ -119,7 +119,7 @@ function signUp(obj){
 
 	var myInit = { method: 'POST',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default'
 		   };
 
@@ -137,17 +137,17 @@ function signUp(obj){
 function login(obj){
 	const email = obj.email
 	const password = obj.password
-	console.log(email, password, "EMAIL and PASSWORD")
+	// console.log(email, password, "EMAIL and PASSWORD")
 	const REQUEST_URL = `${URL}/login?email=${email}&password=${password}`
 
 	var myHeaders = new Headers();
 	myHeaders.append('Access-Control-Request-Method', 'POST');
 	myHeaders.append('Access-Control-Allow-Origin', '*');
-	myHeaders.append('Access-Control-Allow-Headers', 'Content-Type,x-requested-with,Authorization,Access-Control-Allow-Origin');
+	// myHeaders.append('Access-Control-Allow-Headers', 'Content-Type,x-requested-with,Authorization,Access-Control-Allow-Origin');
 
 	var myInit = { method: 'POST',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default'
 		   };
 
@@ -180,7 +180,7 @@ function getUser(obj){
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default'
 		   };
 
@@ -212,7 +212,7 @@ function updateUser(obj){
 		method: 'PUT',
 		body: JSON.stringify(bodyObj),
         headers: myHeaders,
-        mode: 'no-cors',
+        mode: 'cors',
         cache: 'default'
 		};
 
@@ -248,7 +248,7 @@ function aws(obj){
 	var myInit = { method: 'POST',
 			   body: formData,
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 
@@ -276,7 +276,7 @@ function fetchAwsPhoto(obj){
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -308,7 +308,7 @@ function deleteCatFromPhoto(obj){
 	var myInit = { method: 'DELETE',
 			   body: JSON.stringify(obj),
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -337,7 +337,7 @@ function addCatToPhoto(obj){
 	var myInit = { method: 'POST',
 			   body: JSON.stringify(obj),
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -369,7 +369,7 @@ function getPhotoList(){
 
 	var myInit = { method: 'GET',
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -399,7 +399,7 @@ function postNewPhoto(obj){
 	var myInit = { method: 'POST',
 			   body: JSON.stringify(obj),
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
@@ -430,7 +430,7 @@ function addPostBdgs(obj){
 	var myInit = { method: 'POST',
 			   body: JSON.stringify(obj),
                headers: myHeaders,
-               mode: 'no-cors',
+               mode: 'cors',
                cache: 'default' };
 
 	return fetch(REQUEST_URL, myInit)
