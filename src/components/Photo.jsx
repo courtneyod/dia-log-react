@@ -127,7 +127,16 @@ class Photo extends Component {
     };
 
 	handleToggle = (event, toggle) => {
-    	this.setState({expanded: toggle});
+        var photoId = this.props.id
+        var index = getPhotoIndex(photoId, this)
+        var cats = this.props.photos[index].category
+
+		var newArr = createCatObjForChips(cats)
+        
+    	this.setState({
+            expanded: toggle,
+            chipData: newArr
+        });
 	};
 
     handleExpand = () => {

@@ -59,10 +59,12 @@ class NewEntryContainer extends Component {
 				ApiCalls.postNewPhoto(postObj)
 					.then((results)=>{
 						console.log(results, "NOW PHOTO ADD")
+
+					}).then(()=>{
 						console.log(this.props.photos, "STORE PHOTOS")
-						setTimeout(()=>{
-				                    this.context.router.push('/feed')
-				                }, 100);
+
+				        this.context.router.push('/feed')
+
 					}).catch(err=>{
 						console.log(err)
 					})
